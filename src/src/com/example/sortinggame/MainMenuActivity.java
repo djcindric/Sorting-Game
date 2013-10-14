@@ -28,7 +28,6 @@ public class MainMenuActivity extends Activity {
     
     public void loadCustomizerInterface(View view) {
     	Intent intent = new Intent(this, CustomizerActivity.class);
-    	startActivity(intent);
-    	
+    	startActivity(intent); 	
     }
 }
