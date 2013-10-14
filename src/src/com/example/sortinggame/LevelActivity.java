@@ -1,8 +1,11 @@
 package com.example.sortinggame;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
+import android.view.View;
 
 public class LevelActivity extends Activity {
 
@@ -18,5 +21,4 @@ public class LevelActivity extends Activity {
 		getMenuInflater().inflate(R.menu.level, menu);
 		return true;
 	}
-
 }

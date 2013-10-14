@@ -9,5 +9,7 @@
     <string name="title_activity_customizer">CustomizerActivity</string>
     <string name="title_activity_add_update">AddUpdateActivity</string>
     <string name="title_activity_delete">DeleteActivity</string>
+    <string name="choose_level">Choose Level</string>
+    <string name="customizer">Customize Level</string>
 
 </resources>
