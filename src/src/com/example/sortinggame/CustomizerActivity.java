@@ -22,8 +22,13 @@ public class CustomizerActivity extends Activity {
 		return true;
 	}
 	
-	public void dispatchTakePictureIntent(View view) {
-    	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-    	startActivityForResult(takePictureIntent, 0);
+	public void loadAddUpdateInterface(View view) {
+    	Intent intent = new Intent(this, AddUpdateActivity.class);
+    	startActivity(intent); 	
+    }
+	
+	public void loadDeleteInterface(View view) {
+    	Intent intent = new Intent(this, DeleteActivity.class);
+    	startActivity(intent); 	
     }
 }

@@ -21,4 +21,6 @@ public class LevelActivity extends Activity {
 		getMenuInflater().inflate(R.menu.level, menu);
 		return true;
 	}
+	
+	
 }
