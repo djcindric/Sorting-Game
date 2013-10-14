@@ -31,4 +31,9 @@ public class CustomizerActivity extends Activity {
     	Intent intent = new Intent(this, DeleteActivity.class);
     	startActivity(intent); 	
     }
+	
+	public void goBackToMain(View view){
+		Intent intent = new Intent(this, MainMenuActivity.class);
+    	startActivity(intent);
+	}
 }

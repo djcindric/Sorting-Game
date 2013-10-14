@@ -13,11 +13,21 @@
         android:onClick="loadAddUpdateInterface"/>
     
     <Button
+        android:id="@+id/delete_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/Add_Update_Button"
         android:layout_marginTop="20dp"
         android:text="@string/choose_delete"
         android:onClick="loadDeleteInterface"/>
+    
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/delete_Button"
+        android:layout_marginTop="20dp"
+        android:gravity="top|left"
+        android:src="@drawable/back_arrow"
+        android:onClick="goBackToMain" />
 
 </RelativeLayout>

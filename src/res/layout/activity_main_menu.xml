@@ -15,11 +15,12 @@
         android:onClick="loadLevelInterface" />
     
     <Button 
+        android:id="@+id/load_customize_level_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/customizer" 
-        android:onClick="loadCustomizerInterface"
      	android:layout_marginTop="30dp"
-        android:layout_below="@id/load_level_interface" />
+        android:layout_below="@id/load_level_interface"
+        android:text="@string/customizer" 
+        android:onClick="loadCustomizerInterface" />
 
 </RelativeLayout>

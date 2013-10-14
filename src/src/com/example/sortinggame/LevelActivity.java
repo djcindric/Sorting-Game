@@ -22,5 +22,9 @@ public class LevelActivity extends Activity {
 		return true;
 	}
 	
+	public void goBackToMain(View view){
+		Intent intent = new Intent(this, MainMenuActivity.class);
+    	startActivity(intent);
+	}
 	
 }
