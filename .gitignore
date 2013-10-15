@@ -31,4 +31,5 @@ proguard/
 #vim files
 *.swp
 *.swo
+Git Bash.vbs
 .metadata/
