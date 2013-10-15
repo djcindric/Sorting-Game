@@ -1,10 +1,13 @@
 package com.example.sortinggame;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,6 +19,11 @@ public class LevelActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
+		
+		//Remove Icon from Action Bar
+		ActionBar actionBar = getActionBar();
+    	actionBar.setDisplayShowHomeEnabled(false);
+    	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level);
 
@@ -38,6 +46,23 @@ public class LevelActivity extends Activity {
 		return true;
 	}
 	
+	//Handle clicks on the action bar
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case R.id.hide_bar:
+    		ActionBar actionBar = getActionBar();
+    		actionBar.hide();
+    		return true;
+    	case R.id.go_back:
+    		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
+        	clickSound.start();
+    		Intent intent = new Intent(this, MainMenuActivity.class);
+        	startActivity(intent);
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
+    }
+	
 	public void goBackToMain(View view){
 		Intent intent = new Intent(this, MainMenuActivity.class);
     	startActivity(intent);
@@ -49,7 +74,6 @@ public class LevelActivity extends Activity {
 		intent.putExtra(Icon_Position, position);
     	startActivity(intent);
 	}
-	
 }
 
 

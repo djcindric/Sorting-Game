@@ -1,5 +1,6 @@
 package com.example.sortinggame;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,10 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//Hide the action bar to increase play area
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 		
 		Intent intent = getIntent(); //Retrieve the intent
 		
