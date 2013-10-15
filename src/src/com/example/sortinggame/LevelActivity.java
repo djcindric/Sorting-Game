@@ -2,6 +2,7 @@ package com.example.sortinggame;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -11,6 +12,7 @@ public class LevelActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level);
 	}
@@ -21,4 +23,10 @@ public class LevelActivity extends Activity {
 		getMenuInflater().inflate(R.menu.level, menu);
 		return true;
 	}
+	
+	public void goBackToMain(View view){
+		Intent intent = new Intent(this, MainMenuActivity.class);
+    	startActivity(intent);
+	}
+	
 }
