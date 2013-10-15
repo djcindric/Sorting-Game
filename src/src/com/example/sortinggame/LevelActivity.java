@@ -4,8 +4,8 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +19,12 @@ public class LevelActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
-		
-		//Remove Icon from Action Bar
-		ActionBar actionBar = getActionBar();
-    	actionBar.setDisplayShowHomeEnabled(false);
-    	
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level);
+		
+		//Enable icon to function as back button
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 
 		//Create a grid of icons for choosing a level
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
@@ -53,11 +52,9 @@ public class LevelActivity extends Activity {
     		ActionBar actionBar = getActionBar();
     		actionBar.hide();
     		return true;
-    	case R.id.go_back:
-    		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
-        	clickSound.start();
-    		Intent intent = new Intent(this, MainMenuActivity.class);
-        	startActivity(intent);
+    	case android.R.id.home:
+    		NavUtils.navigateUpFromSameTask(this);
+    		return true;
     	default:
     		return super.onOptionsItemSelected(item);
     	}

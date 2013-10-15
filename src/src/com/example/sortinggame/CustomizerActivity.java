@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +17,9 @@ public class CustomizerActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
 		
-		//Remove Icon from Action Bar
+		//Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_customizer);
@@ -34,15 +35,16 @@ public class CustomizerActivity extends Activity {
 	//Handle clicks on the action bar
 		public boolean onOptionsItemSelected(MenuItem item) {
 	    	switch (item.getItemId()) {
+	    	
+	    	case android.R.id.home:
+	    		NavUtils.navigateUpFromSameTask(this);
+	    		return true;
+	    		
 	    	case R.id.hide_bar:
 	    		ActionBar actionBar = getActionBar();
 	    		actionBar.hide();
 	    		return true;
-	    	case R.id.go_back:
-	    		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
-	        	clickSound.start();
-	    		Intent intent = new Intent(this, MainMenuActivity.class);
-	        	startActivity(intent);
+	    		
 	    	default:
 	    		return super.onOptionsItemSelected(item);
 	    	}

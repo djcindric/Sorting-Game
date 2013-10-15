@@ -3,7 +3,7 @@ package com.example.sortinggame;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -11,9 +11,10 @@ public class AddUpdateActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//Remove Icon from Action Bar
+		
+		//Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayShowHomeEnabled(false);
+	    actionBar.setDisplayHomeAsUpEnabled(true);
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_update);
@@ -33,9 +34,9 @@ public class AddUpdateActivity extends Activity {
 	    		ActionBar actionBar = getActionBar();
 	    		actionBar.hide();
 	    		return true;
-	    	case R.id.go_back:
-	    		Intent intent = new Intent(this, CustomizerActivity.class);
-	        	startActivity(intent);
+	    	case android.R.id.home:
+	    		NavUtils.navigateUpFromSameTask(this);
+	    		return true;
 	    	default:
 	    		return super.onOptionsItemSelected(item);
 	    	}
