@@ -16,10 +16,6 @@ public class MainMenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
     	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
     	
-    	//Remove Icon from Action Bar
-    	ActionBar actionBar = getActionBar();
-    	actionBar.setDisplayShowHomeEnabled(false);
-    	
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
     }
