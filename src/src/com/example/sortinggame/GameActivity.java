@@ -1,7 +1,8 @@
 package com.example.sortinggame;
 
-import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
+<<<<<<< HEAD
 import android.graphics.drawable.Drawable;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -12,6 +13,12 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+=======
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.widget.Toast;
+>>>>>>> e75905475f4a454a98e8b0a34e4d148b8d4e4fe0
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnDragListener {
@@ -19,6 +26,20 @@ public class GameActivity extends Activity implements OnTouchListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//Hide the action bar to increase play area
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
+		
+		Intent intent = getIntent(); //Retrieve the intent
+		
+		//Retrieve the icon's position in the grid from the intent. 
+		//position is the integer value of the icons position in the grid
+		int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
+		
+		//Display Position for reference
+		Toast.makeText(GameActivity.this, "" + position, Toast.LENGTH_LONG).show(); 
+		
 		setContentView(R.layout.activity_game);
 		findViewById(R.id.image1).setOnTouchListener(this);
 		findViewById(R.id.top).setOnDragListener(this);
