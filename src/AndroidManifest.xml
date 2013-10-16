@@ -13,8 +13,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <!--change activity that is initially loaded-->
         <activity
-            android:name="com.example.sortinggame.MainMenuActivity"
+            android:name="com.example.sortinggame.GameActivity" 
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +28,7 @@
             android:label="@string/title_activity_level" >
         </activity>
         <activity
-            android:name="com.example.sortinggame.GameActivity"
+            android:name="com.example.sortinggame.MainMenuActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity
