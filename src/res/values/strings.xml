@@ -4,15 +4,17 @@
     <string name="app_name">Sorting Game</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_level">LevelActivity</string>
-    <string name="title_activity_game">GameActivity</string>
-    <string name="title_activity_customizer">CustomizerActivity</string>
-    <string name="title_activity_add_update">AddUpdateActivity</string>
-    <string name="title_activity_delete">DeleteActivity</string>
+    <string name="title_activity_level">Level Selection</string>
+    <string name="title_activity_game">Play The Game!</string>
+    <string name="title_activity_customizer">Customization</string>
+    <string name="title_activity_add_update">Add or Update</string>
+    <string name="title_activity_delete">Delete</string>
     <string name="choose_level_menu">Choose Level</string>
     <string name="customizer">Customize Level</string>
     <string name="choose_level">Choose the level you would like to play.\nList of levels to play will go here.</string>
     <string name="choose_addupdate">Add or update a level</string>
     <string name="choose_delete">Delete a existing level</string>
+    <string name="hide_bar">Hide</string>
+    <string name="back_arrow">Test</string>
 
 </resources>

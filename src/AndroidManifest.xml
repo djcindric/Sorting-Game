@@ -13,8 +13,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <!--change activity that is initially loaded-->
         <activity
-            android:name="com.example.sortinggame.MainMenuActivity"
+            android:name="com.example.sortinggame.GameActivity" 
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,23 +25,43 @@
         </activity>
         <activity
             android:name="com.example.sortinggame.LevelActivity"
-            android:label="@string/title_activity_level" >
+            android:label="@string/title_activity_level" 
+			android:parentActivityName="com.example.sortinggame.MainMenuActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.MainMenuActivity" />
         </activity>
         <activity
-            android:name="com.example.sortinggame.GameActivity"
+            android:name="com.example.sortinggame.MainMenuActivity"
             android:label="@string/title_activity_game" >
         </activity>
         <activity
             android:name="com.example.sortinggame.CustomizerActivity"
-            android:label="@string/title_activity_customizer" >
+            android:label="@string/title_activity_customizer"
+            android:parentActivityName="com.example.sortinggame.MainManuActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.MainMenuActivity" /> 
         </activity>
         <activity
             android:name="com.example.sortinggame.AddUpdateActivity"
-            android:label="@string/title_activity_add_update" >
+            android:label="@string/title_activity_add_update" 
+  			android:parentActivityName="com.example.sortinggame.CustomizerActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.CustomizerActivity" />
         </activity>
         <activity
             android:name="com.example.sortinggame.DeleteActivity"
-            android:label="@string/title_activity_delete" >
+            android:label="@string/title_activity_delete" 
+            android:parentActivityName="com.example.sortinggame.CustomizerActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.CustomizerActivity" />
         </activity>
     </application>
 
