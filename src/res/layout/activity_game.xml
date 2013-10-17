@@ -9,16 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GameActivity" >
 
-<<<<<<< HEAD
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
         android:orientation="vertical" >
-=======
-    
->>>>>>> e75905475f4a454a98e8b0a34e4d148b8d4e4fe0
 
         <ImageView
             android:id="@+id/image1"
