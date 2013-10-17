@@ -2,8 +2,9 @@ package com.example.sortinggame;
 
 import android.app.ActionBar;
 import android.app.Activity;
-<<<<<<< HEAD
-import android.graphics.drawable.Drawable;
+import android.content.Intent;
+import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -13,14 +14,9 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-=======
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
 import android.widget.Toast;
->>>>>>> e75905475f4a454a98e8b0a34e4d148b8d4e4fe0
-
 public class GameActivity extends Activity implements OnTouchListener,
+
 		OnDragListener {
 
 	@Override
@@ -31,20 +27,27 @@ public class GameActivity extends Activity implements OnTouchListener,
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 		
+		//Start the music!!!
+		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.kalimba);
+    	clickSound.start();
+		
 		Intent intent = getIntent(); //Retrieve the intent
 		
 		//Retrieve the icon's position in the grid from the intent. 
 		//position is the integer value of the icons position in the grid
 		int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
 		
-		//Display Position for reference
-		Toast.makeText(GameActivity.this, "" + position, Toast.LENGTH_LONG).show(); 
-		
 		setContentView(R.layout.activity_game);
+		
+		//Allow drag and drop of images to categories
 		findViewById(R.id.image1).setOnTouchListener(this);
-		findViewById(R.id.top).setOnDragListener(this);
 		findViewById(R.id.image2).setOnTouchListener(this);
-		findViewById(R.id.bottom).setOnDragListener(this);
+		findViewById(R.id.image3).setOnTouchListener(this);
+		findViewById(R.id.image4).setOnTouchListener(this);
+		findViewById(R.id.category1).setOnDragListener(this);
+		findViewById(R.id.category2).setOnDragListener(this);
+		findViewById(R.id.category3).setOnDragListener(this);
+		findViewById(R.id.item_tray).setOnDragListener(this);
 	}
 
 	@Override
