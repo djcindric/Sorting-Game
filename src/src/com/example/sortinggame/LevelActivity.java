@@ -29,7 +29,7 @@ public class LevelActivity extends Activity {
 
 		//Create a grid of icons for choosing a level
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
-	    gridview.setAdapter(new ImageAdapter(this));
+	    gridview.setAdapter(new ImageAdapterLevel(this));
 
 	    //Load Game Interface when icon is clicked
 	    gridview.setOnItemClickListener(new OnItemClickListener() {

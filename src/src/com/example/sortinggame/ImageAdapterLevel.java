@@ -7,10 +7,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-public class ImageAdapter extends BaseAdapter {
+public class ImageAdapterLevel extends BaseAdapter {
     private Context mContext;
 
-    public ImageAdapter(Context c) {
+    public ImageAdapterLevel(Context c) {
         mContext = c;
     }
 
@@ -40,11 +40,6 @@ public class ImageAdapter extends BaseAdapter {
 
         imageView.setImageResource(mThumbIds[position]);
         return imageView;
-    }
-    
-    //Add a new image to the grid
-    public void addImage(String s){
-    	
     }
 
     //Store the images to be displayed on the grid

@@ -36,6 +36,8 @@ public class GameActivity extends Activity implements OnTouchListener,
 		findViewById(R.id.image2).setOnTouchListener(this);
 		findViewById(R.id.image3).setOnTouchListener(this);
 		findViewById(R.id.image4).setOnTouchListener(this);
+		findViewById(R.id.image5).setOnTouchListener(this);
+		findViewById(R.id.image6).setOnTouchListener(this);
 		findViewById(R.id.category1).setOnDragListener(this);
 		findViewById(R.id.category2).setOnDragListener(this);
 		findViewById(R.id.category3).setOnDragListener(this);
@@ -61,28 +63,38 @@ public class GameActivity extends Activity implements OnTouchListener,
 	}
 
 	@Override
-	public boolean onDrag(View v, DragEvent e) {
-		View view = (View) e.getLocalState();
+	public boolean onDrag(View v, DragEvent dragEvent) {
+		int dragAction = dragEvent.getAction();
+		View view = (View) dragEvent.getLocalState();
 		ViewGroup from = (ViewGroup) view.getParent();
-		if (e.getAction() == DragEvent.ACTION_DRAG_STARTED)
+		
+		if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
 			;
 		// do nothing
-		else if (e.getAction() == DragEvent.ACTION_DRAG_ENTERED)
+		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENTERED)
 			;
 		// do nothing
-		else if (e.getAction() == DragEvent.ACTION_DRAG_EXITED)
+		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_EXITED)
 			;
 		// do nothing
-		else if (e.getAction() == DragEvent.ACTION_DROP) {
-			// Dropped, reassign View to ViewGroup
-			from.removeView(view);
-			LinearLayout to = (LinearLayout) v;
-			to.addView(view);
-			view.setVisibility(View.VISIBLE);
+		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+			if (checkForValidMove()){
+				from.removeView(view);
+				LinearLayout to = (LinearLayout) v;
+				to.addView(view);
+				view.setVisibility(View.VISIBLE);
+			}
+			else{
+			}
+				
 		}
-		else if (e.getAction() == DragEvent.ACTION_DRAG_ENDED);
+		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED);
 			//view.setVisibility(View.VISIBLE);
 
+		return true;
+	}
+	
+	public boolean checkForValidMove(){
 		return true;
 	}
 

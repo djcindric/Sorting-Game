@@ -41,40 +41,55 @@
 	        android:orientation="horizontal">
     	</LinearLayout>
     </LinearLayout>
-	
-    <LinearLayout
-        android:id="@+id/item_tray"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight=".5"
-        android:background="#bf8e60"
-        android:layout_margin="20dp"
-        android:orientation="horizontal" 
-        android:gravity="center">
-		
-		<ImageView
-            android:id="@+id/image1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/albertosaurus" />
-		<ImageView
-            android:id="@+id/image2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/porcupine" />
-		<ImageView
-            android:id="@+id/image3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/snake" />
-        <ImageView
-            android:id="@+id/image4"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="10dp"
-            android:src="@drawable/kentrosaurus" />
-    </LinearLayout>
+	<HorizontalScrollView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="10dp" 
+	    android:background="#bf8e60">
+	    
+	    <LinearLayout
+	        android:id="@+id/item_tray"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" 
+	        android:gravity="center">
+			
+			<ImageView
+	            android:id="@+id/image1"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
+	            android:layout_margin="10dp"
+	            android:src="@drawable/albertosaurus" />
+			<ImageView
+	            android:id="@+id/image2"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
+	            android:layout_margin="10dp"
+	            android:src="@drawable/porcupine" />
+			<ImageView
+	            android:id="@+id/image3"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
+	            android:layout_margin="10dp"
+	            android:src="@drawable/snake" />
+	        <ImageView
+	            android:id="@+id/image4"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
+	            android:layout_margin="10dp"
+	            android:src="@drawable/kentrosaurus" />
+	        <ImageView
+	            android:id="@+id/image5"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
+	            android:layout_margin="10dp"
+	            android:src="@drawable/kentrosaurus" />
+	        <ImageView
+	            android:id="@+id/image6"
+	            android:layout_width="50dp"
+	            android:layout_height="50dp"
+	            android:layout_margin="10dp"
+	            android:src="@drawable/kentrosaurus" />
+	    </LinearLayout>
+	</HorizontalScrollView>
 </LinearLayout>
