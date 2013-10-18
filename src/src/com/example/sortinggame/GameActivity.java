@@ -2,8 +2,6 @@ package com.example.sortinggame;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -14,7 +12,6 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 public class GameActivity extends Activity implements OnTouchListener,
 
 		OnDragListener {
@@ -27,15 +24,10 @@ public class GameActivity extends Activity implements OnTouchListener,
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 		
-		//Start the music!!!
-		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.kalimba);
-    	clickSound.start();
+		//Intent intent = getIntent(); //Retrieve the intent
 		
-		Intent intent = getIntent(); //Retrieve the intent
-		
-		//Retrieve the icon's position in the grid from the intent. 
 		//position is the integer value of the icons position in the grid
-		int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
+		//int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
 		
 		setContentView(R.layout.activity_game);
 		
@@ -70,7 +62,6 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	@Override
 	public boolean onDrag(View v, DragEvent e) {
-		int action = e.getAction();
 		View view = (View) e.getLocalState();
 		ViewGroup from = (ViewGroup) view.getParent();
 		if (e.getAction() == DragEvent.ACTION_DRAG_STARTED)
