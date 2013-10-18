@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="80dp"
     android:paddingTop="80dp"
+    android:background="#a50b00"
     tools:context=".MainMenuActivity" >
     
     <Button 

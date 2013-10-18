@@ -3,6 +3,8 @@ package com.example.sortinggame;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
+import android.app.Activity;
+import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -16,8 +18,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
+import android.widget.LinearLayout;
 
 public class GameActivity extends Activity implements OnTouchListener,
+
 		OnDragListener {
 
 	@Override
@@ -28,20 +32,24 @@ public class GameActivity extends Activity implements OnTouchListener,
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 		
-		Intent intent = getIntent(); //Retrieve the intent
+		//Intent intent = getIntent(); //Retrieve the intent
 		
-		//Retrieve the icon's position in the grid from the intent. 
 		//position is the integer value of the icons position in the grid
-		int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
-		
-		//Display Position for reference
-		Toast.makeText(GameActivity.this, "" + position, Toast.LENGTH_LONG).show(); 
+		//int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
 		
 		setContentView(R.layout.activity_game);
+		
+		//Allow drag and drop of images to categories
 		findViewById(R.id.image1).setOnTouchListener(this);
-		findViewById(R.id.top).setOnDragListener(this);
 		findViewById(R.id.image2).setOnTouchListener(this);
-		findViewById(R.id.bottom).setOnDragListener(this);
+		findViewById(R.id.image3).setOnTouchListener(this);
+		findViewById(R.id.image4).setOnTouchListener(this);
+		findViewById(R.id.image5).setOnTouchListener(this);
+		findViewById(R.id.image6).setOnTouchListener(this);
+		findViewById(R.id.category1).setOnDragListener(this);
+		findViewById(R.id.category2).setOnDragListener(this);
+		findViewById(R.id.category3).setOnDragListener(this);
+		findViewById(R.id.item_tray).setOnDragListener(this);
 	}
 
 	@Override
@@ -63,29 +71,38 @@ public class GameActivity extends Activity implements OnTouchListener,
 	}
 
 	@Override
-	public boolean onDrag(View v, DragEvent e) {
-		int action = e.getAction();
-		View view = (View) e.getLocalState();
+	public boolean onDrag(View v, DragEvent dragEvent) {
+		int dragAction = dragEvent.getAction();
+		View view = (View) dragEvent.getLocalState();
 		ViewGroup from = (ViewGroup) view.getParent();
-		if (e.getAction() == DragEvent.ACTION_DRAG_STARTED)
+		
+		if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
 			;
 		// do nothing
-		else if (e.getAction() == DragEvent.ACTION_DRAG_ENTERED)
+		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENTERED)
 			;
 		// do nothing
-		else if (e.getAction() == DragEvent.ACTION_DRAG_EXITED)
+		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_EXITED)
 			;
 		// do nothing
-		else if (e.getAction() == DragEvent.ACTION_DROP) {
-			// Dropped, reassign View to ViewGroup
-			from.removeView(view);
-			LinearLayout to = (LinearLayout) v;
-			to.addView(view);
-			view.setVisibility(View.VISIBLE);
+		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+			if (checkForValidMove()){
+				from.removeView(view);
+				LinearLayout to = (LinearLayout) v;
+				to.addView(view);
+				view.setVisibility(View.VISIBLE);
+			}
+			else{
+			}
+				
 		}
-		else if (e.getAction() == DragEvent.ACTION_DRAG_ENDED);
+		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED);
 			//view.setVisibility(View.VISIBLE);
 
+		return true;
+	}
+	
+	public boolean checkForValidMove(){
 		return true;
 	}
 

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -28,7 +29,7 @@ public class LevelActivity extends Activity {
 
 		//Create a grid of icons for choosing a level
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
-	    gridview.setAdapter(new ImageAdapter(this));
+	    gridview.setAdapter(new ImageAdapterLevel(this));
 
 	    //Load Game Interface when icon is clicked
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -53,6 +54,8 @@ public class LevelActivity extends Activity {
     		actionBar.hide();
     		return true;
     	case android.R.id.home:
+    		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.click);
+        	clickSound.start();
     		NavUtils.navigateUpFromSameTask(this);
     		return true;
     	default:
