@@ -1,5 +1,7 @@
 package com.example.sortinggame;
 
+import java.io.IOException;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainMenuActivity extends Activity {
 
@@ -17,6 +20,15 @@ public class MainMenuActivity extends Activity {
     	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        SortingDB sortingdb = new SortingDB(this);
+        try {
+			sortingdb.createDataBase();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        sortingdb.openDataBase();
+        Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
     }
 
     @Override
