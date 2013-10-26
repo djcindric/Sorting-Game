@@ -2,8 +2,6 @@ package com.example.sortinggame;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -13,11 +11,6 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.widget.Toast;
 import android.widget.LinearLayout;
 
 public class GameActivity extends Activity implements OnTouchListener,
