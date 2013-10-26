@@ -14,7 +14,7 @@ public class MainMenuActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
     }
@@ -28,27 +28,27 @@ public class MainMenuActivity extends Activity {
     
     //Handle Presses on the Action bar
     public boolean onOptionsItemSelected(MenuItem item) {
-    	switch (item.getItemId()) {
-    	case R.id.hide_bar:
-    		ActionBar actionBar = getActionBar();
-    		actionBar.hide();
-    		return true;
-    	default:
-    		return super.onOptionsItemSelected(item);
-    	}
+            switch (item.getItemId()) {
+            case R.id.hide_bar:
+                    ActionBar actionBar = getActionBar();
+                    actionBar.hide();
+                    return true;
+            default:
+                    return super.onOptionsItemSelected(item);
+            }
     }
     
     public void loadLevelInterface(View view) {
-    	MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
-    	clickSound.start();
-    	Intent intent = new Intent(this, LevelActivity.class);
-    	startActivity(intent);
+            MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
+            clickSound.start();
+            Intent intent = new Intent(this, LevelActivity.class);
+            startActivity(intent);
     }
     
     public void loadCustomizerInterface(View view) {
-    	MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
-    	clickSound.start();
-    	Intent intent = new Intent(this, CustomizerActivity.class);
-    	startActivity(intent); 	
+            MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
+            clickSound.start();
+            Intent intent = new Intent(this, CustomizerActivity.class);
+            startActivity(intent);         
     }
 }

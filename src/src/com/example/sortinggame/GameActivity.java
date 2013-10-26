@@ -12,6 +12,7 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 public class GameActivity extends Activity implements OnTouchListener,
 
 		OnDragListener {
