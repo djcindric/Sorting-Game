@@ -53,17 +53,17 @@ public class ImageAdapterLevel extends BaseAdapter {
     
     //Gets path from database for preloaded images and finds reference id in R.java class
     private void loadImages() {
-    	Cursor test = db.query("SELECT * FROM  level", null);
+    	Cursor test = db.query("SELECT iconPath FROM  Level", null);
     	Class res = R.drawable.class;
 		Field field;
 		while(test.moveToNext()) {
 			try {
-				field = res.getField(test.getString(test.getColumnIndex("path")));
+				field = res.getField(test.getString(test.getColumnIndex("iconPath")));
 				int identifier = field.getInt(null);
 				images.add(identifier);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+				Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("iconPath")), e);
 			}
 		}
     }
