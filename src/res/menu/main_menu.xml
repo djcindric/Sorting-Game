@@ -1,15 +1,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     
+    
+    <item
+        android:id="@+id/mute"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="@string/mute"
+        android:icon="@drawable/mute_button"/>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-    
     <item
-        android:id="@+id/hide_bar"
+        android:id="@+id/orientation"
         android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/hide_bar"/>
+        android:showAsAction="never"
+        android:title="@string/orientation"/>
+    <item
+        android:id="@+id/sound"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/sound"/>
 
 </menu>

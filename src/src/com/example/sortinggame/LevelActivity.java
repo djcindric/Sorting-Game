@@ -29,7 +29,7 @@ public class LevelActivity extends Activity {
 
 		//Create a grid of icons for choosing a level
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
-	    gridview.setAdapter(new ImageAdapterLevel(this));
+	    //gridview.setAdapter(new ImageAdapterLevel(this));
 
 	    //Load Game Interface when icon is clicked
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -49,10 +49,9 @@ public class LevelActivity extends Activity {
 	//Handle clicks on the action bar
 	public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
-    	case R.id.hide_bar:
-    		ActionBar actionBar = getActionBar();
-    		actionBar.hide();
-    		return true;
+    	case R.id.mute:
+        	SoundManager.setMuted(true);
+        	return true;
     	case android.R.id.home:
     		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.click);
         	clickSound.start();
@@ -62,11 +61,6 @@ public class LevelActivity extends Activity {
     		return super.onOptionsItemSelected(item);
     	}
     }
-	
-	public void goBackToMain(View view){
-		Intent intent = new Intent(this, MainMenuActivity.class);
-    	startActivity(intent);
-	}
 	
 	//Load the game interface, and pass in the icon position
 	public void goToGameInterface(View view, int position){

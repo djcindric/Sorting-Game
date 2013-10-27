@@ -30,10 +30,9 @@ public class DeleteActivity extends Activity {
 	//Handle clicks on the action bar
 		public boolean onOptionsItemSelected(MenuItem item) {
 	    	switch (item.getItemId()) {
-	    	case R.id.hide_bar:
-	    		ActionBar actionBar = getActionBar();
-	    		actionBar.hide();
-	    		return true;
+	    	case R.id.mute:
+            	SoundManager.setMuted(true);
+            	return true;
 	    	case android.R.id.home:
 	    		NavUtils.navigateUpFromSameTask(this);
 	    		return true;
