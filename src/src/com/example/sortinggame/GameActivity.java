@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
@@ -35,6 +37,9 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		//force landscape
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		    		
 		//Hide the action bar to increase play area
 		ActionBar actionBar = getActionBar();
@@ -82,7 +87,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	@Override
 	public boolean onDrag(View v, DragEvent dragEvent) {
 		int dragAction = dragEvent.getAction();
-		View view = (View) dragEvent.getLocalState();
+		ImageView view = (ImageView) dragEvent.getLocalState();
 		ViewGroup from = (ViewGroup) view.getParent();
 		
 		if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
@@ -95,6 +100,11 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+			ImageView img = (ImageView)v;
+			Drawable copyImg = view.getDrawable();
+			img.setImageDrawable(copyImg);
+			view.setImageResource(R.drawable.albertosaurus);
+			view.setVisibility(View.VISIBLE);
 			/*
 			if (checkForValidMove()){
 				from.removeView(view);
