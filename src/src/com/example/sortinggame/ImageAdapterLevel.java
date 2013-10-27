@@ -1,21 +1,33 @@
 package com.example.sortinggame;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class ImageAdapterLevel extends BaseAdapter {
     private Context mContext;
+    private ArrayList<String> images;
+    private ArrayList<String> levels;
+    SortingDB db;
 
     public ImageAdapterLevel(Context c) {
         mContext = c;
+        db = new SortingDB(c);
+        images = new ArrayList<String>();
+        levels = new ArrayList<String>();
+        loadImages();
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return images.size();
     }
 
     public Object getItem(int position) {
@@ -24,6 +36,10 @@ public class ImageAdapterLevel extends BaseAdapter {
 
     public long getItemId(int position) {
         return 0;
+    }
+    
+    public String getLevel(int position) {
+        return levels.get(position);
     }
 
     // create a new ImageView for each item referenced by the Adapter
@@ -38,23 +54,27 @@ public class ImageAdapterLevel extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds[position]);
+        Class res = R.drawable.class;
+		Field field;
+		try {
+			field = res.getField(images.get(position));
+			int id = field.getInt(null);
+	        imageView.setImageResource(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e("MyTag", "Failure to get drawable id. Path = " + images.get(position), e);
+		}
         return imageView;
     }
+    
+    //Gets path from database for preloaded images and finds reference id in R.java class
+    private void loadImages() {
+    	Cursor test = db.query("SELECT name, iconPath FROM  Level", null);
+    	//Toast.makeText(mContext, test.getColumnNames().toString(), Toast.LENGTH_SHORT).show();
 
-    //Store the images to be displayed on the grid
-    private Integer[] mThumbIds = {
-    		//Sample images
-            R.drawable.sample_1, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-            R.drawable.sample_0, R.drawable.sample_1,
-            R.drawable.sample_2, R.drawable.sample_3,
-            R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7,
-    };
+		while(test.moveToNext()) {
+			levels.add(test.getString(test.getColumnIndex("name")));
+			images.add(test.getString(test.getColumnIndex("iconPath")));
+		}
+    }
 }

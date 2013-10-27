@@ -1,21 +1,34 @@
 package com.example.sortinggame;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.DragShadowBuilder;
+import android.view.View.OnTouchListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-public class ImageAdapterGame extends BaseAdapter {
+public class ImageAdapterGame extends BaseAdapter implements OnTouchListener {
     private Context mContext;
+    private ArrayList<Integer> images;
+    SortingDB db;
 
     public ImageAdapterGame(Context c) {
         mContext = c;
+        db = new SortingDB(c);
+        images = new ArrayList<Integer>();
+        loadImages();
     }
 
     public int getCount() {
-        return mThumbIds.length;
+        return images.size();
     }
 
     public Object getItem(int position) {
@@ -38,17 +51,35 @@ public class ImageAdapterGame extends BaseAdapter {
             imageView = (ImageView) convertView;
         }
 
-        imageView.setImageResource(mThumbIds[position]);
+        imageView.setImageResource(images.get(position));
+        imageView.setOnTouchListener(this);
         return imageView;
     }
 
-    //Store the images to be displayed on the grid
-    private Integer[] mThumbIds = {
-    		//Sample images
-            R.drawable.albertosaurus, 	R.drawable.bat3,
-            R.drawable.bear4, 			R.drawable.bee3, 
-            R.drawable.beta2,			R.drawable.black_widow, 
-            R.drawable.bunny, 			R.drawable.butterfly,
-            R.drawable.cardinal,		R.drawable.cat
-    };
+    private void loadImages() {
+    	Cursor test = db.query("SELECT path FROM  Images", null);
+    	Class res = R.drawable.class;
+		Field field;
+		while(test.moveToNext()) {
+			try {
+				field = res.getField(test.getString(test.getColumnIndex("path")));
+				int identifier = field.getInt(null);
+				images.add(identifier);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+			}
+		}
+    }
+
+	@Override
+	public boolean onTouch(View v, MotionEvent event) {
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(v);
+			v.startDrag(null, shadowBuilder, v, 0);
+			v.setVisibility(View.INVISIBLE);
+			return true;
+		} else
+			return false;
+	}
 }

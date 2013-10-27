@@ -1,10 +1,16 @@
 package com.example.sortinggame;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -13,21 +19,28 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.widget.Toast;
-import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
-public class GameActivity extends Activity implements OnTouchListener,
+public class GameActivity extends Activity implements OnTouchListener, OnDragListener {
 
-		OnDragListener {
-
+	SortingDB db;
+	private ImageView[] images;
+	private ImageView[] sortedImages;
+	private ArrayList <Integer> imagePath;
+	ImageView img;
+	TableRow imagePool;
+	String level;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		//force landscape
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		    		
 		//Hide the action bar to increase play area
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
@@ -39,17 +52,18 @@ public class GameActivity extends Activity implements OnTouchListener,
 		
 		setContentView(R.layout.activity_game);
 		
+		db = new SortingDB(this);
+		
+		Intent i = getIntent();
+		level = i.getExtras().getString(LevelActivity.LEVEL_NAME);
+        images = new ImageView[8]; 
+        sortedImages = new ImageView[24];
+        imagePath = new ArrayList<Integer>();
+		loadCategoryBackground(level);
+		loadImages();
+		
 		//Allow drag and drop of images to categories
-		findViewById(R.id.image1).setOnTouchListener(this);
-		findViewById(R.id.image2).setOnTouchListener(this);
-		findViewById(R.id.image3).setOnTouchListener(this);
-		findViewById(R.id.image4).setOnTouchListener(this);
-		findViewById(R.id.image5).setOnTouchListener(this);
-		findViewById(R.id.image6).setOnTouchListener(this);
-		findViewById(R.id.category1).setOnDragListener(this);
-		findViewById(R.id.category2).setOnDragListener(this);
-		findViewById(R.id.category3).setOnDragListener(this);
-		findViewById(R.id.item_tray).setOnDragListener(this);
+			
 	}
 
 	@Override
@@ -73,7 +87,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	@Override
 	public boolean onDrag(View v, DragEvent dragEvent) {
 		int dragAction = dragEvent.getAction();
-		View view = (View) dragEvent.getLocalState();
+		ImageView view = (ImageView) dragEvent.getLocalState();
 		ViewGroup from = (ViewGroup) view.getParent();
 		
 		if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
@@ -86,6 +100,12 @@ public class GameActivity extends Activity implements OnTouchListener,
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+			ImageView img = (ImageView)v;
+			Drawable copyImg = view.getDrawable();
+			img.setImageDrawable(copyImg);
+			view.setImageResource(R.drawable.albertosaurus);
+			view.setVisibility(View.VISIBLE);
+			/*
 			if (checkForValidMove()){
 				from.removeView(view);
 				LinearLayout to = (LinearLayout) v;
@@ -94,7 +114,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 			}
 			else{
 			}
-				
+				*/
 		}
 		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED);
 			//view.setVisibility(View.VISIBLE);
@@ -105,5 +125,51 @@ public class GameActivity extends Activity implements OnTouchListener,
 	public boolean checkForValidMove(){
 		return true;
 	}
+	
+	private void loadImages() {
+    	Cursor test = db.query("SELECT path FROM  Images", null);
+    	Class drawable = R.drawable.class;
+    	Class ids = R.id.class;
+		Field field;
+		int identifier;
+		for(int i = 0; i < sortedImages.length; i++) {
+			try {
+				test.moveToNext();
+				int x = i + 1;
+				field = ids.getField("categoryImage" + x);
+				identifier = field.getInt(null);
+				sortedImages[i] = (ImageView) findViewById(identifier);
+				sortedImages[i].setOnDragListener(this);
+				if (i < images.length){
+					field = ids.getField("imagePool" + x);
+					identifier = field.getInt(null);
+					images[i] = (ImageView) findViewById(identifier);
+					field = drawable.getField(test.getString(test.getColumnIndex("path")));
+					identifier = field.getInt(null);
+					images[i].setImageResource(identifier);
+					images[i].setOnTouchListener(this);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+			}
+		}
+    }
+	private void loadCategoryBackground(String level) {
+    	Cursor test = db.query("SELECT background FROM Level WHERE name=?", new String[]{level});
+    	Class res = R.drawable.class;
+		Field field;
+		try {
+			test.moveToNext();
+			field = res.getField(test.getString(test.getColumnIndex("background")));
+			int identifier = field.getInt(null);
+			
+			TableLayout layout = (TableLayout) findViewById(R.id.catergories);
+			layout.setBackgroundResource(identifier);
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+		}
+	}
 }
