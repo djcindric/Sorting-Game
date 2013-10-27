@@ -1,8 +1,12 @@
 package com.example.sortinggame;
 
+import java.lang.reflect.Field;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -11,16 +15,23 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
-public class GameActivity extends Activity implements OnTouchListener,
+public class GameActivity extends Activity implements OnTouchListener, OnDragListener {
 
-		OnDragListener {
-
+	SortingDB db;
+	private ImageView[] images;
+	ImageView img;
+	TableRow imagePool;
+	String level;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		    		
 		//Hide the action bar to increase play area
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
@@ -32,18 +43,19 @@ public class GameActivity extends Activity implements OnTouchListener,
 		
 		setContentView(R.layout.activity_game);
 		
+		db = new SortingDB(this);
+		
+		Intent i = getIntent();
+		level = i.getExtras().getString(LevelActivity.LEVEL_NAME);
+        images = new ImageView[24]; 
+		loadCategoryBackground(level);
+		loadImages();
+		
 		//Allow drag and drop of images to categories
-		findViewById(R.id.image1).setOnTouchListener(this);
-		findViewById(R.id.image2).setOnTouchListener(this);
-		findViewById(R.id.image3).setOnTouchListener(this);
-		findViewById(R.id.image4).setOnTouchListener(this);
-		findViewById(R.id.image5).setOnTouchListener(this);
-		findViewById(R.id.image6).setOnTouchListener(this);
 		findViewById(R.id.category1).setOnDragListener(this);
 		findViewById(R.id.category2).setOnDragListener(this);
 		findViewById(R.id.category3).setOnDragListener(this);
-		findViewById(R.id.item_tray).setOnDragListener(this);
-	}
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,5 +110,55 @@ public class GameActivity extends Activity implements OnTouchListener,
 	public boolean checkForValidMove(){
 		return true;
 	}
+	
+	private void loadImages() {
+    	Cursor test = db.query("SELECT path FROM  Images", null);
+    	Class drawable = R.drawable.class;
+    	Class ids = R.id.class;
+		Field field;
+		int identifier;
+		for(int i = 0; i < images.length; i++) {
+			try {
+				test.moveToNext();
+				int x = i + 1;
+				field = ids.getField("imagePool" + x);
+				identifier = field.getInt(null);
+				images[i] = (ImageView) findViewById(identifier);
+				field = drawable.getField(test.getString(test.getColumnIndex("path")));
+				identifier = field.getInt(null);
+				images[i].setImageResource(identifier);
+				images[i].setOnTouchListener(this);
+				/*
+				if(i % 3 == 0)
+					imagePool = (TableRow) findViewById(R.id.imagePoolRow1);
+				else if(i % 3 == 1)
+					imagePool = (TableRow) findViewById(R.id.imagePoolRow1);
+				else
+					imagePool = (TableRow) findViewById(R.id.imagePoolRow1);
+				
+					imagePool.addView(images[i]);
+					*/
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+			}
+		}
+    }
+	private void loadCategoryBackground(String level) {
+    	Cursor test = db.query("SELECT background FROM Level WHERE name=?", new String[]{level});
+    	Class res = R.drawable.class;
+		Field field;
+		try {
+			test.moveToNext();
+			field = res.getField(test.getString(test.getColumnIndex("background")));
+			int identifier = field.getInt(null);
+			
+			TableLayout layout = (TableLayout) findViewById(R.id.catergories);
+			layout.setBackgroundResource(identifier);
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+		}
+	}
 }

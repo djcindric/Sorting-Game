@@ -15,7 +15,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 
 public class LevelActivity extends Activity {
-	public final static String Icon_Position = "com.example.sortinggame.MESSAGE"; 
+	public final static String LEVEL_NAME = "com.example.sortinggame.MESSAGE";
+	ImageAdapterLevel imageAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,8 @@ public class LevelActivity extends Activity {
 
 		//Create a grid of icons for choosing a level
 	    GridView gridview = (GridView) findViewById(R.id.gridview);
-	    gridview.setAdapter(new ImageAdapterLevel(this));
+	    imageAdapter = new ImageAdapterLevel(this);
+	    gridview.setAdapter(imageAdapter);
 
 	    //Load Game Interface when icon is clicked
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
@@ -70,8 +72,9 @@ public class LevelActivity extends Activity {
 	
 	//Load the game interface, and pass in the icon position
 	public void goToGameInterface(View view, int position){
+		String level = imageAdapter.getLevel(position);
 		Intent intent = new Intent(this, GameActivity.class);
-		intent.putExtra(Icon_Position, position);
+		intent.putExtra(LEVEL_NAME, level);
     	startActivity(intent);
 	}
 }
