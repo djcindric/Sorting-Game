@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
     	android:weightSum="3"
-        android:layout_weight="2" >
+        android:layout_weight="3" >
 
         <TableRow
             android:id="@+id/category1"
@@ -205,8 +205,8 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-    	android:weightSum="3"
-        android:layout_weight="2" >
+    	android:weightSum="1"
+        android:layout_weight="1" >
 
         <TableRow
             android:id="@+id/imagePoolRow1"
@@ -269,7 +269,7 @@
                 android:src="@drawable/template" />
 
         </TableRow>
-
+<!-- 
         <TableRow
             android:id="@+id/imagePoolRow2"
             android:layout_width="wrap_content"
@@ -395,6 +395,7 @@
                 android:src="@drawable/template" />
 
         </TableRow>
+ -->
     </TableLayout>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.sortinggame;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -25,6 +27,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 
 	SortingDB db;
 	private ImageView[] images;
+	private ImageView[] sortedImages;
+	private ArrayList <Integer> imagePath;
 	ImageView img;
 	TableRow imagePool;
 	String level;
@@ -47,15 +51,15 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		
 		Intent i = getIntent();
 		level = i.getExtras().getString(LevelActivity.LEVEL_NAME);
-        images = new ImageView[24]; 
+        images = new ImageView[8]; 
+        sortedImages = new ImageView[24];
+        imagePath = new ArrayList<Integer>();
 		loadCategoryBackground(level);
 		loadImages();
 		
 		//Allow drag and drop of images to categories
-		findViewById(R.id.category1).setOnDragListener(this);
-		findViewById(R.id.category2).setOnDragListener(this);
-		findViewById(R.id.category3).setOnDragListener(this);
-		}
+			
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,6 +95,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
+			/*
 			if (checkForValidMove()){
 				from.removeView(view);
 				LinearLayout to = (LinearLayout) v;
@@ -99,7 +104,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			}
 			else{
 			}
-				
+				*/
 		}
 		else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED);
 			//view.setVisibility(View.VISIBLE);
@@ -117,27 +122,23 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
     	Class ids = R.id.class;
 		Field field;
 		int identifier;
-		for(int i = 0; i < images.length; i++) {
+		for(int i = 0; i < sortedImages.length; i++) {
 			try {
 				test.moveToNext();
 				int x = i + 1;
-				field = ids.getField("imagePool" + x);
+				field = ids.getField("categoryImage" + x);
 				identifier = field.getInt(null);
-				images[i] = (ImageView) findViewById(identifier);
-				field = drawable.getField(test.getString(test.getColumnIndex("path")));
-				identifier = field.getInt(null);
-				images[i].setImageResource(identifier);
-				images[i].setOnTouchListener(this);
-				/*
-				if(i % 3 == 0)
-					imagePool = (TableRow) findViewById(R.id.imagePoolRow1);
-				else if(i % 3 == 1)
-					imagePool = (TableRow) findViewById(R.id.imagePoolRow1);
-				else
-					imagePool = (TableRow) findViewById(R.id.imagePoolRow1);
-				
-					imagePool.addView(images[i]);
-					*/
+				sortedImages[i] = (ImageView) findViewById(identifier);
+				sortedImages[i].setOnDragListener(this);
+				if (i < images.length){
+					field = ids.getField("imagePool" + x);
+					identifier = field.getInt(null);
+					images[i] = (ImageView) findViewById(identifier);
+					field = drawable.getField(test.getString(test.getColumnIndex("path")));
+					identifier = field.getInt(null);
+					images[i].setImageResource(identifier);
+					images[i].setOnTouchListener(this);
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e("MyTag", "Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
