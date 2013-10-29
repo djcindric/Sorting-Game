@@ -29,7 +29,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 
 	SortingDB db;
 	private ImageView[] images;
-	private ImageView[] sortedImages;
+	//private ImageView[] sortedImages;
 	private ArrayList <Integer> imagePath;
 	ImageView img;
 	TableRow imagePool;
@@ -57,12 +57,15 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		Intent i = getIntent();
 		level = i.getExtras().getString(LevelActivity.LEVEL_NAME);
         images = new ImageView[8]; 
-        sortedImages = new ImageView[24];
+        //sortedImages = new ImageView[24];
         imagePath = new ArrayList<Integer>();
 		loadCategoryBackground(level);
 		loadImages();
 		
 		//Allow drag and drop of images to categories
+		(findViewById(R.id.category1)).setOnDragListener(this);
+		(findViewById(R.id.category2)).setOnDragListener(this);
+		(findViewById(R.id.category3)).setOnDragListener(this);
 			
 	}
 
@@ -100,9 +103,12 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
-			ImageView img = (ImageView)v;
+			LinearLayout category = (LinearLayout)v;
+			ImageView img = new ImageView(this);
+			img.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			Drawable copyImg = view.getDrawable();
 			img.setImageDrawable(copyImg);
+			category.addView(img);
 			view.setImageResource(R.drawable.albertosaurus);
 			view.setVisibility(View.VISIBLE);
 			/*
@@ -132,14 +138,14 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
     	Class ids = R.id.class;
 		Field field;
 		int identifier;
-		for(int i = 0; i < sortedImages.length; i++) {
+		for(int i = 0; i < images.length; i++) {
 			try {
 				test.moveToNext();
 				int x = i + 1;
-				field = ids.getField("categoryImage" + x);
-				identifier = field.getInt(null);
-				sortedImages[i] = (ImageView) findViewById(identifier);
-				sortedImages[i].setOnDragListener(this);
+				//field = ids.getField("categoryImage" + x);
+				//identifier = field.getInt(null);
+				//sortedImages[i] = (ImageView) findViewById(identifier);
+				//sortedImages[i].setOnDragListener(this);
 				if (i < images.length){
 					field = ids.getField("imagePool" + x);
 					identifier = field.getInt(null);
@@ -164,7 +170,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			field = res.getField(test.getString(test.getColumnIndex("background")));
 			int identifier = field.getInt(null);
 			
-			TableLayout layout = (TableLayout) findViewById(R.id.catergories);
+			LinearLayout layout = (LinearLayout) findViewById(R.id.categories);
 			layout.setBackgroundResource(identifier);
 
 		} catch (Exception e) {
