@@ -3,8 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    tools:context=".GameActivity" >
-
+    tools:context=".GameActivity"
+    android:weightSum="4" >
+<!-- 
      <TableLayout
         android:id="@+id/catergories"
         android:layout_width="match_parent"
@@ -201,6 +202,59 @@
 
         </TableRow>
     </TableLayout>
+ -->
+
+    <LinearLayout
+        android:id="@+id/categories"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical" 
+        android:layout_weight="3"
+        android:weightSum="3" >
+
+        <LinearLayout
+            android:id="@+id/category1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" 
+            android:layout_weight="1">
+            
+            <ImageView
+                android:id="@+id/categoryImage1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/template" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/category2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1" >
+            
+            <ImageView
+                android:id="@+id/categoryImage2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/template" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/category3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1" >
+            
+            <ImageView
+                android:id="@+id/categoryImage3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/template" />
+        </LinearLayout>
+
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
@@ -270,131 +324,7 @@
 
         </TableRow>
 <!-- 
-        <TableRow
-            android:id="@+id/imagePoolRow2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
-            android:layout_weight="1"
-            android:weightSum="8" >
-
-           <ImageView
-                android:id="@+id/imagePool9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/imagePool10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/imagePool11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/imagePool12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/imagePool13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/imagePool14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/imagePool15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-
-            <ImageView
-                android:id="@+id/imagePool16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/imagePoolRow3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:weightSum="8" >
-
-            <ImageView
-                android:id="@+id/imagePool17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/imagePool18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/imagePool19"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/imagePool20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/imagePool21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/imagePool22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/imagePool23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-
-            <ImageView
-                android:id="@+id/imagePool24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-        </TableRow>
+        
  -->
     </TableLayout>
 
