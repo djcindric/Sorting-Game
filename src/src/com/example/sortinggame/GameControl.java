@@ -2,7 +2,6 @@ package com.example.sortinggame;
 
 import android.content.Context;
 import android.database.Cursor;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,6 +12,9 @@ public class GameControl {
 	private Image[] images;
 	private Image[] categorySymbols;
 	private int imagesSorted;
+	private int categoryOneSorted;
+	private int categoryTwoSorted;
+	private int categoryThreeSorted;
 	
 	
 	public GameControl(Context mContext,  String l)
@@ -23,6 +25,9 @@ public class GameControl {
 		images = new Image[24];
 		categorySymbols = new Image[3];
 		imagesSorted = 0;
+		categoryOneSorted = 0;
+		categoryTwoSorted = 0;
+		categoryThreeSorted = 0;
 		
 		loadLevel(l);
 		loadCategories();
@@ -62,17 +67,20 @@ public class GameControl {
 		//randomized images
 		for (int i = 0; i < images.length; i++) {
 			imageLoaded = false;
+			int row;
 			while (imageLoaded == false) {
 				query.moveToFirst();
-				int row = rand.nextInt(query.getCount());
+				row = rand.nextInt(query.getCount());
 				query.move(row);
 				
 				//checks to see if row has already been used
 				for(int x = 0; x < usedImages.size(); x++) {
 					if(row != usedImages.get(x))
 						addImage = true;
-					else
+					else {
 						addImage = false;
+						break;
+					}
 				}
 				
 				if(addImage == true) {
@@ -122,8 +130,10 @@ public class GameControl {
 				for(int x = 0; x < usedImages.size(); x++) {
 					if(row != usedImages.get(x))
 						addImage = true;
-					else
+					else {
 						addImage = false;
+						break;
+					}
 				}
 				
 				if(addImage == true) {
@@ -158,9 +168,23 @@ public class GameControl {
 		}
 	}
 	
-	public boolean checkMove(String viewTag) {
+	public boolean checkForValidMove(String dragCategory, String imageCategory) {
+		if(dragCategory.equals(imageCategory)) {
+			update(imageCategory);
+			return true;	
+		}
+		return false;
+	}
+	
+	private void update(String category) {
+		imagesSorted++;
 		
-		return false;	
+		if(categories[0].getName().equals(category))
+			categoryOneSorted++;
+		else if(categories[1].getName().equals(category))
+			categoryTwoSorted++;
+		else
+			categoryThreeSorted++;
 	}
 
 	public Level getLevel() {
@@ -173,8 +197,8 @@ public class GameControl {
 	}
 
 
-	public Category[] getCategories() {
-		return categories;
+	public Category getCategory(int index) {
+		return categories[index];
 	}
 
 
@@ -207,7 +231,30 @@ public class GameControl {
 	}
 	
 	public Image getNextImage() {
-		return images[imagesSorted + 8];
+		return images[imagesSorted + 7];
 	}
-	
+
+	public int getCategoryOneSorted() {
+		return categoryOneSorted;
+	}
+
+	public void setCategoryOneSorted(int categoryOneSorted) {
+		this.categoryOneSorted = categoryOneSorted;
+	}
+
+	public int getCategoryTwoSorted() {
+		return categoryTwoSorted;
+	}
+
+	public void setCategoryTwoSorted(int categoryTwoSorted) {
+		this.categoryTwoSorted = categoryTwoSorted;
+	}
+
+	public int getCategoryThreeSorted() {
+		return categoryThreeSorted;
+	}
+
+	public void setCategoryThreeSorted(int categoryThreeSorted) {
+		this.categoryThreeSorted = categoryThreeSorted;
+	}
 }

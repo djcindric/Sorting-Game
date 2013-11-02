@@ -2,228 +2,262 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    tools:context=".GameActivity"
-    android:weightSum="4" >
-<!-- 
-     <TableLayout
-        android:id="@+id/catergories"
+    android:orientation="vertical"
+    android:weightSum="4"
+    tools:context=".GameActivity" >
+
+    <TableLayout
+        android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-    	android:weightSum="3"
-        android:layout_weight="3" >
+        android:layout_weight="3"
+        android:weightSum="3" >
 
         <TableRow
             android:id="@+id/category1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:weightSum="8" >
+            android:weightSum="9" >
 
             <ImageView
                 android:id="@+id/categoryImage1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage7"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
+            <ImageView
+                android:id="@+id/categoryImage5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+
+            <ImageView
+                android:id="@+id/categoryImage6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+
+            <ImageView
+                android:id="@+id/categoryImage7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage8"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
-
+            
+                <ImageView
+                android:id="@+id/categoryImage9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
         </TableRow>
 
         <TableRow
             android:id="@+id/category2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:weightSum="8" >
-
-           <ImageView
-                android:id="@+id/categoryImage9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
+            android:weightSum="9" >
+       
             <ImageView
                 android:id="@+id/categoryImage10"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage11"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage15"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
+            <ImageView
+                android:id="@+id/categoryImage13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+
+            <ImageView
+                android:id="@+id/categoryImage14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+
+            <ImageView
+                android:id="@+id/categoryImage15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage16"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
-
+            
+            <ImageView
+                android:id="@+id/categoryImage17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
+            <ImageView
+                android:id="@+id/categoryImage18"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
         </TableRow>
 
         <TableRow
             android:id="@+id/category3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:weightSum="8" >
-
-            <ImageView
-                android:id="@+id/categoryImage17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-
-            <ImageView
-                android:id="@+id/categoryImage18"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
+            android:weightSum="9" >
 
             <ImageView
                 android:id="@+id/categoryImage19"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage20"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/template" />
-            <ImageView
-                android:id="@+id/categoryImage23"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
+            <ImageView
+                android:id="@+id/categoryImage21"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+
+            <ImageView
+                android:id="@+id/categoryImage22"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+
+            <ImageView
+                android:id="@+id/categoryImage23"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/categoryImage24"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
-
+            
+            <ImageView
+                android:id="@+id/categoryImage24"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
+            <ImageView
+                android:id="@+id/categoryImage25"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
+            <ImageView
+                android:id="@+id/categoryImage26"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
+            <ImageView
+                android:id="@+id/categoryImage27"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/template" />
+            
         </TableRow>
     </TableLayout>
- -->
-
+<!-- 
     <LinearLayout
         android:id="@+id/categories"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical" 
         android:layout_weight="3"
+        android:orientation="vertical"
         android:weightSum="3" >
 
         <LinearLayout
             android:id="@+id/category1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" 
-            android:layout_weight="1" 
-            android:tag="catergory1" >
-            
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="9" >
+
             <ImageView
                 android:id="@+id/categoryImage1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/template" />
         </LinearLayout>
 
@@ -231,14 +265,15 @@
             android:id="@+id/category2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_weight="1"
-            android:tag="catergory1" >
-            
+            android:orientation="horizontal"
+            android:weightSum="9" >
+
             <ImageView
                 android:id="@+id/categoryImage2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/template" />
         </LinearLayout>
 
@@ -246,24 +281,24 @@
             android:id="@+id/category3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_weight="1"
-            android:tag="catergory1" >
-            
+            android:orientation="horizontal"
+            android:weightSum="9" >
+
             <ImageView
                 android:id="@+id/categoryImage3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:src="@drawable/template" />
         </LinearLayout>
-
     </LinearLayout>
-
+-->
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-    	android:weightSum="1"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:weightSum="1" >
 
         <TableRow
             android:id="@+id/imagePoolRow1"
@@ -274,61 +309,61 @@
 
             <ImageView
                 android:id="@+id/imagePool1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/imagePool2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/imagePool3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/imagePool4"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
+
             <ImageView
                 android:id="@+id/imagePool5"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
+
             <ImageView
                 android:id="@+id/imagePool6"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
+
             <ImageView
                 android:id="@+id/imagePool7"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
 
             <ImageView
                 android:id="@+id/imagePool8"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/template" />
-
         </TableRow>
-<!-- 
-        
- -->
+        <!--  -->
     </TableLayout>
 
 </LinearLayout>
