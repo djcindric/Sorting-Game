@@ -2,8 +2,8 @@ package com.example.sortinggame;
 
 public class Level
 {
-	public String name,icon,background;
-	public boolean isPreLoaded;
+	private String name,icon,background;
+	private boolean isPreLoaded;
 	
 	public Level(String lName, String iName, String bName, boolean pload)
 	{
@@ -35,4 +35,17 @@ public class Level
 	{
 		return icon;
 	}
+	public String getBackground() {
+		return background;
+	}
+	public void setBackground(String background) {
+		this.background = background;
+	}
+	public boolean isPreLoaded() {
+		return isPreLoaded;
+	}
+	public void setPreLoaded(boolean isPreLoaded) {
+		this.isPreLoaded = isPreLoaded;
+	}
+	
 }
