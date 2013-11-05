@@ -20,7 +20,9 @@ public class LevelActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
+		// force landscape
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_level);
 		
