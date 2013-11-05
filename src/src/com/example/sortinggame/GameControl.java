@@ -170,13 +170,13 @@ public class GameControl {
 	
 	public boolean checkForValidMove(String dragCategory, String imageCategory) {
 		if(dragCategory.equals(imageCategory)) {
-			update(imageCategory);
 			return true;	
 		}
-		return false;
+		else
+			return false;
 	}
 	
-	private void update(String category) {
+	public void update(String category) {
 		imagesSorted++;
 		
 		if(categories[0].getName().equals(category))
@@ -185,6 +185,14 @@ public class GameControl {
 			categoryTwoSorted++;
 		else
 			categoryThreeSorted++;
+	}
+	
+	public boolean checkForWin() {
+		if(imagesSorted == 24) {
+			return true;	
+		}
+		else
+			return false;
 	}
 
 	public Level getLevel() {

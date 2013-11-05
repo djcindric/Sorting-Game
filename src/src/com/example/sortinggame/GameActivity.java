@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnDragListener {
@@ -145,6 +146,9 @@ public class GameActivity extends Activity implements OnTouchListener,
 				int row = 0;
 				String imageCategory = (String) view.getTag();
 				
+				//updates number of sorted images
+				game.update(imageCategory);
+				
 				if(imageCategory.equals(game.getCategory(0).getName()))
 					row = game.getCategoryOneSorted();
 				else if(imageCategory.equals(game.getCategory(1).getName()))
@@ -162,6 +166,11 @@ public class GameActivity extends Activity implements OnTouchListener,
 					view.setImageBitmap(getBitmap(game.getNextImage().getPath(), game.getNextImage().isPreloaded(), view));
 					view.setTag(game.getNextImage().getCatName());
 					view.setVisibility(View.VISIBLE);
+				}
+				
+				if(game.checkForWin()) {
+					Toast toast = Toast.makeText(this, "You Win", Toast.LENGTH_LONG);
+					toast.show();
 				}
 			}
 			else
