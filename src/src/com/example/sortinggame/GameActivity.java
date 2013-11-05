@@ -37,6 +37,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	TableRow imagePool;
 	String level;
 	GameControl game;
+	private boolean initializeImages;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,34 +76,39 @@ public class GameActivity extends Activity implements OnTouchListener,
 		category2.setTag(game.getCategory(1).getName());
 		category3.setTag(game.getCategory(2).getName());
 
+		initializeImages = true;
 	}
 	
 	//loads images after onCreate is done
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus){
-		loadCategoryBackground(level);
-		loadImages();
-
-		// Allow drag and drop of images to categories
-		TableRow category1 = (TableRow)(findViewById(R.id.category1));
-		TableRow category2 = (TableRow)(findViewById(R.id.category2));
-		TableRow category3 = (TableRow)(findViewById(R.id.category3));
-		category1.setOnDragListener(this);
-		category2.setOnDragListener(this);
-		category3.setOnDragListener(this);
-		
-		//loads category symbols
-		ImageView symbol1 = (ImageView)(findViewById(R.id.categoryImage1));
-		ImageView symbol2 = (ImageView)(findViewById(R.id.categoryImage10));
-		ImageView symbol3 = (ImageView)(findViewById(R.id.categoryImage19));
-		
-		Bitmap bmap1 = getBitmap(game.getCategorySymbols(0).getPath(), game.getCategorySymbols(0).isPreloaded(), symbol1);
-		Bitmap bmap2 = getBitmap(game.getCategorySymbols(1).getPath(), game.getCategorySymbols(1).isPreloaded(), symbol2);
-		Bitmap bmap3 = getBitmap(game.getCategorySymbols(2).getPath(), game.getCategorySymbols(2).isPreloaded(), symbol3);
-		
-		symbol1.setImageBitmap(bmap1);
-		symbol2.setImageBitmap(bmap2);
-		symbol3.setImageBitmap(bmap3);
+		if(initializeImages) {
+			loadCategoryBackground(level);
+			loadImages();
+	
+			// Allow drag and drop of images to categories
+			TableRow category1 = (TableRow)(findViewById(R.id.category1));
+			TableRow category2 = (TableRow)(findViewById(R.id.category2));
+			TableRow category3 = (TableRow)(findViewById(R.id.category3));
+			category1.setOnDragListener(this);
+			category2.setOnDragListener(this);
+			category3.setOnDragListener(this);
+			
+			//loads category symbols
+			ImageView symbol1 = (ImageView)(findViewById(R.id.categoryImage1));
+			ImageView symbol2 = (ImageView)(findViewById(R.id.categoryImage10));
+			ImageView symbol3 = (ImageView)(findViewById(R.id.categoryImage19));
+			
+			Bitmap bmap1 = getBitmap(game.getCategorySymbols(0).getPath(), game.getCategorySymbols(0).isPreloaded(), symbol1);
+			Bitmap bmap2 = getBitmap(game.getCategorySymbols(1).getPath(), game.getCategorySymbols(1).isPreloaded(), symbol2);
+			Bitmap bmap3 = getBitmap(game.getCategorySymbols(2).getPath(), game.getCategorySymbols(2).isPreloaded(), symbol3);
+			
+			symbol1.setImageBitmap(bmap1);
+			symbol2.setImageBitmap(bmap2);
+			symbol3.setImageBitmap(bmap3);
+			
+			initializeImages = false;
+		}
 	}
 
 	@Override
@@ -169,7 +175,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 				}
 				
 				if(game.checkForWin()) {
-					Toast toast = Toast.makeText(this, "You Win", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(this, "Congratulations, You Win", Toast.LENGTH_LONG);
 					toast.show();
 				}
 			}
@@ -269,7 +275,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 		}
 	}
 	
-	//scales image down if it need to
+	//scales image down if it needs to
 	public static int calculateInSampleSize(
 	    BitmapFactory.Options options, int reqWidth, int reqHeight) {
 	    // Raw height and width of image
