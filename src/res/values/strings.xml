@@ -16,5 +16,8 @@
     <string name="choose_delete">Delete a existing level</string>
     <string name="hide_bar">Hide</string>
     <string name="back_arrow">Test</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_delete_level">Are you sure you would like to delete the level?</string>
+    <string name="dialog_confirm">Yes</string>
 
 </resources>
