@@ -16,5 +16,15 @@
     <string name="choose_delete">Delete a existing level</string>
     <string name="hide_bar">Hide</string>
     <string name="back_arrow">Test</string>
+    <string name="add_level">Create New Level</string>
+    <string name="cancel">Cancel</string>
+    <string name="addupdate_header">Choose a level to update or create a new level</string>
+    <string name="leveltext">Level Name</string>
+    <string name="categorytext">Categories</string>
+    <string name="add_icon">Icon</string>
+    <string name="add_background">Background</string>
+    <string name ="cat_message">Put the categories in the order you want them to appear.</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
 
 </resources>
