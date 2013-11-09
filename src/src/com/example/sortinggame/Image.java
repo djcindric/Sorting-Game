@@ -2,26 +2,24 @@ package com.example.sortinggame;
 
 public class Image 
 {
-	private String imgpath, view, cat;
-	private int isPreloaded;
+	private String imgpath;
+	private int category, isPreloaded;
 	
-	public Image(String path, String catName, int preloaded)
+	public Image(String path, int catName, int preloaded)
 	{
 		this.imgpath = path;
-		this.cat = catName;
+		this.category = catName;
 		this.isPreloaded = preloaded;
 	}
-	public Image(String path, String catName, String view)
+	public Image(String path, int catName)
 	{
 		this.imgpath = path;
-		this.cat = catName;
-		this.view = view;
+		this.category = catName;
 	}
 	public Image() {
 		this.imgpath = null;
-		this.cat = null;
-		this.view = null;
-		this.isPreloaded = 0;
+		this.category = -1;
+		this.isPreloaded = -1;
 	}
 	public void setPath(String path)
 	{
@@ -31,23 +29,15 @@ public class Image
 	{
 		return imgpath;
 	}
-	public void setCatName(String catName)
+	public void setCatName(int catName)
 	{
-		this.cat = catName;
+		this.category = catName;
 	}
-	public String getCatName()
+	public int getCatName()
 	{
-		return cat;
+		return category;
 	}
 	
-	public void setView(String imgview)
-	{
-		this.view = imgview;
-	}
-	public String getView()
-	{
-		return view;
-	}
 	public int isPreloaded() {
 		return isPreloaded;
 	}
