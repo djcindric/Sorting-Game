@@ -145,19 +145,19 @@ public class GameActivity extends Activity implements OnTouchListener,
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
-			if(game.checkForValidMove((String) v.getTag(), (String) view.getTag())) {
+			if(game.checkForValidMove((Integer) v.getTag(), (Integer) view.getTag())) {
 				TableRow category = (TableRow) v;
 				
 				//gets the next column to put the image in
 				int row = 0;
-				String imageCategory = (String) view.getTag();
+				int imageCategory = (Integer) view.getTag();
 				
 				//updates number of sorted images
 				game.update(imageCategory);
 				
-				if(imageCategory.equals(game.getCategory(0).getName()))
+				if(imageCategory == game.getCategory(0).getName())
 					row = game.getCategoryOneSorted();
-				else if(imageCategory.equals(game.getCategory(1).getName()))
+				else if(imageCategory == game.getCategory(1).getName())
 					row = game.getCategoryTwoSorted();
 				else
 					row = game.getCategoryThreeSorted();
