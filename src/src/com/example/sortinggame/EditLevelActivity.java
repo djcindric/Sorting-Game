@@ -55,6 +55,11 @@ public class EditLevelActivity extends Activity {
 		}
 	}
 	
+	public void loadAddUpdateInterface(View view) {
+		Intent intent = new Intent(this, AddUpdateActivity.class);
+		startActivity(intent);
+	}
+	
 	public void loadEditCategoryInterface(View view) {
 		Intent intent = new Intent(this, EditCategoryActivity.class);
 		startActivity(intent);

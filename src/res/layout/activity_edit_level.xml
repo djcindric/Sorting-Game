@@ -106,4 +106,15 @@
         android:text="@string/next" 
         android:onClick="loadEditCategoryInterface"/>
 
+    <Button
+        android:id="@+id/cancel"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/next"
+        android:layout_alignBottom="@+id/next"
+        android:layout_alignLeft="@+id/textCategories"
+        android:text="@string/cancel" 
+        android:onClick="loadAddUpdateInterface"/>
+
 </RelativeLayout>

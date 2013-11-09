@@ -16,7 +16,7 @@ public class EditCategoryActivity extends Activity{
 
 	protected void onCreate(Bundle savedInstanceState) {
 
-		// Prevent screen into landscape
+		// Forces Screen into landscape
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		super.onCreate(savedInstanceState);
@@ -47,6 +47,20 @@ public class EditCategoryActivity extends Activity{
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void loadEditLevelInterface(View view) {
+		Intent intent = new Intent(this, EditLevelActivity.class);
+		startActivity(intent);
+	}
+	
+	public void chooseFromGallery(View view){
+		Intent intent = new Intent();
+		// View  the gallery
+		intent.setAction(Intent.ACTION_VIEW);
+		intent.setData(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+		// Start the activity
+		startActivity(intent);
 	}
 
 }
