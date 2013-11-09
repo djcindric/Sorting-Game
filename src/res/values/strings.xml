@@ -12,7 +12,8 @@
     <string name="choose_level_menu">Choose Level</string>
     <string name="customizer">Customize Level</string>
     <string name="choose_level">Choose the level you would like to play.\nList of levels to play will go here.</string>
-    <string name="choose_addupdate">Add or update a level</string>
+    <string name="choose_add">Add a level</string>
+    <string name="choose_update">Update a level</string>
     <string name="choose_delete">Delete a existing level</string>
     <string name="hide_bar">Hide</string>
     <string name="back_arrow">Test</string>
