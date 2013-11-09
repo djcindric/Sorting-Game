@@ -2,42 +2,47 @@ package com.example.sortinggame;
 
 public class Image 
 {
-public String imgpath, view, cat;
+	private String imgpath;
+	private int category, isPreloaded;
 	
-	public Image(String path, Category catName)
-	{
-		this.imgpath = "/drawable/"+ path;
-		this.cat = catName.name;
-	}
-	public Image(String path, Category catName, String view)
+	public Image(String path, int catName, int preloaded)
 	{
 		this.imgpath = path;
-		this.cat = catName.name;
-		this.view = view;
+		this.category = catName;
+		this.isPreloaded = preloaded;
+	}
+	public Image(String path, int catName)
+	{
+		this.imgpath = path;
+		this.category = catName;
+	}
+	public Image() {
+		this.imgpath = null;
+		this.category = -1;
+		this.isPreloaded = -1;
 	}
 	public void setPath(String path)
 	{
-		this.imgpath = "/drawable/"+ path;
+		this.imgpath = path;
 	}
 	public String getPath()
 	{
 		return imgpath;
 	}
-	public void setCatName(String catName)
+	public void setCatName(int catName)
 	{
-		this.cat = catName;
+		this.category = catName;
 	}
-	public String getCatName()
+	public int getCatName()
 	{
-		return cat;
+		return category;
 	}
 	
-	public void setView(String imgview)
-	{
-		this.view = imgview;
+	public int isPreloaded() {
+		return isPreloaded;
 	}
-	public String getView()
-	{
-		return view;
+	public void setPreloaded(int isPreloaded) {
+		this.isPreloaded = isPreloaded;
 	}
+	
 }
