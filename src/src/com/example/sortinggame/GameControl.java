@@ -205,7 +205,7 @@ public class GameControl {
 		
 	}
 	
-	public boolean checkForValidMove(Integer dragCategory, Integer imageCategory) {
+	public boolean checkForValidMove(int dragCategory, int imageCategory) {
 		if(dragCategory == imageCategory) {
 			return true;	
 		}

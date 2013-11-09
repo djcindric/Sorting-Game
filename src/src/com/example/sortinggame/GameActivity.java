@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -60,8 +61,43 @@ public class GameActivity extends Activity implements OnTouchListener,
 		Intent i = getIntent();
 		level = i.getExtras().getString(LevelActivity.LEVEL_NAME);
 
-		game = new GameControl(this, level);
-		db = new SortingDB(this);
+
+        // Need handler for callbacks to the UI thread
+        final Handler mHandler = new Handler();
+
+     // Create runnable for posting
+        final Runnable mUpdateResults = new Runnable() {
+            public void run() {
+            	images = new ImageView[8];
+        		// sortedImages = new ImageView[24];
+        		imagePath = new ArrayList<Integer>();
+        		
+        		TableRow category1 = (TableRow)(findViewById(R.id.category1));
+        		TableRow category2 = (TableRow)(findViewById(R.id.category2));
+        		TableRow category3 = (TableRow)(findViewById(R.id.category3));
+        		
+        		//sets tags for each category
+        		category1.setTag(game.getCategory(0).getName());
+        		category2.setTag(game.getCategory(1).getName());
+        		category3.setTag(game.getCategory(2).getName());
+
+        		initializeImages = true;
+            }
+        };
+        
+		Thread t = new Thread() {
+            public void run() {
+            	game = new GameControl(getApplicationContext(), level);
+        		db = new SortingDB(getApplicationContext());
+        		mHandler.post(mUpdateResults);
+            }
+        };
+        t.start();
+
+        
+/*
+		//game = new GameControl(this, level);
+		//db = new SortingDB(this);
 
 		images = new ImageView[8];
 		// sortedImages = new ImageView[24];
@@ -77,6 +113,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 		category3.setTag(game.getCategory(2).getName());
 
 		initializeImages = true;
+		*/
 	}
 	
 	//loads images after onCreate is done
