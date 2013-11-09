@@ -1,9 +1,12 @@
 package com.example.sortinggame;
 
-import android.content.Context;
-import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.Random;
+
+import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.database.Cursor;
+import android.widget.ImageView;
 
 public class GameControl {
 	private SortingDB db;
@@ -265,4 +268,5 @@ public class GameControl {
 	public void setCategoryThreeSorted(int categoryThreeSorted) {
 		this.categoryThreeSorted = categoryThreeSorted;
 	}
+	
 }

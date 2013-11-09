@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Random;
 
+import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,8 +25,10 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnDragListener {
@@ -304,12 +308,88 @@ public class GameActivity extends Activity implements OnTouchListener,
 		//Start Game win sound
 		SoundManager.playMusic(2);
 		//Stay in the activity until sound has ended
-		while(SoundManager.players[2].isPlaying() == true){}
+		//while(SoundManager.players[2].isPlaying() == true){}
 		
 		Random r = new Random();
-		int winSelection = r.nextInt(5);
+		int winSelection = r.nextInt(3);
+		
+		if(winSelection==0){
+		gameWinAnimationImages();
+		}
+		if(winSelection==1){
+		gameWinAnimationRows();
+		}
+		if(winSelection>1){
 		Intent intent = new Intent(this, GameWinActivity.class);
 		intent.putExtra(EXTRA_MESSAGE, winSelection);
 		startActivity(intent);
+		}
+	}
+	public void gameWinAnimationImages(){
+		ImageView[] Images = new ImageView[27];
+		ObjectAnimator[] Anims = new ObjectAnimator[28];
+		Images[0] = (ImageView) this.findViewById(R.id.categoryImage1);
+		Images[1] = (ImageView) this.findViewById(R.id.categoryImage2);
+		Images[2] = (ImageView) this.findViewById(R.id.categoryImage3);
+		Images[3] = (ImageView) this.findViewById(R.id.categoryImage4);
+		Images[4] = (ImageView) this.findViewById(R.id.categoryImage5);
+		Images[5] = (ImageView) this.findViewById(R.id.categoryImage6);
+		Images[6] = (ImageView) this.findViewById(R.id.categoryImage7);
+		Images[7] = (ImageView) this.findViewById(R.id.categoryImage8);
+		Images[8] = (ImageView) this.findViewById(R.id.categoryImage9);
+		Images[9] = (ImageView) this.findViewById(R.id.categoryImage10);
+		Images[10] = (ImageView) this.findViewById(R.id.categoryImage11);
+		Images[11] = (ImageView) this.findViewById(R.id.categoryImage12);
+		Images[12] = (ImageView) this.findViewById(R.id.categoryImage13);
+		Images[13] = (ImageView) this.findViewById(R.id.categoryImage14);
+		Images[14] = (ImageView) this.findViewById(R.id.categoryImage15);
+		Images[15] = (ImageView) this.findViewById(R.id.categoryImage16);
+		Images[16] = (ImageView) this.findViewById(R.id.categoryImage17);
+		Images[17] = (ImageView) this.findViewById(R.id.categoryImage18);
+		Images[18] = (ImageView) this.findViewById(R.id.categoryImage19);
+		Images[19] = (ImageView) this.findViewById(R.id.categoryImage20);
+		Images[20] = (ImageView) this.findViewById(R.id.categoryImage21);
+		Images[21] = (ImageView) this.findViewById(R.id.categoryImage22);
+		Images[22] = (ImageView) this.findViewById(R.id.categoryImage23);
+		Images[23] = (ImageView) this.findViewById(R.id.categoryImage24);
+		Images[24] = (ImageView) this.findViewById(R.id.categoryImage25);
+		Images[25] = (ImageView) this.findViewById(R.id.categoryImage26);
+		Images[26] = (ImageView) this.findViewById(R.id.categoryImage27);
+		
+		
+		for(int i = 0; i < Images.length; i++){
+			Anims[i] = ObjectAnimator.ofFloat(Images[i], "translationY", 100f);
+			Anims[i].setDuration(1000);
+			Anims[i].start();
+		}
+		
+	}
+	public void gameWinAnimationRows(){
+		TextView textView = new TextView(this);
+		textView.setTextSize(40);
+		textView.setText("You Win!");
+		textView.setGravity(Gravity.CENTER);
+		
+		LinearLayout gameScreen = (LinearLayout)this.findViewById(R.id.gameScreen);
+		
+		ObjectAnimator winning = ObjectAnimator.ofFloat(gameScreen, "rotation", 0f, 360f);
+		winning.setDuration(2000);
+		winning.start();
+		
+		TableRow row1 = (TableRow) this.findViewById(R.id.category1);
+		TableRow row2 = (TableRow) this.findViewById(R.id.category2);
+		TableRow row3 = (TableRow) this.findViewById(R.id.category3);
+		ObjectAnimator rows1 = ObjectAnimator.ofFloat(row1, "translationY", 400f);
+		ObjectAnimator rows2 = ObjectAnimator.ofFloat(row2, "translationY", 400f);
+		ObjectAnimator rows3 = ObjectAnimator.ofFloat(row3, "translationY", 400f);
+		rows1.setDuration(3000);
+		rows2.setDuration(3000);
+		rows3.setDuration(3000);
+		rows1.start();
+		rows2.start();
+		rows3.start();
+		
+		//gameScreen.removeAllViews();
+		//gameScreen.addView(textView);
 	}
 }
