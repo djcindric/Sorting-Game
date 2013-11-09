@@ -3,23 +3,21 @@ package com.example.sortinggame;
 public class Level
 {
 	private String name,icon,background;
-	private int isPreLoaded, completed;
+	private boolean isPreLoaded;
 	
-	public Level(String lName, String iName, String bName, int pload, int completed)
+	public Level(String lName, String iName, String bName, boolean pload)
 	{
 		this.name = lName;
 		this.icon = iName;
 		this.background = bName;
 		this.isPreLoaded = pload;
-		this.completed = completed;
 	}
 	public Level()
 	{
-		name = null;
-		icon = null;
-		background = null;
-		isPreLoaded = -1;
-		completed = -1;
+		this.name = null;
+		this.icon = null;
+		this.background = null;
+		this.isPreLoaded = false;
 	}
 	public void setName(String lName)
 	{
@@ -43,23 +41,11 @@ public class Level
 	public void setBackground(String background) {
 		this.background = background;
 	}
-	public int isPreLoaded() {
+	public boolean isPreLoaded() {
 		return isPreLoaded;
 	}
-	public void setPreLoaded(int isPreLoaded) {
+	public void setPreLoaded(boolean isPreLoaded) {
 		this.isPreLoaded = isPreLoaded;
-	}
-	/**
-	 * @return the completed
-	 */
-	public int isCompleted() {
-		return completed;
-	}
-	/**
-	 * @param completed the completed to set
-	 */
-	public void setCompleted(int completed) {
-		this.completed = completed;
 	}
 	
 }

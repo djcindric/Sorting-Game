@@ -2,6 +2,8 @@ package com.example.sortinggame;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Random;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,12 +22,9 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 public class GameActivity extends Activity implements OnTouchListener,
 		OnDragListener {
@@ -38,6 +37,8 @@ public class GameActivity extends Activity implements OnTouchListener,
 	String level;
 	GameControl game;
 	private boolean initializeImages;
+	
+	public final static String EXTRA_MESSAGE = "com.example.sortinggame.MESSAGE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -145,19 +146,19 @@ public class GameActivity extends Activity implements OnTouchListener,
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
-			if(game.checkForValidMove((Integer) v.getTag(), (Integer) view.getTag())) {
+			if(game.checkForValidMove((String) v.getTag(), (String) view.getTag())) {
 				TableRow category = (TableRow) v;
 				
 				//gets the next column to put the image in
 				int row = 0;
-				int imageCategory = (Integer) view.getTag();
+				String imageCategory = (String) view.getTag();
 				
 				//updates number of sorted images
 				game.update(imageCategory);
 				
-				if(imageCategory == game.getCategory(0).getName())
+				if(imageCategory.equals(game.getCategory(0).getName()))
 					row = game.getCategoryOneSorted();
-				else if(imageCategory == game.getCategory(1).getName())
+				else if(imageCategory.equals(game.getCategory(1).getName()))
 					row = game.getCategoryTwoSorted();
 				else
 					row = game.getCategoryThreeSorted();
@@ -175,8 +176,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 				}
 				
 				if(game.checkForWin()) {
-					Toast toast = Toast.makeText(this, "Congratulations, You Win", Toast.LENGTH_LONG);
-					toast.show();
+					gameWin();
 				}
 			}
 			else
@@ -297,5 +297,19 @@ public class GameActivity extends Activity implements OnTouchListener,
 	    }
 	
 	    return inSampleSize;
+	}
+	
+	public void gameWin(){
+		SoundManager.setContext(this);
+		//Start Game win sound
+		SoundManager.playMusic(2);
+		//Stay in the activity until sound has ended
+		while(SoundManager.players[2].isPlaying() == true){}
+		
+		Random r = new Random();
+		int winSelection = r.nextInt(5);
+		Intent intent = new Intent(this, GameWinActivity.class);
+		intent.putExtra(EXTRA_MESSAGE, winSelection);
+		startActivity(intent);
 	}
 }

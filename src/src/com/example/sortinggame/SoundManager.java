@@ -4,64 +4,63 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 
+//MediaPlayers are referenced by position in the array
+//0 - Menu Music
+//1 - Click
+//2 - GameWin Music
+//3 - Game Music
+
+
 public class SoundManager extends Activity {
-	private static MediaPlayer backGroundPlayer;
-	private static Context context;
+	static int numPlayers = 3;
+	static MediaPlayer[] players = new MediaPlayer[3];
 	
-	private static boolean isStarted=false;
+	static Context context;
 	
-	private static boolean isMuted = false;
+	static boolean isInitialized=false;
+	static boolean isMuted = false;
 	
-	private static boolean permMute = false;
-	
-	public static void setPermMute(boolean b){
-		if (backGroundPlayer.isPlaying()){
-			setMuted(true);
-		}
-		permMute=b;
-	}
 	public static void setContext(Context cont){
 		context = cont;
 	}
-	public static void setMusic(int resource){
-		backGroundPlayer = MediaPlayer.create(context, resource);
-		backGroundPlayer.setLooping(true);
-		backGroundPlayer.setVolume(100, 100);
+	
+	public static void initializePlayers(){
+		if(isInitialized==false){
+			players[0] = MediaPlayer.create(context, R.raw.kalimba);
+			players[1] = MediaPlayer.create(context, R.raw.click);
+			players[2] = MediaPlayer.create(context, R.raw.gamewin);
+			isInitialized=true;
+		}
 	}
 	
-	public static void changeMusic(int resource){
-		backGroundPlayer.reset();
-		backGroundPlayer = MediaPlayer.create(context, resource);
-		backGroundPlayer.setLooping(true);
-		backGroundPlayer.setVolume(100, 100);
-	}
-	public static boolean playMusic(){
-		if (isStarted==false){
-		backGroundPlayer.start();
-		isStarted=true;
-		return true;}
-		return false;
-	}
-	
-	public static void setMuted(boolean muted){
-		if(backGroundPlayer.isPlaying()){
-			backGroundPlayer.pause();
+	public static void playMusic(int playerNumber){
+		if(players[playerNumber].isPlaying()){
+			players[playerNumber].pause();
 			isMuted=true;
 		}
 		else{
-			backGroundPlayer.start();
-			isMuted = false;
+			players[playerNumber].start();
+			isMuted=false;
 		}
 	}
+	public static void stopPlayer(int playerNumber){
+		players[playerNumber].stop();
+	}
+	
 	public static String checkSoundState(){
 		if (isMuted){
 			return "off";
 		}
 		return "on";
 	}
+	
+	public static void releasePlayer(int playerNumber){
+		players[playerNumber].release();
+	}
+	
 	public static void quit(){
-		if(backGroundPlayer != null){
-			backGroundPlayer.release();
+		for(int i=0; i < numPlayers; i++){
+			players[i].release();
 		}
 	}
 }

@@ -40,9 +40,10 @@ public class CustomizerActivity extends Activity {
 	    		NavUtils.navigateUpFromSameTask(this);
 	    		return true;
 	    		
-	    	case R.id.mute:
-            	SoundManager.setMuted(true);
-            	return true;
+	    	case R.id.hide_bar:
+	    		ActionBar actionBar = getActionBar();
+	    		actionBar.hide();
+	    		return true;
 	    		
 	    	default:
 	    		return super.onOptionsItemSelected(item);

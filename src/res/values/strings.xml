@@ -16,8 +16,8 @@
     <string name="choose_delete">Delete a existing level</string>
     <string name="hide_bar">Hide</string>
     <string name="back_arrow">Test</string>
+    <string name="title_activity_game_win">GameWinActivity</string>
     <string name="mute">Mute</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="orientation">Change Screen Orientation</string>
-    <string name="sound">Toggle Sound On/Off</string>
+	<string name="sound">Disable Sound</string>
+	
 </resources>
