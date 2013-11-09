@@ -1,6 +1,5 @@
 package com.example.sortinggame;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -21,7 +20,9 @@ public class AddUpdateActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
+		//Forces Screen to Landscape
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_update);
 
@@ -37,7 +38,7 @@ public class AddUpdateActivity extends Activity {
 		//Load Edit Interface when icon is clicked
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	        	loadCustomizerControl(v);
+	        	loadEditInterface(v);
 	        }
 	    });
 	}
@@ -65,18 +66,18 @@ public class AddUpdateActivity extends Activity {
 	}
 
 	public void loadCustomizerInterface(View view) {
-		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(),
-				R.raw.back);
-		clickSound.start();
 		Intent intent = new Intent(this, CustomizerActivity.class);
 		startActivity(intent);
 	}
 	
-	public void loadCustomizerControl(View view) {
-		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.click);
-    	clickSound.start();
-    	Intent intent = new Intent(this, CustomizerControl.class);
-    	startActivity(intent); 	
-    }
+	public void loadAddInterface(View view) {
+		Intent intent = new Intent(this, EditLevelActivity.class);
+		startActivity(intent);
+	}
+	
+	public void loadEditInterface(View view) {
+		Intent intent = new Intent(this, EditLevelActivity.class);
+		startActivity(intent);
+	}
 
 }

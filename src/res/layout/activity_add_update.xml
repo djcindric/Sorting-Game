@@ -23,7 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="@string/add_level" 
-        android:onClick="loadCustomizerControl"/>
+        android:onClick="loadAddInterface"/>
 
     <GridView
         android:id="@+id/gridView1"

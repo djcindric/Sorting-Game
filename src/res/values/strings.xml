@@ -26,5 +26,7 @@
     <string name ="cat_message">Put the categories in the order you want them to appear.</string>
     <string name="next">Next</string>
     <string name="done">Done</string>
+    <string name="title_activity_edit_level"></string>
+    <string name="title_activity_edit_category"></string>
 
 </resources>
