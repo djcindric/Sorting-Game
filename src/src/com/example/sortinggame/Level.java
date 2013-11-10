@@ -3,7 +3,7 @@ package com.example.sortinggame;
 public class Level
 {
 	private String name,icon,background;
-	private int isPreLoaded, completed;
+	private int isPreLoaded, completed, iconPreloaded, backgroundPreloaded;
 	
 	public Level(String lName, String iName, String bName, int pload, int completed)
 	{
@@ -20,6 +20,8 @@ public class Level
 		background = null;
 		isPreLoaded = -1;
 		completed = -1;
+		setIconPreloaded(-1);
+		setBackgroundPreloaded(-1);
 	}
 	public void setName(String lName)
 	{
@@ -60,6 +62,30 @@ public class Level
 	 */
 	public void setCompleted(int completed) {
 		this.completed = completed;
+	}
+	/**
+	 * @return the iconPreloaded
+	 */
+	public int getIconPreloaded() {
+		return iconPreloaded;
+	}
+	/**
+	 * @param iconPreloaded the iconPreloaded to set
+	 */
+	public void setIconPreloaded(int iconPreloaded) {
+		this.iconPreloaded = iconPreloaded;
+	}
+	/**
+	 * @return the backgroundPreloaded
+	 */
+	public int getBackgroundPreloaded() {
+		return backgroundPreloaded;
+	}
+	/**
+	 * @param backgroundPreloaded the backgroundPreloaded to set
+	 */
+	public void setBackgroundPreloaded(int backgroundPreloaded) {
+		this.backgroundPreloaded = backgroundPreloaded;
 	}
 	
 }

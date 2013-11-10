@@ -39,6 +39,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	String level;
 	GameControl game;
 	private boolean initializeImages;
+	private ImageView[] categorySymbols;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,19 +95,18 @@ public class GameActivity extends Activity implements OnTouchListener,
 			category1.setOnDragListener(this);
 			category2.setOnDragListener(this);
 			category3.setOnDragListener(this);
-			
+					
 			//loads category symbols
-			ImageView symbol1 = (ImageView)(findViewById(R.id.categoryImage1));
-			ImageView symbol2 = (ImageView)(findViewById(R.id.categoryImage10));
-			ImageView symbol3 = (ImageView)(findViewById(R.id.categoryImage19));
+			categorySymbols = new ImageView[3];
 			
-			Bitmap bmap1 = getBitmap(game.getCategorySymbols(0).getPath(), game.getCategorySymbols(0).isPreloaded(), symbol1);
-			Bitmap bmap2 = getBitmap(game.getCategorySymbols(1).getPath(), game.getCategorySymbols(1).isPreloaded(), symbol2);
-			Bitmap bmap3 = getBitmap(game.getCategorySymbols(2).getPath(), game.getCategorySymbols(2).isPreloaded(), symbol3);
+			categorySymbols[0] = (ImageView)(findViewById(R.id.categoryImage1));
+			categorySymbols[1] = (ImageView)(findViewById(R.id.categoryImage10));
+			categorySymbols[2] = (ImageView)(findViewById(R.id.categoryImage19));
 			
-			symbol1.setImageBitmap(bmap1);
-			symbol2.setImageBitmap(bmap2);
-			symbol3.setImageBitmap(bmap3);
+			for(int i = 0; i < game.getNumOfCategories(); i++) {
+				Bitmap bmap1 = getBitmap(game.getCategorySymbols(i).getPath(), game.getCategorySymbols(i).isPreloaded(), categorySymbols[i]);
+				categorySymbols[i].setImageBitmap(bmap1);
+			}
 			
 			initializeImages = false;
 		}
@@ -169,7 +169,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 				img.setImageDrawable(copyImg);
 				img.setVisibility(View.VISIBLE);
 				
-				if(game.getImagesSorted() < 17) {
+				if(game.getNextImage() != null) {
 					view.setImageBitmap(getBitmap(game.getNextImage().getPath(), game.getNextImage().isPreloaded(), view));
 					view.setTag(game.getNextImage().getCatName());
 					view.setVisibility(View.VISIBLE);
@@ -198,13 +198,15 @@ public class GameActivity extends Activity implements OnTouchListener,
 		for (int i = 0; i < images.length; i++) {
 			int x = i + 1;
 			try {
-				field = res.getField("imagePool" + x);				
-				identifier = field.getInt(null);
-				images[i] = (ImageView)(findViewById(identifier));
-				bmap = getBitmap(game.getImages(i).getPath(), game.getImages(i).isPreloaded(), images[i]);
-				images[i].setImageBitmap(bmap);
-				images[i].setTag(game.getImages(i).getCatName());
-				images[i].setOnTouchListener(this);
+				if(i < game.getTotalNumOfImages()) {
+					field = res.getField("imagePool" + x);				
+					identifier = field.getInt(null);
+					images[i] = (ImageView)(findViewById(identifier));
+					bmap = getBitmap(game.getImages(i).getPath(), game.getImages(i).isPreloaded(), images[i]);
+					images[i].setImageBitmap(bmap);
+					images[i].setTag(game.getImages(i).getCatName());
+					images[i].setOnTouchListener(this);
+				}
 			}catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e("MyTag","", e);
