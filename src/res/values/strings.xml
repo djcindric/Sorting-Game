@@ -9,6 +9,7 @@
     <string name="title_activity_customizer">Customization</string>
     <string name="title_activity_add_update">Add or Update</string>
     <string name="title_activity_delete">Delete</string>
+     <string name="title_activity_gallery">Image Gallery</string>
     <string name="choose_level_menu">Choose Level</string>
     <string name="customizer">Customize Level</string>
     <string name="choose_level">Choose the level you would like to play.\nList of levels to play will go here.</string>
@@ -30,6 +31,8 @@
     <string name="title_activity_edit_level">Edit Level</string>
     <string name="title_activity_edit_category">Edit Categories</string>
     <string name="select_images">Select Images for Each Category</string>
-    <string name="images">Choose</string>
+    <string name="add_cat1">Add</string>
+    <string name="add_cat2">Add</string>
+    <string name="add_cat3">Add</string>
 
 </resources>

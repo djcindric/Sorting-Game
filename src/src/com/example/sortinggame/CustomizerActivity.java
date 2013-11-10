@@ -1,15 +1,13 @@
 package com.example.sortinggame;
 
-import android.media.MediaPlayer;
-import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,9 +15,11 @@ import android.widget.EditText;
 
 public class CustomizerActivity extends Activity {
 
+	public final static String LEVEL_NAME = "com.example.sortinggame.MESSAGE";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); //Prevent Screen From rotating
+		//Forces landscape mode
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		
 		//Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
@@ -60,12 +60,12 @@ public class CustomizerActivity extends Activity {
     }
 	
 	public void loadAddInterface(View view) {
-		final Intent intent = new Intent(this, AddUpdateActivity.class);
+		final Intent intent = new Intent(this, EditCategoryActivity.class);
 		
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-		alert.setTitle("Title");
-		alert.setMessage("Message");
+		alert.setTitle("Level");
+		alert.setMessage("Enter the name for your level");
 
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
@@ -74,9 +74,8 @@ public class CustomizerActivity extends Activity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		  String value = input.getText().toString();
-		  System.out.println("show dialog box " + value);
+		  intent.putExtra(LEVEL_NAME, value);
 		  startActivity(intent); 
-		  // Do something with value!
 		  }
 		});
 

@@ -3,96 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a50b00"
-    tools:context=".EditCategoryActivity" >
+    android:background="#0ca961"
+    tools:context=".EditCategoryActivity" >   
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:id="@+id/cat1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/cat1_images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="chooseFromGallery"
+                android:text="@string/add_cat1" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="159dp"
-        android:text="@string/select_images"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_below="@id/horizontalScrollView1">
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/cat2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/cat2_images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="chooseFromGallery"
+                android:text="@string/add_cat2" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontalScrollView3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignTop="@+id/cat3_images"
-        android:text="Category 3"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+         android:layout_below="@id/horizontalScrollView2"  >
 
-    <Button
+        <LinearLayout
+            android:id="@+id/cat3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/cat3_images"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="chooseFromGallery"
+                android:text="@string/add_cat3" />
+          </LinearLayout>
+     </HorizontalScrollView>     
+          
+     <Button
         android:id="@+id/button1"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/cat3_images"
-        android:layout_marginLeft="30dp"
-        android:text="@string/cancel"
-        android:onClick="loadEditLevelInterface" />
-
-    <TextView
-        android:id="@+id/textView2"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="19dp"
-        android:layout_toRightOf="@+id/button1"
-        android:text="Category 1"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_below="@+id/cat1_images"
-        android:layout_marginTop="20dp"
-        android:text="Category 2"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/cat1_images"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignLeft="@+id/cat2_images"
-        android:text="@string/images"
-        android:onClick="chooseFromGallery" />
-
-    <Button
-        android:id="@+id/cat3_images"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/cat2_images"
-        android:layout_marginRight="81dp"
-        android:layout_marginTop="17dp"
-        android:text="@string/images"
-        android:onClick="chooseFromGallery" />
-
-    <Button
-        android:id="@+id/cat2_images"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/cat3_images"
-        android:layout_alignTop="@+id/textView3"
-        android:text="@string/images"
-        android:onClick="chooseFromGallery" />
+        android:onClick="loadEditLevelInterface"
+        android:text="@string/cancel" />
 
     <Button
         android:id="@+id/button2"
         style="?android:attr/buttonStyleSmall"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cat3_images"
-        android:layout_toRightOf="@+id/textView1"
         android:text="@string/done" />
-
-</RelativeLayout>
+ </RelativeLayout>

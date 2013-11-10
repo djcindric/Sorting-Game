@@ -1,19 +1,18 @@
 package com.example.sortinggame;
 
-import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.view.View;
 
 public class EditCategoryActivity extends Activity{
-
+	private String level;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 
 		// Forces Screen into landscape
@@ -25,6 +24,11 @@ public class EditCategoryActivity extends Activity{
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		Intent i = getIntent();
+		level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+		
+		actionBar.setTitle("Add Images to " + level);
 	}
 
 	@Override
@@ -55,10 +59,10 @@ public class EditCategoryActivity extends Activity{
 	}
 	
 	public void chooseFromGallery(View view){
-		Intent intent = new Intent();
+		Intent intent = new Intent(this, GalleryActivity.class);
 		// View  the gallery
-		intent.setAction(Intent.ACTION_VIEW);
-		intent.setData(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+		//intent.setAction(Intent.ACTION_VIEW);
+		//intent.setData(android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
 		// Start the activity
 		startActivity(intent);
 	}

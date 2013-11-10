@@ -84,6 +84,17 @@
             
         </activity>
         
+        <activity 
+            android:name="GalleryActivity"
+            android:label="@string/title_activity_gallery"
+            android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.AddUpdateActivity" />
+            
+        </activity>
+        
     </application>
 
 </manifest>
