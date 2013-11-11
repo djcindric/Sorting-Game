@@ -57,12 +57,6 @@ public class MainMenuActivity extends Activity {
         startActivity(intent);         
     }
     
-    public void testButton(View view) {
-    	SoundManager.playMusic(1);
-    	Intent intent = new Intent(this, GameWinActivity.class);
-		startActivity(intent);
-    }
-    
     public void disableSound(){
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setMessage("Sound is currently " + SoundManager.checkSoundState() +

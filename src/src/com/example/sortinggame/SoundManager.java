@@ -12,8 +12,8 @@ import android.media.MediaPlayer;
 
 
 public class SoundManager extends Activity {
-	static int numPlayers = 3;
-	static MediaPlayer[] players = new MediaPlayer[3];
+	static int numPlayers = 4;
+	static MediaPlayer[] players = new MediaPlayer[4];
 	
 	static Context context;
 	
@@ -29,6 +29,8 @@ public class SoundManager extends Activity {
 			players[0] = MediaPlayer.create(context, R.raw.kalimba);
 			players[1] = MediaPlayer.create(context, R.raw.click);
 			players[2] = MediaPlayer.create(context, R.raw.gamewin);
+			players[3] = MediaPlayer.create(context, R.raw.gamemusic); 
+			players[3].setLooping(true);
 			isInitialized=true;
 		}
 	}

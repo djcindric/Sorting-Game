@@ -97,7 +97,9 @@ public class LevelActivity extends Activity {
 		Intent intent = new Intent(this, GameActivity.class);
 		intent.putExtra(LEVEL_NAME, level);
 		//Stop menu music
-		SoundManager.stopPlayer(0);
+		if(SoundManager.players[0].isPlaying()){
+			SoundManager.playMusic(0);
+		}
     	startActivity(intent);
 	}
 }

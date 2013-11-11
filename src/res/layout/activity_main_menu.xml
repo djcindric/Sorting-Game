@@ -21,13 +21,5 @@
         android:layout_below="@id/load_level_interface"
         android:text="@string/customizer" 
         android:onClick="loadCustomizerInterface" />
-    <Button 
-        android:id="@+id/test_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-     	android:layout_marginTop="30dp"
-        android:layout_below="@id/load_customize_level_interface"
-        android:text="Test Button" 
-        android:onClick="testButton" />
 
 </RelativeLayout>

@@ -60,11 +60,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.sortinggame.CustomizerActivity" />
         </activity>
-        <activity
-            android:name="com.example.sortinggame.GameWinActivity"
-            android:label="@string/title_activity_game_win" 
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
-        </activity>
     </application>
 
 </manifest>
