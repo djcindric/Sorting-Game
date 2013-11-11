@@ -45,6 +45,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 	private boolean initializeImages;
 	
 	public final static String EXTRA_MESSAGE = "com.example.sortinggame.MESSAGE";
+	public final static String LEVEL_NAME_REPLAY = "com.example.sortinggame.MESSAGE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -374,15 +375,18 @@ public class GameActivity extends Activity implements OnTouchListener,
 	//Choose new level
 	View.OnClickListener myHandler1 = new View.OnClickListener(){
 		public void onClick(View v) {
-			Toast toast = Toast.makeText(getBaseContext(), "Play Again", Toast.LENGTH_SHORT);
-			toast.show();
+			Intent intent = new Intent(getBaseContext(), GameActivity.class);
+			intent.putExtra(LEVEL_NAME_REPLAY, level);
+			startActivity(intent);
+			finish();
 		}
 	};
 	//Quit Game
 	View.OnClickListener myHandler2 = new View.OnClickListener(){
 		public void onClick(View v) {
-			Intent intent = new Intent(getBaseContext(), LevelActivity.class);
-			startActivity(intent);
+//			Intent intent = new Intent(getBaseContext(), LevelActivity.class);
+//			startActivity(intent);
+			finish();
 		}
 	};
 	//Play Again
