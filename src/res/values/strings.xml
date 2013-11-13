@@ -9,7 +9,7 @@
     <string name="title_activity_customizer">Customization</string>
     <string name="title_activity_add_update">Add or Update</string>
     <string name="title_activity_delete">Delete</string>
-     <string name="title_activity_gallery">Image Gallery</string>
+    <string name="title_activity_gallery">Image Gallery</string>
     <string name="choose_level_menu">Choose Level</string>
     <string name="customizer">Customize Level</string>
     <string name="choose_level">Choose the level you would like to play.\nList of levels to play will go here.</string>
@@ -25,7 +25,7 @@
     <string name="categorytext">Categories</string>
     <string name="add_icon">Icon</string>
     <string name="add_background">Background</string>
-    <string name ="cat_message">Put the categories in the order you want them to appear.</string>
+    <string name="cat_message">Put the categories in the order you want them to appear.</string>
     <string name="next">Next</string>
     <string name="done">Done</string>
     <string name="title_activity_edit_level">Edit Level</string>

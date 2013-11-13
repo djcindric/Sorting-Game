@@ -21,7 +21,7 @@
                 android:id="@+id/cat1_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="chooseFromGallery"
+                android:onClick="chooseCat1Images"
                 android:text="@string/add_cat1" />
         </LinearLayout>
     </HorizontalScrollView>
@@ -42,7 +42,7 @@
                 android:id="@+id/cat2_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="chooseFromGallery"
+                android:onClick="chooseCat2Images"
                 android:text="@string/add_cat2" />
         </LinearLayout>
     </HorizontalScrollView>
@@ -63,7 +63,7 @@
                 android:id="@+id/cat3_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="chooseFromGallery"
+                android:onClick="chooseCat3Images"
                 android:text="@string/add_cat3" />
           </LinearLayout>
      </HorizontalScrollView>     

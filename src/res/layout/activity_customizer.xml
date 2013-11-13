@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#a50b00"
+    android:background="@drawable/game_background"
     tools:context=".CustomizerActivity" >
 
     <Button
@@ -13,6 +13,7 @@
         android:layout_above="@+id/delete_Button"
         android:layout_alignLeft="@+id/delete_Button"
         android:layout_marginBottom="30dp"
+        android:textColor="@android:color/white"
         android:onClick="loadAddInterface"
         android:text="@string/choose_add" />
 
@@ -23,6 +24,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="53dp"
+        android:textColor="@android:color/white"
         android:onClick="loadDeleteInterface"
         android:text="@string/choose_delete" />
 
@@ -33,6 +35,7 @@
         android:layout_alignLeft="@+id/delete_Button"
         android:layout_alignTop="@+id/delete_Button"
         android:layout_marginTop="62dp"
+        android:textColor="@android:color/white"
         android:onClick="loadUpdateInterface"
         android:text="@string/choose_update" />
 
