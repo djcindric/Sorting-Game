@@ -3,9 +3,9 @@ package com.example.sortinggame;
 public class Level
 {
 	private String name,icon,background;
-	private boolean isPreLoaded;
+	private int isPreLoaded, iconPreloaded, backgroundPreloaded;
 	
-	public Level(String lName, String iName, String bName, boolean pload)
+	public Level(String lName, String iName, String bName, int pload)
 	{
 		this.name = lName;
 		this.icon = iName;
@@ -14,10 +14,12 @@ public class Level
 	}
 	public Level()
 	{
-		this.name = null;
-		this.icon = null;
-		this.background = null;
-		this.isPreLoaded = false;
+		name = null;
+		icon = null;
+		background = null;
+		isPreLoaded = -1;
+		setIconPreloaded(-1);
+		setBackgroundPreloaded(-1);
 	}
 	public void setName(String lName)
 	{
@@ -41,11 +43,35 @@ public class Level
 	public void setBackground(String background) {
 		this.background = background;
 	}
-	public boolean isPreLoaded() {
+	public int isPreLoaded() {
 		return isPreLoaded;
 	}
-	public void setPreLoaded(boolean isPreLoaded) {
+	public void setPreLoaded(int isPreLoaded) {
 		this.isPreLoaded = isPreLoaded;
+	}
+	/**
+	 * @return the iconPreloaded
+	 */
+	public int getIconPreloaded() {
+		return iconPreloaded;
+	}
+	/**
+	 * @param iconPreloaded the iconPreloaded to set
+	 */
+	public void setIconPreloaded(int iconPreloaded) {
+		this.iconPreloaded = iconPreloaded;
+	}
+	/**
+	 * @return the backgroundPreloaded
+	 */
+	public int getBackgroundPreloaded() {
+		return backgroundPreloaded;
+	}
+	/**
+	 * @param backgroundPreloaded the backgroundPreloaded to set
+	 */
+	public void setBackgroundPreloaded(int backgroundPreloaded) {
+		this.backgroundPreloaded = backgroundPreloaded;
 	}
 	
 }

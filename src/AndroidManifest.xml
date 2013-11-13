@@ -7,6 +7,8 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
+	<!-- allows UIL to cache images on SD card -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -60,6 +62,38 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.sortinggame.CustomizerActivity" />
         </activity>
+        <activity 
+            android:name="EditLevelActivity"
+            android:label="@string/title_activity_edit_level"
+            android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.AddUpdateActivity" />
+            
+        </activity>
+        <activity 
+            android:name="EditCategoryActivity"
+            android:label="@string/title_activity_edit_category"
+            android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.AddUpdateActivity" />
+            
+        </activity>
+        
+        <activity 
+            android:name="GalleryActivity"
+            android:label="@string/title_activity_gallery"
+            android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
+            
+            <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.AddUpdateActivity" />
+            
+        </activity>
+        
     </application>
 
 </manifest>

@@ -9,15 +9,33 @@
     <string name="title_activity_customizer">Customization</string>
     <string name="title_activity_add_update">Add or Update</string>
     <string name="title_activity_delete">Delete</string>
+     <string name="title_activity_gallery">Image Gallery</string>
     <string name="choose_level_menu">Choose Level</string>
     <string name="customizer">Customize Level</string>
     <string name="choose_level">Choose the level you would like to play.\nList of levels to play will go here.</string>
-    <string name="choose_addupdate">Add or update a level</string>
+    <string name="choose_add">Add a level</string>
+    <string name="choose_update">Update a level</string>
     <string name="choose_delete">Delete a existing level</string>
     <string name="hide_bar">Hide</string>
     <string name="back_arrow">Test</string>
+    <string name="add_level">Create New Level</string>
+    <string name="cancel">Cancel</string>
+    <string name="addupdate_header">Choose a level to update or create a new level</string>
+    <string name="leveltext">Level Name</string>
+    <string name="categorytext">Categories</string>
+    <string name="add_icon">Icon</string>
+    <string name="add_background">Background</string>
+    <string name ="cat_message">Put the categories in the order you want them to appear.</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+    <string name="title_activity_edit_level">Edit Level</string>
+    <string name="title_activity_edit_category">Edit Categories</string>
+    <string name="select_images">Select Images for Each Category</string>
+    <string name="add_cat1">Add</string>
+    <string name="add_cat2">Add</string>
+    <string name="add_cat3">Add</string>
     <string name="title_activity_game_win">GameWinActivity</string>
     <string name="mute">Mute</string>
-	<string name="sound">Disable Sound</string>
-	
+    <string name="sound">Disable Sound</string>
+
 </resources>

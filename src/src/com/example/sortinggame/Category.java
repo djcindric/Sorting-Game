@@ -2,23 +2,26 @@ package com.example.sortinggame;
 
 public class Category
 {
-	private String name, level;
-	private int position;
+	private String level, path;
+	private int name;
+	private boolean preloaded;
 	
-	public Category(String catName, String levelName)
+	public Category(int catName, String levelName, String path, boolean preloaded)
 	{
 		this.name = catName;
 		this.level = levelName;
+		this.path = path;
+		this.setPreloaded(preloaded);
 	}
 	public Category() {
-		this.name = null;
+		this.name = -1;
 		this.level = null;
 	}
-	public void setName(String catName)
+	public void setName(int catName)
 	{
 		this.name = catName;
 	}
-	public String getName()
+	public int getName()
 	{
 		return name;
 	}
@@ -28,10 +31,28 @@ public class Category
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public int getPosition() {
-		return position;
+	/**
+	 * @return the path
+	 */
+	public String getPath() {
+		return path;
 	}
-	public void setPosition(int position) {
-		this.position = position;
+	/**
+	 * @param path the path to set
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
+	/**
+	 * @return the preloaded
+	 */
+	public boolean isPreloaded() {
+		return preloaded;
+	}
+	/**
+	 * @param preloaded the preloaded to set
+	 */
+	public void setPreloaded(boolean preloaded) {
+		this.preloaded = preloaded;
 	}
 }
