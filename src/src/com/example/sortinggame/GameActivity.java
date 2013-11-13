@@ -1,17 +1,13 @@
 package com.example.sortinggame;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
@@ -21,25 +17,25 @@ import android.view.View.DragShadowBuilder;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-public class GameActivity extends Activity implements OnTouchListener,
-		OnDragListener {
+public class GameActivity extends Activity implements OnTouchListener, OnDragListener {
 
 	SortingDB db;
 	private ImageView[] images;
-	// private ImageView[] sortedImages;
-	private ArrayList<Integer> imagePath;
 	TableRow imagePool;
 	String level;
 	GameControl game;
-	private boolean initializeImages;
 	private ImageView[] categorySymbols;
+	ImageLoader imageLoader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,65 +48,60 @@ public class GameActivity extends Activity implements OnTouchListener,
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 
-		// Intent intent = getIntent(); //Retrieve the intent
-
-		// position is the integer value of the icons position in the grid
-		// int position = intent.getIntExtra(LevelActivity.Icon_Position, -1);
-
 		setContentView(R.layout.activity_game);
 
-		Intent i = getIntent();
-		level = i.getExtras().getString(LevelActivity.LEVEL_NAME);
-
+		Intent intent = getIntent();
+		level = intent.getExtras().getString(LevelActivity.LEVEL_NAME);	
 		game = new GameControl(this, level);
 		db = new SortingDB(this);
 
 		images = new ImageView[8];
-		// sortedImages = new ImageView[24];
-		imagePath = new ArrayList<Integer>();
+		initImageLoader();
 		
 		TableRow category1 = (TableRow)(findViewById(R.id.category1));
 		TableRow category2 = (TableRow)(findViewById(R.id.category2));
 		TableRow category3 = (TableRow)(findViewById(R.id.category3));
 		
+		intializeLevelBackground();
+		
 		//sets tags for each category
 		category1.setTag(game.getCategory(0).getName());
 		category2.setTag(game.getCategory(1).getName());
 		category3.setTag(game.getCategory(2).getName());
-
-		initializeImages = true;
-	}
-	
-	//loads images after onCreate is done
-	@Override
-	public void onWindowFocusChanged(boolean hasFocus){
-		if(initializeImages) {
-			loadCategoryBackground(level);
-			loadImages();
-	
-			// Allow drag and drop of images to categories
-			TableRow category1 = (TableRow)(findViewById(R.id.category1));
-			TableRow category2 = (TableRow)(findViewById(R.id.category2));
-			TableRow category3 = (TableRow)(findViewById(R.id.category3));
-			category1.setOnDragListener(this);
-			category2.setOnDragListener(this);
-			category3.setOnDragListener(this);
-					
-			//loads category symbols
-			categorySymbols = new ImageView[3];
-			
-			categorySymbols[0] = (ImageView)(findViewById(R.id.categoryImage1));
-			categorySymbols[1] = (ImageView)(findViewById(R.id.categoryImage10));
-			categorySymbols[2] = (ImageView)(findViewById(R.id.categoryImage19));
-			
-			for(int i = 0; i < game.getNumOfCategories(); i++) {
-				Bitmap bmap1 = getBitmap(game.getCategorySymbols(i).getPath(), game.getCategorySymbols(i).isPreloaded(), categorySymbols[i]);
-				categorySymbols[i].setImageBitmap(bmap1);
-			}
-			
-			initializeImages = false;
+		
+		// Allow drag and drop of images to categories
+		category1.setOnDragListener(this);
+		category2.setOnDragListener(this);
+		category3.setOnDragListener(this);
+		
+		//loads image pool
+		initializeImagePool();
+				
+		//loads category symbols
+		categorySymbols = new ImageView[3];
+		
+		categorySymbols[0] = (ImageView)(findViewById(R.id.categoryImage1));
+		categorySymbols[1] = (ImageView)(findViewById(R.id.categoryImage10));
+		categorySymbols[2] = (ImageView)(findViewById(R.id.categoryImage19));
+		
+		for(int i = 0; i < game.getNumOfCategories(); i++) {
+			loadImage(game.getCategorySymbols(i).getPath(), game.getCategorySymbols(i).isPreloaded(), categorySymbols[i]);
 		}
 	}
+	
+	private void initImageLoader() {
+        DisplayImageOptions defaultOptions =  new DisplayImageOptions.Builder()
+        .showStubImage(R.drawable.ic_stub)
+                .cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
+                this).defaultDisplayImageOptions(defaultOptions).memoryCache(
+                new WeakMemoryCache());
+
+        ImageLoaderConfiguration config = builder.build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,9 +123,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 
 	@Override
 	public boolean onDrag(View v, DragEvent dragEvent) {
-		int dragAction = dragEvent.getAction();
 		ImageView view = (ImageView) dragEvent.getLocalState();
-		ViewGroup from = (ViewGroup) view.getParent();
 
 		if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
 			;
@@ -169,8 +158,9 @@ public class GameActivity extends Activity implements OnTouchListener,
 				img.setImageDrawable(copyImg);
 				img.setVisibility(View.VISIBLE);
 				
+				//loads next image in item pool
 				if(game.getNextImage() != null) {
-					view.setImageBitmap(getBitmap(game.getNextImage().getPath(), game.getNextImage().isPreloaded(), view));
+					loadImage(game.getNextImage().getPath(), game.getNextImage().isPreloaded(), view);
 					view.setTag(game.getNextImage().getCatName());
 					view.setVisibility(View.VISIBLE);
 				}
@@ -183,14 +173,37 @@ public class GameActivity extends Activity implements OnTouchListener,
 			else
 				view.setVisibility(View.VISIBLE);
 		} else if (dragEvent.getAction() == DragEvent.ACTION_DRAG_ENDED) {
-			//snaps image back to item pool
+			//snaps image back to item pool if placed in wrong category
 			if (!dragEvent.getResult())
 				view.setVisibility(View.VISIBLE);
 		}
 		return true;
 	}
 
-	private void loadImages() {
+	//sets picture for imageview; will either use path to sd card or resource id
+	private void loadImage(String path, int isPreloaded, ImageView imageView) {
+		Class res = R.id.class;
+		Field field;
+		int identifier;
+		
+			if(isPreloaded == 0)
+				imageLoader.displayImage("file://" + path, imageView);
+			else {
+				try {
+					//Find resource id
+					res = R.drawable.class;
+					field = res.getField(path);
+					identifier = field.getInt(null);
+					imageView.setImageResource(identifier);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					Log.e("MyTag", "Failure to get drawable id. Path = " + path, e);
+				}
+			}
+		}
+	
+	//Initializes image pool
+	private void initializeImagePool() {
 		Class res = R.id.class;
 		Field field;
 		int identifier;
@@ -199,11 +212,13 @@ public class GameActivity extends Activity implements OnTouchListener,
 			int x = i + 1;
 			try {
 				if(i < game.getTotalNumOfImages()) {
+					res = R.id.class;
 					field = res.getField("imagePool" + x);				
 					identifier = field.getInt(null);
 					images[i] = (ImageView)(findViewById(identifier));
-					bmap = getBitmap(game.getImages(i).getPath(), game.getImages(i).isPreloaded(), images[i]);
-					images[i].setImageBitmap(bmap);
+					String path = game.getImages(i).getPath();
+					int isPreloaded = game.getImages(i).isPreloaded();
+					loadImage(path, isPreloaded, images[i]);
 					images[i].setTag(game.getImages(i).getCatName());
 					images[i].setOnTouchListener(this);
 				}
@@ -213,92 +228,24 @@ public class GameActivity extends Activity implements OnTouchListener,
 			}
 		}
 	}
-
-	private void loadCategoryBackground(String level) {
-		Cursor test = db.query("SELECT background FROM Level WHERE name=?", new String[] { level });
+	
+	
+	//Initializes level background
+	private void intializeLevelBackground() {
 		Class res = R.drawable.class;
 		Field field;
+		String background = game.getLevel().getBackground();
 		try {
-			test.moveToNext();
-			field = res.getField(test.getString(test.getColumnIndex("background")));
+			field = res.getField(background);
 			int identifier = field.getInt(null);
 
 			TableLayout layout = (TableLayout) findViewById(R.id.categories);
 			layout.setBackgroundResource(identifier);
-			System.out.print("Background width - " + layout.getWidth() + "   height " + layout.getHeight());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e("MyTag",
-					"Failure to get drawable id. Path = " + test.getString(test.getColumnIndex("path")), e);
+					"Failure to get drawable id. Path = " + background, e);
 		}
-	}
-	
-	private Bitmap getBitmap (String path, int isPreloaded, ImageView img) {
-		Bitmap bmap = null;
-		int height =  img.getHeight();
-		int width = img.getWidth();
 		
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		
-		if(isPreloaded == 0) {
-			// First decode with inJustDecodeBounds=true to check dimensions
-			options.inJustDecodeBounds = true;
-		    BitmapFactory.decodeFile(path, options);
-
-		    // Calculate inSampleSize
-		    options.inSampleSize = calculateInSampleSize(options, width, height);
-
-		    // Decode bitmap with inSampleSize set
-		    options.inJustDecodeBounds = false;
-			return  BitmapFactory.decodeFile(path, options);
-		} else {
-			Class res = R.drawable.class;
-			Field field;
-			int identifier;
-			try {
-				//Find resource id
-				field = res.getField(path);
-				identifier = field.getInt(null);
-				
-				// First decode with inJustDecodeBounds=true to check dimensions
-				options.inJustDecodeBounds = true;
-				BitmapFactory.decodeResource(getResources(), identifier, options);
-
-			    // Calculate inSampleSize
-			    options.inSampleSize = calculateInSampleSize(options, width, height);
-
-			    // Decode bitmap with inSampleSize set
-			    options.inJustDecodeBounds = false;			    		
-			    return BitmapFactory.decodeResource(getResources(), identifier, options);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				Log.e("MyTag", "Failure to get drawable id. Path = " + path, e);
-			}
-			return bmap;
-		}
-	}
-	
-	//scales image down if it needs to
-	public static int calculateInSampleSize(
-	    BitmapFactory.Options options, int reqWidth, int reqHeight) {
-	    // Raw height and width of image
-	    final int height = options.outHeight;
-	    final int width = options.outWidth;
-	    int inSampleSize = 1;
-	
-	    if (height > reqHeight || width > reqWidth) {
-	
-	        final int halfHeight = height / 2;
-	        final int halfWidth = width / 2;
-	
-	        // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-	        // height and width larger than the requested height and width.
-	        while ((halfHeight / inSampleSize) > reqHeight
-	                && (halfWidth / inSampleSize) > reqWidth) {
-	            inSampleSize *= 2;
-	        }
-	    }
-	
-	    return inSampleSize;
 	}
 }

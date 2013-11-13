@@ -1,26 +1,33 @@
 package com.example.sortinggame;
 
+import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class GalleryActivity extends Activity {
 	private ImageAdapterGallery imageAdapter;
 	private Cursor cursor;
 	private int columnIndex;
+	private ImageLoader imageLoader;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,44 +40,50 @@ public class GalleryActivity extends Activity {
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		// Set up an array of the Thumbnail Image ID column we want
-		String[] projection = { MediaStore.Images.Media._ID };
-		// Create the cursor pointing to the SDCard
-		cursor = getContentResolver().query(
-				MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, // Which columns to return
-				null, // Return all rows
-				null, MediaStore.Images.Media._ID);
 		
-		// Get the column index of the Thumbnails Image ID
-		columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID);
+		initImageLoader();
+		
+		getGalleryImages();
 
 		// Create a grid of icons for choosing a level
 		GridView gridview = (GridView) findViewById(R.id.gallery);
-		imageAdapter = new ImageAdapterGallery(this, cursor, columnIndex);
+		gridview.setFastScrollEnabled(true);
+		imageAdapter = new ImageAdapterGallery(this, cursor, columnIndex, imageLoader);
 		gridview.setAdapter(imageAdapter);
+	}
+	
+	private void initImageLoader() {
+        DisplayImageOptions defaultOptions =  new DisplayImageOptions.Builder()
+        .showStubImage(R.drawable.ic_stub)
+                .cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565).build();
+        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
+                this).defaultDisplayImageOptions(defaultOptions).memoryCache(
+                new WeakMemoryCache());
 
-		// Load Game Interface when icon is clicked
-		gridview.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View v,
-					int position, long id) {
-				// Get the data location of the image
-				String[] projection = { MediaStore.Images.Media.DATA };
+        ImageLoaderConfiguration config = builder.build();
+        imageLoader = ImageLoader.getInstance();
+        imageLoader.init(config);
+    }
+	
+	private void getGalleryImages() {
+		// Set up an array of the Thumbnail Image ID column we want
+				String[] projection = { MediaStore.Images.Thumbnails.DATA };
+				// Create the cursor pointing to the SDCard
 				cursor = getContentResolver().query(
-						MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-						projection, // Which columns to return
+						MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, projection, // Which columns to return
 						null, // Return all rows
-						null, null);
-				columnIndex = cursor
-						.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-				cursor.moveToPosition(position);
-				// Get image filename
-				String imagePath = cursor.getString(columnIndex);
-				// Use this path to do further processing, i.e. full screen
-				// display
-				Toast.makeText(GalleryActivity.this, imagePath, Toast.LENGTH_SHORT).show();
-			}
-		});
+						null, MediaStore.Images.Thumbnails.DATA);
+				
+				// Get the column index of the Thumbnails Image ID
+				columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA);
+	}
+	
+public void btnChoosePhotosClick(View v){
+		
+		ArrayList<String> selectedItems = imageAdapter.getCheckedItems();
+		Toast.makeText(GalleryActivity.this, "Total photos selected: "+selectedItems.size(), Toast.LENGTH_SHORT).show();
+		Log.d(GalleryActivity.class.getSimpleName(), "Selected Items: " + selectedItems.toString());
 	}
 
 	@Override
