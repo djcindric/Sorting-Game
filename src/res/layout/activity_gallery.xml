@@ -8,13 +8,13 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_above="@+id/saveButton"
-        android:background="#0ca961"
         android:columnWidth="115dp"
         android:gravity="center"
         android:horizontalSpacing="4dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth"
-        android:verticalSpacing="2dp" />
+        android:verticalSpacing="2dp" 
+        android:background="@drawable/background_plain_blue"/>
 
     <Button
         android:id="@+id/saveButton"

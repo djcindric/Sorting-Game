@@ -1,9 +1,10 @@
 package com.example.sortinggame;
 
-import android.content.Context;
-import android.database.Cursor;
 import java.util.ArrayList;
 import java.util.Random;
+
+import android.content.Context;
+import android.database.Cursor;
 
 public class GameControl {
 	private SortingDB db;
@@ -28,8 +29,8 @@ public class GameControl {
 		level = new Level();
 		imagesSorted = 0;
 		categoryOneSorted = 0;
-        categoryTwoSorted = 0;
-        categoryThreeSorted = 0;
+		categoryTwoSorted = 0;
+		categoryThreeSorted = 0;
 		
 		loadLevel(l);
 		getImagesCounts();
@@ -73,11 +74,86 @@ public class GameControl {
 		int num1 = 0;
 		int num2 = 0;
 		int num3 = 0;
+		int imgUsedForCat = 0;
 		ArrayList<Integer> usedImages = new ArrayList<Integer>();
 		boolean addImage = true;
 		boolean imageLoaded = false;
 		Random rand = new Random();
+		
+		//randomized category symbols
+		Cursor queryForSymbols = db.query("SELECT iconPath, categoryName, iconPreloaded FROM Category WHERE levelName=?", new String[]{level.getName()});
+		for (int i = 0; i < numOfCategories; i++) {
+			//first check for Category symbol in db
+			queryForSymbols.moveToNext();
+			
+			if(queryForSymbols.getString(0) != null) {
+				categorySymbols[i] = new Image();
+                categorySymbols[i].setPath(queryForSymbols.getString(0));
+                categorySymbols[i].setCatName(queryForSymbols.getInt(1));
+                categorySymbols[i].setPreloaded(queryForSymbols.getInt(2));
+			}
+			else {
+				//if not picks an images out of database
+				imageLoaded = false;
+				while (imageLoaded == false) {
+					query.moveToFirst();
+					int row = rand.nextInt(query.getCount());
+					query.move(row);
+					 
+					//checks to see if row has already been used
+					if(usedImages.size() < totalNumOfImages) {
+						for(int x = 0; x < usedImages.size(); x++) {
+							if(row != usedImages.get(x))
+								addImage = true;
+							else {
+								addImage = false;
+								break;
+							}
+						}
+					}
 	
+					if(addImage == true) {
+						if(query.getInt(1) == 1 && num1 < 1 && i == 0) {			
+							categorySymbols[i] = new Image();
+	                        categorySymbols[i].setPath(query.getString(0));
+	                        categorySymbols[i].setCatName(query.getInt(1));
+	                        categorySymbols[i].setPreloaded(query.getInt(2));
+	                        imgUsedForCat++;
+							num1++;
+							usedImages.add(row);
+							imageLoaded = true;
+						} else if(query.getInt(1) == 2 && num2 < 1 && i == 1) {
+							categorySymbols[i] = new Image();
+	                        categorySymbols[i].setPath(query.getString(0));
+	                        categorySymbols[i].setCatName(query.getInt(1));
+	                        categorySymbols[i].setPreloaded(query.getInt(2));
+	                        imgUsedForCat++;
+							num2++;
+							usedImages.add(row);
+							imageLoaded = true;
+						} else if(query.getInt(1) == 3 && num3 < 1 && i == 2) {
+							categorySymbols[i] = new Image();
+	                        categorySymbols[i].setPath(query.getString(0));
+	                        categorySymbols[i].setCatName(query.getInt(1));
+	                        categorySymbols[i].setPreloaded(query.getInt(2));
+	                        imgUsedForCat++;
+							num3++;
+							usedImages.add(row);
+							imageLoaded = true;
+						} else
+							imageLoaded = false;
+					}
+				}
+			}
+		}
+		num1 = 0;
+		num2 = 0;
+		num3 = 0;
+		
+		//checks to see if there is less than 24 images in level and if so subtracts the number of images used as a category symbol
+		if(query.getCount() < 24)
+			totalNumOfImages -= imgUsedForCat;
+		
 		//randomized images
 		for (int i = 0; i < totalNumOfImages; i++) {
 			imageLoaded = false;
@@ -124,74 +200,6 @@ public class GameControl {
 						imageLoaded = true;
 					} else
 						imageLoaded = false;
-				}
-			}
-		}
-	
-		num1 = 0;
-		num2 = 0;
-		num3 = 0;
-		
-		//randomized category symbols
-		Cursor queryForSymbols = db.query("SELECT iconPath, categoryName, iconPreloaded FROM Category WHERE levelName=?", new String[]{level.getName()});
-		for (int i = 0; i < numOfCategories; i++) {
-			//first check for Category symbol in db
-			queryForSymbols.moveToNext();
-			
-			if(queryForSymbols.getString(0) != null) {
-				categorySymbols[i] = new Image();
-                categorySymbols[i].setPath(queryForSymbols.getString(0));
-                categorySymbols[i].setCatName(queryForSymbols.getInt(1));
-                categorySymbols[i].setPreloaded(queryForSymbols.getInt(2));
-			}
-			else {
-				//if not picks an images out of database
-				imageLoaded = false;
-				while (imageLoaded == false) {
-					query.moveToFirst();
-					int row = rand.nextInt(query.getCount());
-					query.move(row);
-					 
-					//checks to see if row has already been used
-					if(usedImages.size() < totalNumOfImages) {
-						for(int x = 0; x < usedImages.size(); x++) {
-							if(row != usedImages.get(x))
-								addImage = true;
-							else {
-								addImage = false;
-								break;
-							}
-						}
-					}
-	
-					if(addImage == true) {
-						if(query.getInt(1) == 1 && num1 < 1 && i == 0) {			
-							categorySymbols[i] = new Image();
-	                        categorySymbols[i].setPath(query.getString(0));
-	                        categorySymbols[i].setCatName(query.getInt(1));
-	                        categorySymbols[i].setPreloaded(query.getInt(2));
-							num1++;
-							usedImages.add(row);
-							imageLoaded = true;
-						} else if(query.getInt(1) == 2 && num2 < 1 && i == 1) {
-							categorySymbols[i] = new Image();
-	                        categorySymbols[i].setPath(query.getString(0));
-	                        categorySymbols[i].setCatName(query.getInt(1));
-	                        categorySymbols[i].setPreloaded(query.getInt(2));
-							num2++;
-							usedImages.add(row);
-							imageLoaded = true;
-						} else if(query.getInt(1) == 3 && num3 < 1 && i == 2) {
-							categorySymbols[i] = new Image();
-	                        categorySymbols[i].setPath(query.getString(0));
-	                        categorySymbols[i].setCatName(query.getInt(1));
-	                        categorySymbols[i].setPreloaded(query.getInt(2));
-							num3++;
-							usedImages.add(row);
-							imageLoaded = true;
-						} else
-							imageLoaded = false;
-					}
 				}
 			}
 		}

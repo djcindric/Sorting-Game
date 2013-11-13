@@ -4,11 +4,11 @@
     android:id="@+id/gridview"
     android:layout_width="fill_parent" 
     android:layout_height="fill_parent"
-    android:columnWidth="90dp"
+    android:columnWidth="115dp"
     android:numColumns="auto_fit"
     android:verticalSpacing="10dp"
     android:horizontalSpacing="10dp"
     android:stretchMode="columnWidth"
     android:gravity="center"
-    android:background="#a50b00"
+    android:background="@drawable/background_plain_blue"
 />

@@ -79,11 +79,17 @@ public class GalleryActivity extends Activity {
 				columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA);
 	}
 	
-public void btnChoosePhotosClick(View v){
-		
+public void btnChoosePhotosClick(View v){	
 		ArrayList<String> selectedItems = imageAdapter.getCheckedItems();
 		Toast.makeText(GalleryActivity.this, "Total photos selected: "+selectedItems.size(), Toast.LENGTH_SHORT).show();
 		Log.d(GalleryActivity.class.getSimpleName(), "Selected Items: " + selectedItems.toString());
+		String[] allPath = new String[selectedItems.size()];
+        for (int i = 0; i < allPath.length; i++) {
+                allPath[i] = selectedItems.get(i);
+        }
+		Intent data = new Intent().putExtra("image_paths", allPath);
+	    setResult(RESULT_OK, data);
+	    finish();
 	}
 
 	@Override
