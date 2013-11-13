@@ -2,6 +2,7 @@ package com.example.sortinggame;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
@@ -9,10 +10,12 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.DragEvent;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,10 +24,12 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GameActivity extends Activity implements OnTouchListener,
@@ -38,6 +43,9 @@ public class GameActivity extends Activity implements OnTouchListener,
 	String level;
 	GameControl game;
 	private boolean initializeImages;
+	
+	public final static String EXTRA_MESSAGE = "com.example.sortinggame.MESSAGE";
+	public final static String LEVEL_NAME_REPLAY = "com.example.sortinggame.MESSAGE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,11 @@ public class GameActivity extends Activity implements OnTouchListener,
 		category3.setTag(game.getCategory(2).getName());
 
 		initializeImages = true;
+		if(!SoundManager.players[3].isPlaying()){
+			SoundManager.players[3].seekTo(0);
+			SoundManager.playMusic(3);
+		}
+		
 	}
 	
 	//loads images after onCreate is done
@@ -145,19 +158,19 @@ public class GameActivity extends Activity implements OnTouchListener,
 			;
 		// do nothing
 		else if (dragEvent.getAction() == DragEvent.ACTION_DROP) {
-			if(game.checkForValidMove((Integer) v.getTag(), (Integer) view.getTag())) {
+			if(game.checkForValidMove((String) v.getTag(), (String) view.getTag())) {
 				TableRow category = (TableRow) v;
 				
 				//gets the next column to put the image in
 				int row = 0;
-				int imageCategory = (Integer) view.getTag();
+				String imageCategory = (String) view.getTag();
 				
 				//updates number of sorted images
 				game.update(imageCategory);
 				
-				if(imageCategory == game.getCategory(0).getName())
+				if(imageCategory.equals(game.getCategory(0).getName()))
 					row = game.getCategoryOneSorted();
-				else if(imageCategory == game.getCategory(1).getName())
+				else if(imageCategory.equals(game.getCategory(1).getName()))
 					row = game.getCategoryTwoSorted();
 				else
 					row = game.getCategoryThreeSorted();
@@ -175,8 +188,7 @@ public class GameActivity extends Activity implements OnTouchListener,
 				}
 				
 				if(game.checkForWin()) {
-					Toast toast = Toast.makeText(this, "Congratulations, You Win", Toast.LENGTH_LONG);
-					toast.show();
+					gameWin();
 				}
 			}
 			else
@@ -298,4 +310,90 @@ public class GameActivity extends Activity implements OnTouchListener,
 	
 	    return inSampleSize;
 	}
+	
+	public void gameWin(){
+		SoundManager.setContext(this);
+		//Stop Game Music
+		if(SoundManager.players[3].isPlaying()){
+			SoundManager.playMusic(3);
+		}
+		//Start Game win sound
+		SoundManager.playMusic(2);
+		
+		//Grab the entire game view and clear it
+		LinearLayout linear = (LinearLayout) findViewById(R.id.gameScreen);
+		linear.removeAllViews();
+		
+		//Create text to display win message
+		TextView winMessage = new TextView(this);
+		
+		//Create layout for bottom half of screen (buttons)
+		LinearLayout bottomHalf = new LinearLayout(this);
+		bottomHalf.setGravity(Gravity.CENTER);
+		//Parameters for text view
+		LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
+		//params1.weight = 1.0f;
+		
+		//Parameters for bottom linear layout
+		LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
+		//params1.weight = 1.0f;
+		
+		//Set the parameters
+		bottomHalf.setLayoutParams(params2);
+		winMessage.setLayoutParams(params1);
+		
+		//Initialize text view
+		winMessage.setTextSize(40);
+		winMessage.setTextColor(Color.WHITE);
+		winMessage.setText("You Win!");
+		winMessage.setGravity(Gravity.CENTER);
+		
+		//Create buttons
+		Button quitButton = new Button(this);
+		Button playAgain = new Button(this);
+		Button pickNew = new Button(this);
+		
+		//Set On clicks for buttons
+		playAgain.setOnClickListener(myHandler1);
+		playAgain.setText("Play Again");
+		pickNew.setOnClickListener(myHandler2);
+		pickNew.setText("Play Another Level");
+		quitButton.setOnClickListener(myHandler3);
+		quitButton.setText("Quit");
+		
+		
+		//Add buttons to bottom view
+		bottomHalf.addView(playAgain);
+		bottomHalf.addView(pickNew);
+		bottomHalf.addView(quitButton);
+		
+		linear.setBackgroundResource(R.drawable.winbackground);
+		linear.addView(winMessage);
+		linear.addView(bottomHalf);
+		}
+	
+	//Choose new level
+	View.OnClickListener myHandler1 = new View.OnClickListener(){
+		public void onClick(View v) {
+			Intent intent = new Intent(getBaseContext(), GameActivity.class);
+			intent.putExtra(LEVEL_NAME_REPLAY, level);
+			startActivity(intent);
+			finish();
+		}
+	};
+	//Quit Game
+	View.OnClickListener myHandler2 = new View.OnClickListener(){
+		public void onClick(View v) {
+//			Intent intent = new Intent(getBaseContext(), LevelActivity.class);
+//			startActivity(intent);
+			finish();
+		}
+	};
+	//Play Again
+	View.OnClickListener myHandler3 = new View.OnClickListener(){
+		public void onClick(View v) {
+			Toast toast = Toast.makeText(getBaseContext(), "Quit Game", Toast.LENGTH_SHORT);
+			toast.show();
+		}
+	};
 }

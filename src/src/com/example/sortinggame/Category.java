@@ -2,24 +2,23 @@ package com.example.sortinggame;
 
 public class Category
 {
-	private String level, path;
-	private int name;
+	private String name, level;
+	private int position;
 	
-	public Category(int catName, String levelName, String path)
+	public Category(String catName, String levelName)
 	{
 		this.name = catName;
 		this.level = levelName;
-		this.setPath(path);
 	}
 	public Category() {
-		this.name = -1;
+		this.name = null;
 		this.level = null;
 	}
-	public void setName(int catName)
+	public void setName(String catName)
 	{
 		this.name = catName;
 	}
-	public int getName()
+	public String getName()
 	{
 		return name;
 	}
@@ -29,16 +28,10 @@ public class Category
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	/**
-	 * @return the path
-	 */
-	public String getPath() {
-		return path;
+	public int getPosition() {
+		return position;
 	}
-	/**
-	 * @param path the path to set
-	 */
-	public void setPath(String path) {
-		this.path = path;
+	public void setPosition(int position) {
+		this.position = position;
 	}
 }

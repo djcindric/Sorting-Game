@@ -5,11 +5,16 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
-    
     <item
-        android:id="@+id/hide_bar"
+        android:id="@+id/sound"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/sound"/>
+    <item
+        android:id="@+id/mute"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:title="@string/hide_bar"/>
+        android:title="@string/mute"
+        android:icon="@drawable/mute_button"/>
 
 </menu>

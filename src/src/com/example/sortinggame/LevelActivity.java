@@ -2,9 +2,10 @@ package com.example.sortinggame;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -53,18 +54,36 @@ public class LevelActivity extends Activity {
 	//Handle clicks on the action bar
 	public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
-    	case R.id.hide_bar:
-    		ActionBar actionBar = getActionBar();
-    		actionBar.hide();
-    		return true;
+    	case R.id.mute:
+        	SoundManager.playMusic(0);
+        	return true;
+        case R.id.sound:
+        	disableSound();
+        	return true;
     	case android.R.id.home:
-    		MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.click);
-        	clickSound.start();
     		NavUtils.navigateUpFromSameTask(this);
     		return true;
     	default:
     		return super.onOptionsItemSelected(item);
     	}
+    }
+	
+	public void disableSound(){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState() +
+    				". Would you like to change it?").setTitle("Change Sound State");
+    	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			SoundManager.playMusic(0);
+    		}
+    	});
+    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			
+    		}
+    	});
+    	AlertDialog dialog = builder.create();
+    	dialog.show();
     }
 	
 	public void goBackToMain(View view){
@@ -77,6 +96,10 @@ public class LevelActivity extends Activity {
 		String level = imageAdapter.getLevel(position);
 		Intent intent = new Intent(this, GameActivity.class);
 		intent.putExtra(LEVEL_NAME, level);
+		//Stop menu music
+		if(SoundManager.players[0].isPlaying()){
+			SoundManager.playMusic(0);
+		}
     	startActivity(intent);
 	}
 }

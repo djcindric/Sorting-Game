@@ -1,10 +1,10 @@
 package com.example.sortinggame;
 
-import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,6 +19,9 @@ public class MainMenuActivity extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        
+        SoundManager.setContext(this);
+        SoundManager.initializePlayers();
     }
 
     @Override
@@ -31,26 +34,44 @@ public class MainMenuActivity extends Activity {
     //Handle Presses on the Action bar
     public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
-            case R.id.hide_bar:
-                    ActionBar actionBar = getActionBar();
-                    actionBar.hide();
-                    return true;
+            case R.id.mute:
+            	SoundManager.playMusic(0);
+            	return true;
+            case R.id.sound:
+            	disableSound();
+            	return true;
             default:
                     return super.onOptionsItemSelected(item);
             }
     }
     
     public void loadLevelInterface(View view) {
-            MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
-            clickSound.start();
-            Intent intent = new Intent(this, LevelActivity.class);
-            startActivity(intent);
+    	SoundManager.playMusic(1);
+        Intent intent = new Intent(this, LevelActivity.class);
+        startActivity(intent);
     }
     
     public void loadCustomizerInterface(View view) {
-            MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
-            clickSound.start();
-            Intent intent = new Intent(this, CustomizerActivity.class);
-            startActivity(intent);         
+    	SoundManager.playMusic(1);
+    	Intent intent = new Intent(this, CustomizerActivity.class);
+        startActivity(intent);         
+    }
+    
+    public void disableSound(){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState() +
+    				". Would you like to change it?").setTitle("Change Sound State");
+    	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			SoundManager.playMusic(0);
+    		}
+    	});
+    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			
+    		}
+    	});
+    	AlertDialog dialog = builder.create();
+    	dialog.show();
     }
 }
