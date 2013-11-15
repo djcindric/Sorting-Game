@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 public class EditCategoryActivity extends Activity{
+	private CustomizerControl control;
 	private String level;
 	private ArrayList<String> catergory1Images;
 	private ArrayList<String> catergory2Images;
@@ -35,6 +36,7 @@ public class EditCategoryActivity extends Activity{
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setTitle("Add Images to " + level);
 		
+		control = new CustomizerControl(this);
 		
 		catergory1Images = new ArrayList<String>();
 		catergory2Images = new ArrayList<String>();
@@ -82,6 +84,24 @@ public class EditCategoryActivity extends Activity{
 		Intent intent = new Intent(this, GalleryActivity.class);
 		startActivityForResult(intent, 300);
 	}
+	public void saveLevel(View view) {
+		control.saveLevel(level, "bagel", "bookcase_background");
+		control.saveCategory(level, 1, null);
+		control.saveCategory(level, 2, null);
+		control.saveCategory(level, 3, null);
+		
+		ArrayList<Integer> ids = control.getCategoryIDs(level);
+		for(String path : catergory1Images)
+			control.saveImage(path, ids.get(0));
+		
+		for(String path : catergory2Images)
+			control.saveImage(path, ids.get(1));
+		
+		for(String path : catergory3Images)
+			control.saveImage(path, ids.get(2));
+		
+		Toast.makeText(this, "Adding Level...", Toast.LENGTH_LONG).show();
+	}
 	 @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
              super.onActivityResult(requestCode, resultCode, data);
@@ -92,7 +112,7 @@ public class EditCategoryActivity extends Activity{
                  for (String string : all_path) {
                 	 catergory1Images.add(string);
                  }
-                 Toast.makeText(this, "Category 3 Images: " + catergory1Images.toString(), Toast.LENGTH_LONG).show();
+                 System.out.println(catergory1Images.toString());
              }
              else if (requestCode == 200 && resultCode == Activity.RESULT_OK) {
             	 String[] all_path = data.getStringArrayExtra("image_paths");
@@ -100,7 +120,6 @@ public class EditCategoryActivity extends Activity{
                  for (String string : all_path) {
                 	 catergory2Images.add(string);
                  }
-                 Toast.makeText(this, "Category 3 Images: " + catergory2Images.toString(), Toast.LENGTH_LONG).show();
              }
              else  if (requestCode == 300 && resultCode == Activity.RESULT_OK) {
             	 String[] all_path = data.getStringArrayExtra("image_paths");
@@ -108,7 +127,6 @@ public class EditCategoryActivity extends Activity{
                  for (String string : all_path) {
                 	 catergory3Images.add(string);
                  }
-                 Toast.makeText(this, "Category 3 Images: " + catergory3Images.toString(), Toast.LENGTH_LONG).show();
              }
      }
 }
