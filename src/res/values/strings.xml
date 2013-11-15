@@ -37,5 +37,7 @@
     <string name="title_activity_game_win">GameWinActivity</string>
     <string name="mute">Mute</string>
     <string name="sound">Disable Sound</string>
+    <string name="dialog_delete_level">Are you sure you would like to delete the level?</string>
+    <string name="dialog_confirm">Yes</string>
 
 </resources>
