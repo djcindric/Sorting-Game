@@ -29,7 +29,8 @@ public class EditCategoryActivity extends Activity{
 		setContentView(R.layout.activity_edit_category);
 		
 		Intent i = getIntent();
-		level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+		if(i.hasExtra(CustomizerActivity.LEVEL_NAME))
+			level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
 
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
