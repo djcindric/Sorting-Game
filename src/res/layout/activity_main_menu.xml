@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#a50b00"
+    android:background="@drawable/game_background"
     android:gravity="center"
     tools:context=".MainMenuActivity" >
     
@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/choose_level_menu"
+        android:textColor="@android:color/white"
         android:onClick="loadLevelInterface" />
     
     <Button 
@@ -19,6 +20,7 @@
         android:layout_height="wrap_content"
      	android:layout_marginTop="30dp"
         android:layout_below="@id/load_level_interface"
+        android:textColor="@android:color/white"
         android:text="@string/customizer" 
         android:onClick="loadCustomizerInterface" />
 

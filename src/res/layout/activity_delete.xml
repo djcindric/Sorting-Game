@@ -1,14 +1,34 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-	android:gravity="center|center_vertical"
-	android:background="#a50b00"
-    tools:context=".DeleteActivity" >
+<?xml version="1.0" encoding="utf-8"?>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="This is the Delete Interface" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#a50b00" >
+	
+    <Button
+        android:id="@+id/cancel_button"
+    	android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:layout_alignParentBottom="true"
+    	android:layout_alignParentRight="true"
+    	android:text="@string/cancel"
+    	android:onClick="loadCustomizerInterface" />
+    
+    <GridView 
+    	android:id="@+id/gridview"
+    	android:layout_width="fill_parent" 
+    	android:layout_height="wrap_content"
+    	android:columnWidth="90dp"
+    	android:numColumns="auto_fit"
+    	android:verticalSpacing="10dp"
+    	android:horizontalSpacing="10dp"
+    	android:stretchMode="columnWidth"
+    	android:gravity="center"
+    	android:layout_above="@id/cancel_button"
+    	android:layout_alignParentTop="true"
+    	android:background="#a50b00" > 
+    
+    
+</GridView>
 
 </RelativeLayout>

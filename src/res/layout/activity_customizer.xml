@@ -3,23 +3,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="#a50b00"
+    android:background="@drawable/game_background"
     tools:context=".CustomizerActivity" >
 
     <Button
-        android:id="@+id/Add_Update_Button"
+        android:id="@+id/Add_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/choose_addupdate"
-        android:onClick="loadAddUpdateInterface"/>
-    
+        android:layout_above="@+id/delete_Button"
+        android:layout_alignLeft="@+id/delete_Button"
+        android:layout_marginBottom="30dp"
+        android:textColor="@android:color/white"
+        android:onClick="loadAddInterface"
+        android:text="@string/choose_add" />
+
     <Button
         android:id="@+id/delete_Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Add_Update_Button"
-        android:layout_marginTop="20dp"
-        android:text="@string/choose_delete"
-        android:onClick="loadDeleteInterface"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
+        android:textColor="@android:color/white"
+        android:onClick="loadDeleteInterface"
+        android:text="@string/choose_delete" />
+
+    <Button
+        android:id="@+id/Update_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/delete_Button"
+        android:layout_alignTop="@+id/delete_Button"
+        android:layout_marginTop="62dp"
+        android:textColor="@android:color/white"
+        android:onClick="loadUpdateInterface"
+        android:text="@string/choose_update" />
 
 </RelativeLayout>
