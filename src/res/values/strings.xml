@@ -10,17 +10,17 @@
     <string name="title_activity_add_update">Add or Update</string>
     <string name="title_activity_delete">Delete</string>
     <string name="title_activity_gallery">Image Gallery</string>
-    <string name="choose_level_menu">Choose Level</string>
-    <string name="customizer">Customize Level</string>
+    <string name="choose_level_menu">Choose \n Level</string>
+    <string name="customizer">Customize \n Level</string>
     <string name="choose_level">Choose the level you would like to play.\nList of levels to play will go here.</string>
-    <string name="choose_add">Add a level</string>
-    <string name="choose_update">Update a level</string>
-    <string name="choose_delete">Delete a existing level</string>
+    <string name="choose_add">Add \n a \n level</string>
+    <string name="choose_update">Update \n a \n level</string>
+    <string name="choose_delete">Delete an \n existing \n level</string>
     <string name="hide_bar">Hide</string>
     <string name="back_arrow">Test</string>
     <string name="add_level">Create New Level</string>
     <string name="cancel">Cancel</string>
-    <string name="addupdate_header">Choose a level to update or create a new level</string>
+    <string name="addupdate_header">Choose a level to update</string>
     <string name="leveltext">Level Name</string>
     <string name="categorytext">Categories</string>
     <string name="add_icon">Icon</string>
@@ -39,5 +39,7 @@
     <string name="sound">Disable Sound</string>
     <string name="dialog_delete_level">Are you sure you would like to delete the level?</string>
     <string name="dialog_confirm">Yes</string>
+    <string name="content">Image</string>
+    <string name="update">Update</string>
 
 </resources>

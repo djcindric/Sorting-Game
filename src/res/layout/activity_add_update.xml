@@ -15,16 +15,7 @@
     	android:text="@string/cancel"
     	android:onClick="loadCustomizerInterface" />
 
-    <Button
-        android:id="@+id/Add_Level"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="@string/add_level" 
-        android:onClick="loadAddInterface"/>
-
+   
     <GridView
         android:id="@+id/gridView1"
         android:layout_width="match_parent"

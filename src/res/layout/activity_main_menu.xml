@@ -5,23 +5,31 @@
     android:background="@drawable/game_background"
     android:gravity="center"
     tools:context=".MainMenuActivity" >
-    
-    <Button 
-        android:id="@+id/load_level_interface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/choose_level_menu"
-        android:textColor="@android:color/white"
-        android:onClick="loadLevelInterface" />
-    
-    <Button 
+
+    <Button
         android:id="@+id/load_customize_level_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-     	android:layout_marginTop="30dp"
-        android:layout_below="@id/load_level_interface"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="37dp"
+        android:padding="10dp"
+        android:background="@drawable/android_button"
+        android:onClick="loadCustomizerInterface"
+        android:text="@string/customizer"
         android:textColor="@android:color/white"
-        android:text="@string/customizer" 
-        android:onClick="loadCustomizerInterface" />
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/load_level_interface"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/load_customize_level_interface"
+        android:layout_marginLeft="35dp"
+        android:background="@drawable/android_button"
+        android:onClick="loadLevelInterface"
+        android:text="@string/choose_level_menu"
+        android:textColor="@android:color/white" 
+        android:padding="10dp"/>
 
 </RelativeLayout>
