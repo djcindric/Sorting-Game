@@ -36,7 +36,12 @@ public class EditCategoryActivity extends Activity{
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle("Add Images to " + ulevel);
+		if(level!=null)
+		{
+			actionBar.setTitle("Add Images to " + level);
+		}
+		else
+			actionBar.setTitle("Add Images to " + ulevel);
 		
 		control = new CustomizerControl(this);
 		
@@ -105,7 +110,8 @@ public class EditCategoryActivity extends Activity{
 		Toast.makeText(this, "Adding Level...", Toast.LENGTH_LONG).show();
 	}
 	public void updateLevel(View view) {
-		control.updateLevel(ulevel, "bagel", "bookcase_background");
+		//set icon to book and bg to shapes_background to show successful update
+		control.updateLevel(ulevel, "book", "shapes_background");
 		control.updateCategory(ulevel, 1, null);
 		control.updateCategory(ulevel, 2, null);
 		control.updateCategory(ulevel, 3, null);

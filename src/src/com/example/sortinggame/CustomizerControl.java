@@ -35,13 +35,13 @@ public class CustomizerControl {
 		values.put("category_id", catID);
 		db.insert("Images", null, values);
 	}
-	
+	//Update seems to successfully run
 	public void updateImage(String path, int catID) {
 		ContentValues values = new ContentValues();
 		String[] whereArgs = new String[] {String.valueOf(catID)};
 		values.put("path", path);
 		values.put("category_id", catID);
-		db.update("Images", values, "category_id = "+ catID , whereArgs);
+		db.update("Images", values, "category_id = ?"/*+ catID*/, whereArgs);
 	}
 	
 	public void updateLevel(String name, String icon, String background) {
