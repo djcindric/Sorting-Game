@@ -29,17 +29,21 @@ public class EditCategoryActivity extends Activity{
 		setContentView(R.layout.activity_edit_category);
 		
 		Intent i = getIntent();
-		level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+
 		if(i.hasExtra(CustomizerActivity.LEVEL_NAME))
 			level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
-		if(i.hasExtra(CustomizerActivity.LEVEL))
-			level = j.getExtras().getString(AddUpdateActivity.LEVEL);
+		if(i.hasExtra(AddUpdateActivity.LEVEL))
+			level = i.getExtras().getString(AddUpdateActivity.LEVEL);
+
 
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+		
+		if(level != null)
 			actionBar.setTitle("Add Images to " + level);
+		else
+			actionBar.setTitle("Add Images to " + ulevel);
 		
 		control = new CustomizerControl(this);
 		
@@ -109,11 +113,27 @@ public class EditCategoryActivity extends Activity{
 	}
 	public void updateLevel(View view) {
 		//set icon to book and bg to shapes_background to show successful update
-		control.updateLevel(ulevel, "book", "shapes_background");
+		if(level != null) {
+			control.saveLevel(level, "book", "shapes_background");
+			control.saveCategory(level, 1, null);
+			control.saveCategory(level, 2, null);
+			control.saveCategory(level, 3, null);
+		}
+		/*
 		control.updateCategory(ulevel, 1, null);
 		control.updateCategory(ulevel, 2, null);
 		control.updateCategory(ulevel, 3, null);
+		*/
+		ArrayList<Integer> ids = control.getCategoryIDs(level);
+		for(String path : catergory1Images)
+			control.saveImage(path, ids.get(0));
 		
+		for(String path : catergory2Images)
+			control.saveImage(path, ids.get(1));
+		
+		for(String path : catergory3Images)
+			control.saveImage(path, ids.get(2));
+		/*
 		ArrayList<Integer> ids = control.getCategoryIDs(ulevel);
 		for(String path : catergory1Images)
 			control.updateImage(path, ids.get(0));
@@ -125,6 +145,7 @@ public class EditCategoryActivity extends Activity{
 			control.updateImage(path, ids.get(2));
 		
 		Toast.makeText(this, "Updating Level...", Toast.LENGTH_LONG).show();
+		*/
 	}
 	 @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
