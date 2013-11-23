@@ -35,6 +35,32 @@ public class CustomizerControl {
 		values.put("category_id", catID);
 		db.insert("Images", null, values);
 	}
+	//Update seems to successfully run
+	public void updateImage(String path, int catID) {
+		ContentValues values = new ContentValues();
+		String[] whereArgs = new String[] {String.valueOf(catID)};
+		values.put("path", path);
+		values.put("category_id", catID);
+		db.update("Images", values, "category_id = ?"/*+ catID*/, whereArgs);
+	}
+	
+	public void updateLevel(String name, String icon, String background) {
+		ContentValues values = new ContentValues();
+		String[] whereArgs = new String[] {String.valueOf(name)};
+		values.put("name", name);
+		values.put("iconPath", icon);
+		values.put("background", background);
+		db.update("Level", values,"name = ?" /*+ name*/, whereArgs);
+	}
+	
+	public void updateCategory(String level, int name, String icon) {
+		ContentValues values = new ContentValues();
+		String[] whereArgs = new String[] {String.valueOf(level)};
+		values.put("levelName", level);
+		values.put("categoryName", name);
+		values.put("iconPath", icon);
+		db.update("Category", values, "levelName = ?" /*+ level*/, whereArgs);
+	}
 	
 	public ArrayList<Integer> getCategoryIDs(String level) {
 		ArrayList <Integer> ids = new ArrayList<Integer>();

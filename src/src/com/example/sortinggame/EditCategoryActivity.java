@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class EditCategoryActivity extends Activity{
 	private CustomizerControl control;
-	private String level;
+	private String level, ulevel;
 	private ArrayList<String> catergory1Images;
 	private ArrayList<String> catergory2Images;
 	private ArrayList<String> catergory3Images;
@@ -29,13 +29,17 @@ public class EditCategoryActivity extends Activity{
 		setContentView(R.layout.activity_edit_category);
 		
 		Intent i = getIntent();
+		level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
 		if(i.hasExtra(CustomizerActivity.LEVEL_NAME))
 			level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+		if(i.hasExtra(CustomizerActivity.LEVEL))
+			level = j.getExtras().getString(AddUpdateActivity.LEVEL);
 
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle("Add Images to " + level);
+
+			actionBar.setTitle("Add Images to " + level);
 		
 		control = new CustomizerControl(this);
 		
@@ -102,6 +106,25 @@ public class EditCategoryActivity extends Activity{
 			control.saveImage(path, ids.get(2));
 		
 		Toast.makeText(this, "Adding Level...", Toast.LENGTH_LONG).show();
+	}
+	public void updateLevel(View view) {
+		//set icon to book and bg to shapes_background to show successful update
+		control.updateLevel(ulevel, "book", "shapes_background");
+		control.updateCategory(ulevel, 1, null);
+		control.updateCategory(ulevel, 2, null);
+		control.updateCategory(ulevel, 3, null);
+		
+		ArrayList<Integer> ids = control.getCategoryIDs(ulevel);
+		for(String path : catergory1Images)
+			control.updateImage(path, ids.get(0));
+		
+		for(String path : catergory2Images)
+			control.updateImage(path, ids.get(1));
+		
+		for(String path : catergory3Images)
+			control.updateImage(path, ids.get(2));
+		
+		Toast.makeText(this, "Updating Level...", Toast.LENGTH_LONG).show();
 	}
 	 @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
