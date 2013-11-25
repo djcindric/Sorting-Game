@@ -11,8 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginLeft="37dp"
-        android:padding="10dp"
+        android:layout_margin="30dp"
         android:background="@drawable/android_button"
         android:onClick="loadCustomizerInterface"
         android:text="@string/customizer"
@@ -23,13 +22,12 @@
         android:id="@+id/load_level_interface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/load_customize_level_interface"
-        android:layout_marginLeft="35dp"
+        android:layout_centerVertical="true"
+      	android:layout_margin="30dp"
+        android:layout_toLeftOf="@+id/load_customize_level_interface"
         android:background="@drawable/android_button"
         android:onClick="loadLevelInterface"
         android:text="@string/choose_level_menu"
-        android:textColor="@android:color/white" 
-        android:padding="10dp"/>
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>

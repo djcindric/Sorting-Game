@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 public class EditCategoryActivity extends Activity{
+	public final static String LEVEL_NAME = "com.example.sortinggame.MESSAGE";
 	private CustomizerControl control;
 	private String level, ulevel;
 	private ArrayList<String> catergory1Images;
@@ -81,72 +82,58 @@ public class EditCategoryActivity extends Activity{
 	
 	public void chooseCat1Images(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
+		if(level != null)
+			intent.putExtra(LEVEL_NAME,level);
+		else
+			intent.putExtra(LEVEL_NAME,ulevel);
 		startActivityForResult(intent, 100);
 	}
 	
 	public void chooseCat2Images(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
+		if(level != null)
+			intent.putExtra(LEVEL_NAME,level);
+		else
+			intent.putExtra(LEVEL_NAME,ulevel);
 		startActivityForResult(intent, 200);
 	}
 	
 	public void chooseCat3Images(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
+		if(level != null)
+			intent.putExtra(LEVEL_NAME,level);
+		else
+			intent.putExtra(LEVEL_NAME,ulevel);
 		startActivityForResult(intent, 300);
 	}
 	public void saveLevel(View view) {
-		control.saveLevel(level, "bagel", "bookcase_background");
-		control.saveCategory(level, 1, null);
-		control.saveCategory(level, 2, null);
-		control.saveCategory(level, 3, null);
-		
-		ArrayList<Integer> ids = control.getCategoryIDs(level);
-		for(String path : catergory1Images)
-			control.saveImage(path, ids.get(0));
-		
-		for(String path : catergory2Images)
-			control.saveImage(path, ids.get(1));
-		
-		for(String path : catergory3Images)
-			control.saveImage(path, ids.get(2));
-		
-		Toast.makeText(this, "Adding Level...", Toast.LENGTH_LONG).show();
-	}
-	public void updateLevel(View view) {
-		//set icon to book and bg to shapes_background to show successful update
-		if(level != null) {
+		// set icon to book and bg to shapes_background to show successful update
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		if (level != null) {
 			control.saveLevel(level, "book", "shapes_background");
 			control.saveCategory(level, 1, null);
 			control.saveCategory(level, 2, null);
 			control.saveCategory(level, 3, null);
-		}
-		/*
-		control.updateCategory(ulevel, 1, null);
-		control.updateCategory(ulevel, 2, null);
-		control.updateCategory(ulevel, 3, null);
-		*/
-		ArrayList<Integer> ids = control.getCategoryIDs(level);
-		for(String path : catergory1Images)
+			ids = control.getCategoryIDs(level);
+		} else
+			ids = control.getCategoryIDs(level);
+
+		for (String path : catergory1Images)
 			control.saveImage(path, ids.get(0));
-		
-		for(String path : catergory2Images)
+
+		for (String path : catergory2Images)
 			control.saveImage(path, ids.get(1));
-		
-		for(String path : catergory3Images)
+
+		for (String path : catergory3Images)
 			control.saveImage(path, ids.get(2));
-		/*
-		ArrayList<Integer> ids = control.getCategoryIDs(ulevel);
-		for(String path : catergory1Images)
-			control.updateImage(path, ids.get(0));
+
+		Toast.makeText(this, "Saving Level...", Toast.LENGTH_LONG).show();
 		
-		for(String path : catergory2Images)
-			control.updateImage(path, ids.get(1));
-		
-		for(String path : catergory3Images)
-			control.updateImage(path, ids.get(2));
-		
-		Toast.makeText(this, "Updating Level...", Toast.LENGTH_LONG).show();
-		*/
+		Intent intent = new Intent(this, CustomizerActivity.class);
+		startActivity(intent);
+		finish();
 	}
+	
 	 @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
              super.onActivityResult(requestCode, resultCode, data);

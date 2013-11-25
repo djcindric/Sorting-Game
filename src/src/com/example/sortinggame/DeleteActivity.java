@@ -41,7 +41,7 @@ public class DeleteActivity extends FragmentActivity {
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	        	 String level = imageAdapter.getLevel(position);
-	        	 DialogFragment newFragment = new DeleteDialogBox(level);
+	        	 DialogFragment newFragment = new DeleteDialogBox(level, getApplicationContext());
 	        	 newFragment.show(getSupportFragmentManager(), "dialog");
 	        }
 	    });

@@ -70,6 +70,7 @@ public class GameControl {
 	}
 	
 	private void loadImages() {
+		System.out.println("Loading Images from db");
 		Cursor query = db.query("SELECT path, Category.categoryName, preloaded FROM Images, Category WHERE Images.category_id = Category.id and Category.levelName=?", new String[]{level.getName()});
 		int num1 = 0;
 		int num2 = 0;
@@ -80,6 +81,7 @@ public class GameControl {
 		boolean imageLoaded = false;
 		Random rand = new Random();
 		
+		System.out.println("Loading category Images from db");
 		//randomized category symbols
 		Cursor queryForSymbols = db.query("SELECT iconPath, categoryName, iconPreloaded FROM Category WHERE levelName=?", new String[]{level.getName()});
 		for (int i = 0; i < numOfCategories; i++) {
@@ -91,6 +93,9 @@ public class GameControl {
                 categorySymbols[i].setPath(queryForSymbols.getString(0));
                 categorySymbols[i].setCatName(queryForSymbols.getInt(1));
                 categorySymbols[i].setPreloaded(queryForSymbols.getInt(2));
+                System.out.println("Symbol 1 + " + queryForSymbols.getString(0));
+                System.out.println("Symbol 2 + " + queryForSymbols.getString(1));
+                System.out.println("Symbol 3 + " + queryForSymbols.getString(3));
 			}
 			else {
 				//if not picks an images out of database
@@ -146,11 +151,15 @@ public class GameControl {
 				}
 			}
 		}
+		
+		System.out.println("Loaded category Images from db");
+		System.out.println("Loading playable Images from db");
 		num1 = 0;
 		num2 = 0;
 		num3 = 0;
 		
 		//checks to see if there is less than 24 images in level and if so subtracts the number of images used as a category symbol
+		System.out.println("Number of IMages " + query.getCount());
 		if(query.getCount() < 24)
 			totalNumOfImages -= imgUsedForCat;
 		
@@ -168,6 +177,7 @@ public class GameControl {
 					if(row != usedImages.get(x))
 						addImage = true;
 					else {
+						System.out.println(row + "  " + usedImages.get(x));
 						addImage = false;
 						break;
 					}
@@ -203,6 +213,8 @@ public class GameControl {
 				}
 			}
 		}
+		System.out.println("Loaded playable Images from db");
+		System.out.println("Loaded Images from db");
 	}
 	
 	private void getImagesCounts() {

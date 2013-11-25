@@ -81,8 +81,8 @@ public class CustomizerControl {
 			ids[i] = cursor.getString(0);
 		}
 		
-		db.delete("Images", "category_id = ? and categoery_id = ? and category_id = ?" ,  ids);
-		db.delete("Category", "levelName = " + name, null);
-		db.delete("Level", "levelName = " + name, null);
+		db.delete("Images", "category_id = ? or category_id = ? or category_id = ?" ,  ids);
+		db.delete("Category", "levelName = ?", new String[]{name});
+		db.delete("Level", "name = ?", new String[]{name});
 	}
 }

@@ -154,10 +154,6 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 				ImageView img = (ImageView) category.getChildAt(row);
 				Drawable copyImg = view.getDrawable();
 				img.setImageDrawable(copyImg);
-				if(levelPreloaded == 0) {
-					img.setPadding(5, 5, 5, 0);
-					img.setScaleType(ScaleType.CENTER_INSIDE);
-				}
 				img.setVisibility(View.VISIBLE);
 				
 				//loads next image in item pool
@@ -188,9 +184,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		int identifier;
 		
 			if(isPreloaded == 0) {
-				imageView.setImageBitmap(mImageManager.decodeSampledBitmapFromFile(path, 50, 50));
-				imageView.setScaleType(ScaleType.CENTER_INSIDE);
-				imageView.setPadding(5, 5, 5, 0);
+				imageView.setImageBitmap(mImageManager.decodeSampledBitmapFromFile(path, 100, 100));
 			}
 			else {
 				try {
@@ -302,7 +296,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		pickNew.setOnClickListener(myHandler2);
 		pickNew.setText("Play Another Level");
 		quitButton.setOnClickListener(myHandler3);
-		quitButton.setText("Quit");
+		quitButton.setText("Main Menu");
 		
 		
 		//Add buttons to bottom view
@@ -335,8 +329,9 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	//Play Again
 	View.OnClickListener myHandler3 = new View.OnClickListener(){
 		public void onClick(View v) {
-			Toast toast = Toast.makeText(getBaseContext(), "Quit Game", Toast.LENGTH_SHORT);
-			toast.show();
+			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
+			startActivity(intent);
+			finish();
 		}
 	};
 }

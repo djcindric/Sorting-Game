@@ -71,12 +71,7 @@ public class AddUpdateActivity extends Activity {
 		Intent intent = new Intent(this, CustomizerActivity.class);
 		startActivity(intent);
 	}
-	
-	public void loadAddInterface(View view) {
-		Intent intent = new Intent(this, EditLevelActivity.class);
-		startActivity(intent);
-	}
-	
+
 	public void loadEditInterface(View view, String level) {
 		Intent intent = new Intent(this, EditCategoryActivity.class);
 		intent.putExtra(LEVEL, level);
