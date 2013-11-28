@@ -16,6 +16,7 @@ import android.widget.GridView;
 public class AddUpdateActivity extends Activity {
 
 	ImageAdapterLevel imageAdapter;
+	public static String LEVEL ="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,8 @@ public class AddUpdateActivity extends Activity {
 		//Load Edit Interface when icon is clicked
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-	        	loadEditInterface(v);
+	        	LEVEL = imageAdapter.getLevel(position);
+	        	loadEditInterface(v, LEVEL);
 	        }
 	    });
 	}
@@ -69,14 +71,10 @@ public class AddUpdateActivity extends Activity {
 		Intent intent = new Intent(this, CustomizerActivity.class);
 		startActivity(intent);
 	}
-	
-	public void loadAddInterface(View view) {
-		Intent intent = new Intent(this, EditLevelActivity.class);
-		startActivity(intent);
-	}
-	
-	public void loadEditInterface(View view) {
-		Intent intent = new Intent(this, EditLevelActivity.class);
+
+	public void loadEditInterface(View view, String level) {
+		Intent intent = new Intent(this, EditCategoryActivity.class);
+		intent.putExtra(LEVEL, level);
 		startActivity(intent);
 	}
 

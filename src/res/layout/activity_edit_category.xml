@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0ca961"
+    android:background="@drawable/background_plain_blue"
     tools:context=".EditCategoryActivity" >   
 
     <HorizontalScrollView
@@ -21,6 +21,7 @@
                 android:id="@+id/cat1_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/template"
                 android:onClick="chooseCat1Images"
                 android:text="@string/add_cat1" />
         </LinearLayout>
@@ -42,6 +43,7 @@
                 android:id="@+id/cat2_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/template"
                 android:onClick="chooseCat2Images"
                 android:text="@string/add_cat2" />
         </LinearLayout>
@@ -51,7 +53,7 @@
         android:id="@+id/horizontalScrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-         android:layout_below="@id/horizontalScrollView2"  >
+        android:layout_below="@id/horizontalScrollView2"  >
 
         <LinearLayout
             android:id="@+id/cat3"
@@ -63,28 +65,21 @@
                 android:id="@+id/cat3_images"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/template"
                 android:onClick="chooseCat3Images"
                 android:text="@string/add_cat3" />
           </LinearLayout>
-     </HorizontalScrollView>     
-          
-     <Button
-        android:id="@+id/button1"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="loadEditLevelInterface"
-        android:text="@string/cancel" />
+     </HorizontalScrollView>
 
     <Button
         android:id="@+id/button2"
         style="?android:attr/buttonStyleSmall"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:onClick="saveLevel"
         android:text="@string/done" />
+
  </RelativeLayout>

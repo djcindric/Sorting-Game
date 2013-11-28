@@ -34,6 +34,33 @@ public class CustomizerControl {
 		values.put("path", path);
 		values.put("category_id", catID);
 		db.insert("Images", null, values);
+		System.out.println("Saving image" + path + "in cat" + catID);
+	}
+	//Update seems to successfully run
+	public void updateImage(String path, int catID) {
+		ContentValues values = new ContentValues();
+		String[] whereArgs = new String[] {String.valueOf(catID)};
+		values.put("path", path);
+		values.put("category_id", catID);
+		db.update("Images", values, "category_id = ?"/*+ catID*/, whereArgs);
+	}
+	
+	public void updateLevel(String name, String icon, String background) {
+		ContentValues values = new ContentValues();
+		String[] whereArgs = new String[] {String.valueOf(name)};
+		values.put("name", name);
+		values.put("iconPath", icon);
+		values.put("background", background);
+		db.update("Level", values,"name = ?" /*+ name*/, whereArgs);
+	}
+	
+	public void updateCategory(String level, int name, String icon) {
+		ContentValues values = new ContentValues();
+		String[] whereArgs = new String[] {String.valueOf(level)};
+		values.put("levelName", level);
+		values.put("categoryName", name);
+		values.put("iconPath", icon);
+		db.update("Category", values, "levelName = ?" /*+ level*/, whereArgs);
 	}
 	
 	public ArrayList<Integer> getCategoryIDs(String level) {
@@ -46,17 +73,20 @@ public class CustomizerControl {
 	}
 	
 	public void deleteLevel(String name) {
-		Cursor cursor = db.query("SELECT count(DISTINCT id) FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{name});
-		String[] ids = new String[cursor.getCount()];
-		cursor = db.query("SELECT id FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{name});
+		String[] ids = new String[3];
+		Cursor cursor = db.query("SELECT id FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{name});
 		
 		for(int i = 0; i < ids.length; i++) {
 			cursor.moveToNext();
 			ids[i] = cursor.getString(0);
 		}
 		
-		db.delete("Images", "category_id = ? and categoery_id = ? and category_id = ?" ,  ids);
-		db.delete("Category", "levelName = " + name, null);
-		db.delete("Level", "levelName = " + name, null);
+		db.delete("Images", "category_id = ? or category_id = ? or category_id = ?" ,  ids);
+		db.delete("Category", "levelName = ?", new String[]{name});
+		db.delete("Level", "name = ?", new String[]{name});
+	}
+	
+	public void close() {
+		db.close();
 	}
 }

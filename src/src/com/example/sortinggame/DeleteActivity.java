@@ -23,7 +23,7 @@ public class DeleteActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		//Prevent Screen From rotating
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR); 
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); 
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delete);
@@ -41,7 +41,7 @@ public class DeleteActivity extends FragmentActivity {
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	        	 String level = imageAdapter.getLevel(position);
-	        	DialogFragment newFragment = new DeleteDialogBox(level);
+	        	 DialogFragment newFragment = new DeleteDialogBox(level, getApplicationContext());
 	        	 newFragment.show(getSupportFragmentManager(), "dialog");
 	        }
 	    });
@@ -74,5 +74,5 @@ public class DeleteActivity extends FragmentActivity {
             clickSound.start();
             Intent intent = new Intent(this, CustomizerActivity.class);
             startActivity(intent);         
-    }	
+    }		
 }
