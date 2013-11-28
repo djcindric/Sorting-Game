@@ -27,7 +27,14 @@ public class DeleteDialogBox extends DialogFragment {
                .setPositiveButton(R.string.dialog_confirm, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        // Delete the level
-                	   cControl.deleteLevel(level);
+                	   new Thread(new Runnable() {
+                	        public void run() {
+                	        	cControl.deleteLevel(level);
+                	        	cControl.close();
+                	        }
+                	    }).start();
+
+                	   
                 	   Intent intent = new Intent(mContext, CustomizerActivity.class);
                 	   startActivity(intent);
                    }

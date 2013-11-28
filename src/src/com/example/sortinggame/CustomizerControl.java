@@ -34,6 +34,7 @@ public class CustomizerControl {
 		values.put("path", path);
 		values.put("category_id", catID);
 		db.insert("Images", null, values);
+		System.out.println("Saving image" + path + "in cat" + catID);
 	}
 	//Update seems to successfully run
 	public void updateImage(String path, int catID) {
@@ -72,9 +73,8 @@ public class CustomizerControl {
 	}
 	
 	public void deleteLevel(String name) {
-		Cursor cursor = db.query("SELECT count(DISTINCT id) FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{name});
-		String[] ids = new String[cursor.getCount()];
-		cursor = db.query("SELECT id FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{name});
+		String[] ids = new String[3];
+		Cursor cursor = db.query("SELECT id FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{name});
 		
 		for(int i = 0; i < ids.length; i++) {
 			cursor.moveToNext();
@@ -84,5 +84,9 @@ public class CustomizerControl {
 		db.delete("Images", "category_id = ? or category_id = ? or category_id = ?" ,  ids);
 		db.delete("Category", "levelName = ?", new String[]{name});
 		db.delete("Level", "name = ?", new String[]{name});
+	}
+	
+	public void close() {
+		db.close();
 	}
 }

@@ -34,7 +34,7 @@ public class EditCategoryActivity extends Activity{
 		if(i.hasExtra(CustomizerActivity.LEVEL_NAME))
 			level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
 		if(i.hasExtra(AddUpdateActivity.LEVEL))
-			level = i.getExtras().getString(AddUpdateActivity.LEVEL);
+			ulevel = i.getExtras().getString(AddUpdateActivity.LEVEL);
 
 
 		// Enable icon to function as back button
@@ -107,25 +107,32 @@ public class EditCategoryActivity extends Activity{
 		startActivityForResult(intent, 300);
 	}
 	public void saveLevel(View view) {
-		// set icon to book and bg to shapes_background to show successful update
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		if (level != null) {
-			control.saveLevel(level, "book", "shapes_background");
-			control.saveCategory(level, 1, null);
-			control.saveCategory(level, 2, null);
-			control.saveCategory(level, 3, null);
-			ids = control.getCategoryIDs(level);
-		} else
-			ids = control.getCategoryIDs(level);
+		new Thread(new Runnable() {
+	        public void run() {
 
-		for (String path : catergory1Images)
-			control.saveImage(path, ids.get(0));
+				ArrayList<Integer> ids = new ArrayList<Integer>();
+				if (level != null) {
+					control.saveLevel(level, "pbm_launch_icon",
+							"pbm_background");
+					control.saveCategory(level, 1, null);
+					control.saveCategory(level, 2, null);
+					control.saveCategory(level, 3, null);
+					ids = control.getCategoryIDs(level);
+				} else
+					ids = control.getCategoryIDs(ulevel);
 
-		for (String path : catergory2Images)
-			control.saveImage(path, ids.get(1));
+				for (String path : catergory1Images)
+					control.saveImage(path, ids.get(0));
 
-		for (String path : catergory3Images)
-			control.saveImage(path, ids.get(2));
+				for (String path : catergory2Images)
+					control.saveImage(path, ids.get(1));
+
+				for (String path : catergory3Images)
+					control.saveImage(path, ids.get(2));
+
+				control.close();
+			}
+		}).start();
 
 		Toast.makeText(this, "Saving Level...", Toast.LENGTH_LONG).show();
 		

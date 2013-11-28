@@ -98,6 +98,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		
 		for(int i = 0; i < game.getNumOfCategories(); i++) 
 			loadImage(game.getCategorySymbols(i).getPath(), game.getCategorySymbols(i).isPreloaded(), categorySymbols[i]);
+	
+		game.closeDB();
 	}
 
 	@Override

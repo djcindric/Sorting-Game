@@ -70,7 +70,7 @@ public class ImageAdapterDelete extends BaseAdapter{
     
   //Gets path from database for preloaded images and finds reference id in R.java class
     private void loadImages() {
-    	Cursor test = db.query("SELECT name, iconPath FROM  Level", null);
+    	Cursor test = db.query("SELECT name, iconPath FROM  Level WHERE preloaded = 0", null);
     	//Toast.makeText(mContext, test.getColumnNames().toString(), Toast.LENGTH_SHORT).show();
 
 		while(test.moveToNext()) {
