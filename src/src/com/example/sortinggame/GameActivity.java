@@ -2,6 +2,8 @@ package com.example.sortinggame;
 import java.lang.reflect.Field;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -66,10 +69,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		mImageManager = new ImageManager();
 		levelPreloaded = game.getLevel().isPreLoaded();
 		
-		if(!SoundManager.players[3].isPlaying()){
-			SoundManager.players[3].seekTo(0);
-			SoundManager.playMusic(3);
-		}
+		SoundManager.players[3].seekTo(0);
+		
 		TableRow category1 = (TableRow)(findViewById(R.id.category1));
 		TableRow category2 = (TableRow)(findViewById(R.id.category2));
 		TableRow category3 = (TableRow)(findViewById(R.id.category3));
@@ -101,6 +102,25 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	
 		game.closeDB();
 	}
+	
+	protected void onStart(){
+    	super.onStart();
+    	
+    	//Start menu music
+    	if(SoundManager.isMuted[3] == false){
+    		SoundManager.playMusic(3);
+    	}
+    	
+    }
+
+    protected void onPause(){
+    	super.onPause();
+    	//Pause music when app is out of focus
+    	if(SoundManager.players[3].isPlaying()){
+    		SoundManager.playMusic(3);
+    		SoundManager.isMuted[3] = false;
+    	}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,6 +128,17 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		getMenuInflater().inflate(R.menu.game, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.sound:
+        	disableSound();
+        	return true;
+        default:
+                return super.onOptionsItemSelected(item);
+        }
+}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent e) {
@@ -336,4 +367,22 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			finish();
 		}
 	};
+	
+	public void disableSound(){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState(0) +
+    				". Would you like to change it?").setTitle("Change Sound State");
+    	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			SoundManager.playMusic(3);
+    		}
+    	});
+    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			
+    		}
+    	});
+    	AlertDialog dialog = builder.create();
+    	dialog.show();
+    }
 }

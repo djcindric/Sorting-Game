@@ -44,6 +44,25 @@ public class AddUpdateActivity extends Activity {
 	        }
 	    });
 	}
+	
+	protected void onStart(){
+    	super.onStart();
+    	
+    	//Start menu music
+    	if(SoundManager.isMuted[0] == false){
+    		SoundManager.playMusic(0);
+    	}
+    	
+    }
+
+    protected void onPause(){
+    	super.onPause();
+    	//Pause music when app is out of focus
+    	if(SoundManager.players[0].isPlaying()){
+    		SoundManager.playMusic(0);
+    		SoundManager.isMuted[0] = false;
+    	}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,10 +74,9 @@ public class AddUpdateActivity extends Activity {
 	// Handle clicks on the action bar
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.hide_bar:
-			ActionBar actionBar = getActionBar();
-			actionBar.hide();
-			return true;
+		case R.id.mute:
+        	SoundManager.playMusic(0);
+        	return true;
 		case android.R.id.home:
 			NavUtils.navigateUpFromSameTask(this);
 			return true;

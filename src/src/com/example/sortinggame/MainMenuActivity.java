@@ -23,6 +23,24 @@ public class MainMenuActivity extends Activity {
         SoundManager.setContext(this);
         SoundManager.initializePlayers();
     }
+    
+    protected void onStart(){
+    	super.onStart();
+    	
+    	//Start menu music
+    	if(SoundManager.isMuted[0] == false){
+    		SoundManager.playMusic(0);
+    	}
+    	
+    }
+    protected void onPause(){
+    	super.onPause();
+    	//Pause music when app is out of focus
+    	if(SoundManager.players[0].isPlaying()){
+    		SoundManager.playMusic(0);
+    		SoundManager.isMuted[0] = false;
+    	}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,7 +77,7 @@ public class MainMenuActivity extends Activity {
     
     public void disableSound(){
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState() +
+    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState(0) +
     				". Would you like to change it?").setTitle("Change Sound State");
     	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {

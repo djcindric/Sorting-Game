@@ -28,6 +28,25 @@ public class CustomizerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_customizer);
 	}
+	
+	protected void onStart(){
+    	super.onStart();
+    	
+    	//Start menu music
+    	if(SoundManager.isMuted[0] == false){
+    		SoundManager.playMusic(0);
+    	}
+    	
+    }
+
+    protected void onPause(){
+    	super.onPause();
+    	//Pause music when app is out of focus
+    	if(SoundManager.players[0].isPlaying()){
+    		SoundManager.playMusic(0);
+    		SoundManager.isMuted[0] = false;
+    	}
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -37,22 +56,18 @@ public class CustomizerActivity extends Activity {
 	}
 	
 	//Handle clicks on the action bar
-		public boolean onOptionsItemSelected(MenuItem item) {
-	    	switch (item.getItemId()) {
-	    	
-	    	case android.R.id.home:
-	    		NavUtils.navigateUpFromSameTask(this);
-	    		return true;
-	    		
-	    	case R.id.hide_bar:
-	    		ActionBar actionBar = getActionBar();
-	    		actionBar.hide();
-	    		return true;
-	    		
-	    	default:
-	    		return super.onOptionsItemSelected(item);
-	    	}
-	    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case R.id.mute:
+        	SoundManager.playMusic(0);
+        	return true;
+    	case android.R.id.home:
+    		NavUtils.navigateUpFromSameTask(this);
+    		return true;	
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
+    }
 	
 	public void loadUpdateInterface(View view) {
     	Intent intent = new Intent(this, AddUpdateActivity.class);

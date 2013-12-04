@@ -79,7 +79,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginRight="20dp"
-        android:onClick="saveLevel"
         android:text="@string/done" />
 
  </RelativeLayout>

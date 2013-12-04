@@ -41,5 +41,6 @@
     <string name="dialog_confirm">Yes</string>
     <string name="content">Image</string>
     <string name="update">Update</string>
+	<string name="save">Save</string>
 
 </resources>

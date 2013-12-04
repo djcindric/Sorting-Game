@@ -14,11 +14,11 @@ import android.media.MediaPlayer;
 public class SoundManager extends Activity {
 	static int numPlayers = 4;
 	static MediaPlayer[] players = new MediaPlayer[4];
+	static Boolean[] isMuted = new Boolean[4];
 	
 	static Context context;
 	
 	static boolean isInitialized=false;
-	static boolean isMuted = false;
 	
 	public static void setContext(Context cont){
 		context = cont;
@@ -32,28 +32,39 @@ public class SoundManager extends Activity {
 			players[3] = MediaPlayer.create(context, R.raw.gamemusic); 
 			players[3].setLooping(true);
 			isInitialized=true;
+			isMuted[0] = false;
+			isMuted[3] = false;
 		}
 	}
 	
 	public static void playMusic(int playerNumber){
 		if(players[playerNumber].isPlaying()){
 			players[playerNumber].pause();
-			isMuted=true;
+			isMuted[playerNumber]=true;
 		}
 		else{
 			players[playerNumber].start();
-			isMuted=false;
+			isMuted[playerNumber] = false;
 		}
 	}
 	public static void stopPlayer(int playerNumber){
 		players[playerNumber].stop();
 	}
 	
-	public static String checkSoundState(){
-		if (isMuted){
+	public static String checkSoundState(int playerNumber){
+		if (isMuted[playerNumber]){
 			return "off";
 		}
 		return "on";
+	}
+	
+	public static void muteAll(){
+		for (int i=0; i < numPlayers; i++){
+			if(players[i].isPlaying()){
+				players[i].pause();
+			}
+			isMuted[i]=true;
+		}
 	}
 	
 	public static void releasePlayer(int playerNumber){
