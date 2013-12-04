@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory 
+        android:title="@string/pref_user_profile" >
+        
+        <EditTextPreference
+            android:title="@string/pref_user_name"
+            android:summary="@string/pref_user_name_summary"
+            android:key="prefUsername"/>
+        <EditTextPreference 
+            android:title="@string/pref_password"
+            android:summary="@string/pref_password_summary"
+            android:key="prefPassword"/>
+        
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="@string/pref_music_settings" >
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="prefMusicToggle"
+            android:summary="@string/pref_music_enable_summary"
+            android:title="@string/pref_music_enable" >
+            </CheckBoxPreference>
+            
+        <ListPreference
+            android:key="prefMusicSelection"
+            android:entries="@array/music"
+            android:summary="@string/pref_music_select_summary"
+            android:entryValues="@array/musicValues"
+            android:title="@string/pref_music_select" />
+        
+    </PreferenceCategory>
+
+</PreferenceScreen>

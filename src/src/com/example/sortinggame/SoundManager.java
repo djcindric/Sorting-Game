@@ -2,19 +2,19 @@ package com.example.sortinggame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 
 //MediaPlayers are referenced by position in the array
 //0 - Menu Music
-//1 - Click
-//2 - GameWin Music
-//3 - Game Music
+//1 - GameWin Music
 
 
 public class SoundManager extends Activity {
-	static int numPlayers = 4;
-	static MediaPlayer[] players = new MediaPlayer[4];
-	static Boolean[] isMuted = new Boolean[4];
+	static int numPlayers = 2;
+	static MediaPlayer[] players = new MediaPlayer[2];
+	static Boolean[] isMuted = new Boolean[2];
 	
 	static Context context;
 	
@@ -26,14 +26,17 @@ public class SoundManager extends Activity {
 	
 	public static void initializePlayers(){
 		if(isInitialized==false){
-			players[0] = MediaPlayer.create(context, R.raw.kalimba);
-			players[1] = MediaPlayer.create(context, R.raw.click);
-			players[2] = MediaPlayer.create(context, R.raw.gamewin);
-			players[3] = MediaPlayer.create(context, R.raw.gamemusic); 
-			players[3].setLooping(true);
+			SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(context);
+			if(s.getString("prefMusicSelection", "NULL").equalsIgnoreCase("kalimba")){
+				players[0] = MediaPlayer.create(context, R.raw.kalimba);
+			}
+			else{
+				players[0] = MediaPlayer.create(context, R.raw.gamemusic);
+			}
+			players[1] = MediaPlayer.create(context, R.raw.gamewin);
+			players[0].setLooping(true);
 			isInitialized=true;
 			isMuted[0] = false;
-			isMuted[3] = false;
 		}
 	}
 	

@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainMenuActivity extends Activity {
 
@@ -22,6 +26,7 @@ public class MainMenuActivity extends Activity {
         
         SoundManager.setContext(this);
         SoundManager.initializePlayers();
+        
     }
     
     protected void onStart(){
@@ -49,39 +54,59 @@ public class MainMenuActivity extends Activity {
         return true;
     }
     
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+    	//Adjust action bar icons based on if music is currently muted
+    	if(SoundManager.isMuted[0]){
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
+    	}
+    	else{
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
+    	}
+    	
+    	return true;
+    }
+      
     //Handle Presses on the Action bar
     public boolean onOptionsItemSelected(MenuItem item) {
             switch (item.getItemId()) {
             case R.id.mute:
+            	if(SoundManager.isMuted[0]){
+            		item.setIcon(R.drawable.mute_button_off);
+            	}
+            	else{
+            		item.setIcon(R.drawable.mute_button);
+            	}
             	SoundManager.playMusic(0);
             	return true;
-            case R.id.sound:
-            	disableSound();
-            	return true;
+            case R.id.action_settings:
+            	loadSettings();
             default:
                     return super.onOptionsItemSelected(item);
             }
     }
     
     public void loadLevelInterface(View view) {
-    	SoundManager.playMusic(1);
         Intent intent = new Intent(this, LevelActivity.class);
         startActivity(intent);
     }
     
     public void loadCustomizerInterface(View view) {
-    	SoundManager.playMusic(1);
-    	Intent intent = new Intent(this, CustomizerActivity.class);
-        startActivity(intent);         
-    }
-    
-    public void disableSound(){
+    	final Intent intent = new Intent(this, CustomizerActivity.class);
+    	final EditText passwordView = new EditText(this);
+    	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    	
+    	
+    	//Dialog box prompts user to input password and only proceeds to next menu if password is correct.
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState(0) +
-    				". Would you like to change it?").setTitle("Change Sound State");
-    	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+    	builder.setMessage("Enter Password to Continue").setTitle("Customize");
+    	builder.setView(passwordView);
+    	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			SoundManager.playMusic(0);
+    			String value = passwordView.getText().toString();
+    			if(value.equals(prefs.getString("prefPassword", "NULL"))){
+    				startActivity(intent); 
+    			}	
     		}
     	});
     	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -90,6 +115,10 @@ public class MainMenuActivity extends Activity {
     		}
     	});
     	AlertDialog dialog = builder.create();
-    	dialog.show();
+    	dialog.show();       
     }
-}
+    
+    public void loadSettings() {
+    	Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);         
+    }}

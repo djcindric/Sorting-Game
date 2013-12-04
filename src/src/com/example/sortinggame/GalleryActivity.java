@@ -163,17 +163,34 @@ public class GalleryActivity extends Activity {
 		getMenuInflater().inflate(R.menu.level, menu);
 		return true;
 	}
+	
+	@Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+    	//Adjust action bar icons based on if music is currently muted
+    	if(SoundManager.isMuted[0]){
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
+    	}
+    	else{
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
+    	}
+    	
+    	return true;
+    }
 
 	// Handle clicks on the action bar
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.mute:
+        	if(SoundManager.isMuted[0]){
+        		item.setIcon(R.drawable.mute_button_off);
+        	}
+        	else{
+        		item.setIcon(R.drawable.mute_button);
+        	}
         	SoundManager.playMusic(0);
         	return true;
+        	
 		case android.R.id.home:
-			MediaPlayer clickSound = MediaPlayer.create(getBaseContext(),
-					R.raw.click);
-			clickSound.start();
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		default:

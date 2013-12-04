@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="music">
+        <item name="1">Terrible Music</item>
+        <item name="2">Slightly Less Terrible Music</item>
+    </string-array>
+    <string-array name="musicValues">
+        <item name="1">kalimba</item>
+        <item name="2">gamemusic</item>
+    </string-array>
+</resources>

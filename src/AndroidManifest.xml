@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="17" />
-	<!-- allows UIL to cache images on SD card -->
+    <!-- allows UIL to cache images on SD card -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
@@ -62,37 +62,34 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.sortinggame.CustomizerActivity" />
         </activity>
-        <activity 
-            android:name="EditLevelActivity"
+        <activity
+            android:name="com.example.sortinggame.EditLevelActivity"
             android:label="@string/title_activity_edit_level"
             android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
-            
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.sortinggame.AddUpdateActivity" />
-            
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sortinggame.AddUpdateActivity" />
         </activity>
-        <activity 
-            android:name="EditCategoryActivity"
+        <activity
+            android:name="com.example.sortinggame.EditCategoryActivity"
             android:label="@string/title_activity_edit_category"
             android:parentActivityName="com.example.sortinggame.CustomizerActivity" >
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.sortinggame.CustomizerActivity" />
-            
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sortinggame.CustomizerActivity" />
         </activity>
-        
-        <activity 
-            android:name="GalleryActivity"
+        <activity
+            android:name="com.example.sortinggame.GalleryActivity"
             android:label="@string/title_activity_gallery"
             android:parentActivityName="com.example.sortinggame.EditCategoryActivity" >
-            
             <meta-data
-            android:name="android.support.PARENT_ACTIVITY"
-            android:value="com.example.sortinggame.EditCategoryActivity" />
-            
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.sortinggame.EditCategoryActivity" />
         </activity>
-        
+        <activity
+            android:name="com.example.sortinggame.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

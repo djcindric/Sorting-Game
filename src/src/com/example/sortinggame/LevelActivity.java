@@ -44,6 +44,7 @@ public class LevelActivity extends Activity {
 	    });
 	}
 	
+	@Override
 	protected void onStart(){
     	super.onStart();
     	
@@ -54,6 +55,7 @@ public class LevelActivity extends Activity {
     	
     }
 
+	@Override
     protected void onPause(){
     	super.onPause();
     	//Pause music when app is out of focus
@@ -70,14 +72,30 @@ public class LevelActivity extends Activity {
 		return true;
 	}
 	
+	@Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+    	//Adjust action bar icons based on if music is currently muted
+    	if(SoundManager.isMuted[0]){
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
+    	}
+    	else{
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
+    	}
+    	
+    	return true;
+    }
+	
 	//Handle clicks on the action bar
 	public boolean onOptionsItemSelected(MenuItem item) {
     	switch (item.getItemId()) {
     	case R.id.mute:
+        	if(SoundManager.isMuted[0]){
+        		item.setIcon(R.drawable.mute_button_off);
+        	}
+        	else{
+        		item.setIcon(R.drawable.mute_button);
+        	}
         	SoundManager.playMusic(0);
-        	return true;
-        case R.id.sound:
-        	disableSound();
         	return true;
     	case android.R.id.home:
     		NavUtils.navigateUpFromSameTask(this);
@@ -85,24 +103,6 @@ public class LevelActivity extends Activity {
     	default:
     		return super.onOptionsItemSelected(item);
     	}
-    }
-	
-	public void disableSound(){
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage("Sound is currently " + SoundManager.checkSoundState(0) +
-    				". Would you like to change it?").setTitle("Change Sound State");
-    	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int id) {
-    			SoundManager.playMusic(0);
-    		}
-    	});
-    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-    		public void onClick(DialogInterface dialog, int id) {
-    			
-    		}
-    	});
-    	AlertDialog dialog = builder.create();
-    	dialog.show();
     }
 	
 	public void goBackToMain(View view){

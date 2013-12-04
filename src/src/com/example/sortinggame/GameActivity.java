@@ -69,7 +69,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		mImageManager = new ImageManager();
 		levelPreloaded = game.getLevel().isPreLoaded();
 		
-		SoundManager.players[3].seekTo(0);
+		//SoundManager.players[0].seekTo(0);
 		
 		TableRow category1 = (TableRow)(findViewById(R.id.category1));
 		TableRow category2 = (TableRow)(findViewById(R.id.category2));
@@ -107,8 +107,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
     	super.onStart();
     	
     	//Start menu music
-    	if(SoundManager.isMuted[3] == false){
-    		SoundManager.playMusic(3);
+    	if(SoundManager.isMuted[0] == false){
+    		SoundManager.playMusic(0);
     	}
     	
     }
@@ -116,9 +116,9 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
     protected void onPause(){
     	super.onPause();
     	//Pause music when app is out of focus
-    	if(SoundManager.players[3].isPlaying()){
-    		SoundManager.playMusic(3);
-    		SoundManager.isMuted[3] = false;
+    	if(SoundManager.players[0].isPlaying()){
+    		SoundManager.playMusic(0);
+    		SoundManager.isMuted[0] = false;
     	}
     }
 
@@ -374,7 +374,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
     				". Would you like to change it?").setTitle("Change Sound State");
     	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			SoundManager.playMusic(3);
+    			SoundManager.playMusic(0);
     		}
     	});
     	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
