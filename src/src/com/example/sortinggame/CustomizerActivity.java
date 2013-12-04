@@ -28,6 +28,7 @@ public class CustomizerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_customizer);
 	}
+	
 	protected void onStart(){
     	super.onStart();
     	
@@ -55,18 +56,18 @@ public class CustomizerActivity extends Activity {
 	}
 	
 	//Handle clicks on the action bar
-		public boolean onOptionsItemSelected(MenuItem item) {
-	    	switch (item.getItemId()) {
-	    	case R.id.mute:
-	        	SoundManager.playMusic(0);
-	        	return true;
-	    	case android.R.id.home:
-	    		NavUtils.navigateUpFromSameTask(this);
-	    		return true;	
-	    	default:
-	    		return super.onOptionsItemSelected(item);
-	    	}
-	    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case R.id.mute:
+        	SoundManager.playMusic(0);
+        	return true;
+    	case android.R.id.home:
+    		NavUtils.navigateUpFromSameTask(this);
+    		return true;	
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
+    }
 	
 	public void loadUpdateInterface(View view) {
     	Intent intent = new Intent(this, AddUpdateActivity.class);

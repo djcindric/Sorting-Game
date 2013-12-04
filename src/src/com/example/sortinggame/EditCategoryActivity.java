@@ -11,14 +11,12 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class EditCategoryActivity extends Activity{
+	public final static String LEVEL_NAME = "com.example.sortinggame.MESSAGE";
 	private CustomizerControl control;
-	private String level;
+	private String level, ulevel;
 	private ArrayList<String> catergory1Images;
 	private ArrayList<String> catergory2Images;
 	private ArrayList<String> catergory3Images;
@@ -32,20 +30,29 @@ public class EditCategoryActivity extends Activity{
 		setContentView(R.layout.activity_edit_category);
 		
 		Intent i = getIntent();
-		level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+
+		if(i.hasExtra(CustomizerActivity.LEVEL_NAME))
+			level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+		if(i.hasExtra(AddUpdateActivity.LEVEL))
+			ulevel = i.getExtras().getString(AddUpdateActivity.LEVEL);
+
 
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle("Add Images to " + level);
+		
+		if(level != null)
+			actionBar.setTitle("Add Images to " + level);
+		else
+			actionBar.setTitle("Add Images to " + ulevel);
 		
 		control = new CustomizerControl(this);
 		
 		catergory1Images = new ArrayList<String>();
 		catergory2Images = new ArrayList<String>();
 		catergory3Images = new ArrayList<String>();
-		setOnClicks();
 	}
+	
 	protected void onStart(){
     	super.onStart();
     	
@@ -96,36 +103,65 @@ public class EditCategoryActivity extends Activity{
 	
 	public void chooseCat1Images(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
+		if(level != null)
+			intent.putExtra(LEVEL_NAME,level);
+		else
+			intent.putExtra(LEVEL_NAME,ulevel);
 		startActivityForResult(intent, 100);
 	}
 	
 	public void chooseCat2Images(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
+		if(level != null)
+			intent.putExtra(LEVEL_NAME,level);
+		else
+			intent.putExtra(LEVEL_NAME,ulevel);
 		startActivityForResult(intent, 200);
 	}
 	
 	public void chooseCat3Images(View view){
 		Intent intent = new Intent(this, GalleryActivity.class);
+		if(level != null)
+			intent.putExtra(LEVEL_NAME,level);
+		else
+			intent.putExtra(LEVEL_NAME,ulevel);
 		startActivityForResult(intent, 300);
 	}
 	public void saveLevel() {
-		control.saveLevel(level, "bagel", "bookcase_background");
-		control.saveCategory(level, 1, null);
-		control.saveCategory(level, 2, null);
-		control.saveCategory(level, 3, null);
+		new Thread(new Runnable() {
+	        public void run() {
+
+				ArrayList<Integer> ids = new ArrayList<Integer>();
+				if (level != null) {
+					control.saveLevel(level, "pbm_launch_icon",
+							"pbm_background");
+					control.saveCategory(level, 1, null);
+					control.saveCategory(level, 2, null);
+					control.saveCategory(level, 3, null);
+					ids = control.getCategoryIDs(level);
+				} else
+					ids = control.getCategoryIDs(ulevel);
+
+				for (String path : catergory1Images)
+					control.saveImage(path, ids.get(0));
+
+				for (String path : catergory2Images)
+					control.saveImage(path, ids.get(1));
+
+				for (String path : catergory3Images)
+					control.saveImage(path, ids.get(2));
+
+				control.close();
+			}
+		}).start();
+
+		Toast.makeText(this, "Saving Level...", Toast.LENGTH_LONG).show();
 		
-		ArrayList<Integer> ids = control.getCategoryIDs(level);
-		for(String path : catergory1Images)
-			control.saveImage(path, ids.get(0));
-		
-		for(String path : catergory2Images)
-			control.saveImage(path, ids.get(1));
-		
-		for(String path : catergory3Images)
-			control.saveImage(path, ids.get(2));
-		
-		Toast.makeText(this, "Adding Level...", Toast.LENGTH_LONG).show();
+		Intent intent = new Intent(this, CustomizerActivity.class);
+		startActivity(intent);
+		finish();
 	}
+	
 	 @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
              super.onActivityResult(requestCode, resultCode, data);
@@ -153,73 +189,4 @@ public class EditCategoryActivity extends Activity{
                  }
              }
      }
-	 
-	 private void setOnClicks(){
-		 //Add onClickListeners to the views
-		 ImageView icon1 = (ImageView) findViewById(R.id.categoryImage1);
-		 	icon1.setOnClickListener(myHandler1);
-		 ImageView icon2 = (ImageView) findViewById(R.id.categoryImage2);
-		 	icon2.setOnClickListener(myHandler2);
-		 ImageView icon3 = (ImageView) findViewById(R.id.categoryImage3);
-		 	icon3.setOnClickListener(myHandler3);
-		 LinearLayout images1 = (LinearLayout) findViewById(R.id.images1);
-		 	images1.setOnClickListener(myHandler4);
-		 LinearLayout images2 = (LinearLayout) findViewById(R.id.images2);
-		 	images2.setOnClickListener(myHandler5);
-		 LinearLayout images3 = (LinearLayout) findViewById(R.id.images3);
-		 	images3.setOnClickListener(myHandler6);
-	 }
-	 
-	 //Change the level background
-	 public void changeBackground(View view){
-		Toast toast = Toast.makeText(getApplicationContext(), "Change Background", Toast.LENGTH_SHORT);
-		toast.show();
-	 }
-	 
-	 //Change the level icon
-	 public void changeIcon(View view){
-		 Toast toast = Toast.makeText(getApplicationContext(), "Change Icon", Toast.LENGTH_SHORT);
-		 toast.show();
-	 }
-	 
-	 //Handle clicks on icon for category 1
-	 View.OnClickListener myHandler1 = new View.OnClickListener(){
-		public void onClick(View v) {
-			Toast toast = Toast.makeText(getApplicationContext(), "Icon 1", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-	 };
-	//Handle clicks on icon for category 2
-	 View.OnClickListener myHandler2 = new View.OnClickListener(){
-		public void onClick(View v) {
-			Toast toast = Toast.makeText(getApplicationContext(), "Icon 2", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-	 };
-	//Handle clicks on icon for category 3
-	 View.OnClickListener myHandler3 = new View.OnClickListener(){
-		public void onClick(View v) {
-			Toast toast = Toast.makeText(getApplicationContext(), "Icon 3", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-	 };
-	//Handle clicks on images for category 1
-	 View.OnClickListener myHandler4 = new View.OnClickListener(){
-		public void onClick(View v) {
-			chooseCat1Images(v);
-		}
-	 };
-	//Handle clicks on images for category 2
-	 View.OnClickListener myHandler5 = new View.OnClickListener(){
-		public void onClick(View v) {
-			chooseCat2Images(v);
-		}
-	 };
-	//Handle clicks on images for category 3
-	 View.OnClickListener myHandler6 = new View.OnClickListener(){
-		public void onClick(View v) {
-			chooseCat3Images(v);
-		}
-	 };
-	 
 }

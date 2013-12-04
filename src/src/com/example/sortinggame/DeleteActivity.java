@@ -23,7 +23,7 @@ public class DeleteActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		
 		//Prevent Screen From rotating
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); 
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_delete);
@@ -41,11 +41,12 @@ public class DeleteActivity extends FragmentActivity {
 	    gridview.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
 	        	 String level = imageAdapter.getLevel(position);
-	        	DialogFragment newFragment = new DeleteDialogBox(level);
+	        	 DialogFragment newFragment = new DeleteDialogBox(level, getApplicationContext());
 	        	 newFragment.show(getSupportFragmentManager(), "dialog");
 	        }
 	    });
 	}
+	
 	protected void onStart(){
     	super.onStart();
     	
@@ -73,23 +74,23 @@ public class DeleteActivity extends FragmentActivity {
 	}
 	
 	//Handle clicks on the action bar
-		public boolean onOptionsItemSelected(MenuItem item) {
-	    	switch (item.getItemId()) {
-	    	case R.id.mute:
-	        	SoundManager.playMusic(0);
-	        	return true;
-	    	case android.R.id.home:
-	    		NavUtils.navigateUpFromSameTask(this);
-	    		return true;
-	    	default:
-	    		return super.onOptionsItemSelected(item);
-	    	}
-	    }
+	public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+    	case R.id.mute:
+        	SoundManager.playMusic(0);
+        	return true;
+    	case android.R.id.home:
+    		NavUtils.navigateUpFromSameTask(this);
+    		return true;
+    	default:
+    		return super.onOptionsItemSelected(item);
+    	}
+    }
 		
 		public void loadCustomizerInterface(View view) {
             MediaPlayer clickSound = MediaPlayer.create(getBaseContext(), R.raw.back);
             clickSound.start();
             Intent intent = new Intent(this, CustomizerActivity.class);
             startActivity(intent);         
-    }	
+    }		
 }

@@ -41,7 +41,7 @@
         <activity
             android:name="com.example.sortinggame.CustomizerActivity"
             android:label="@string/title_activity_customizer"
-            android:parentActivityName="com.example.sortinggame.MainManuActivity" >
+            android:parentActivityName="com.example.sortinggame.MainMenuActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.sortinggame.MainMenuActivity" />
@@ -66,9 +66,10 @@
             android:name="EditLevelActivity"
             android:label="@string/title_activity_edit_level"
             android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
+            
             <meta-data
-            	android:name="android.support.PARENT_ACTIVITY"
-            	android:value="com.example.sortinggame.AddUpdateActivity" />
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.AddUpdateActivity" />
             
         </activity>
         <activity 
@@ -76,18 +77,19 @@
             android:label="@string/title_activity_edit_category"
             android:parentActivityName="com.example.sortinggame.CustomizerActivity" >
             <meta-data
-            	android:name="android.support.PARENT_ACTIVITY"
-            	android:value="com.example.sortinggame.CustomizerActivity" />
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.CustomizerActivity" />
             
         </activity>
         
         <activity 
             android:name="GalleryActivity"
             android:label="@string/title_activity_gallery"
-            android:parentActivityName="com.example.sortinggame.AddUpdateActivity" >
+            android:parentActivityName="com.example.sortinggame.EditCategoryActivity" >
+            
             <meta-data
-           		android:name="android.support.PARENT_ACTIVITY"
-            	android:value="com.example.sortinggame.AddUpdateActivity" />
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.example.sortinggame.EditCategoryActivity" />
             
         </activity>
         

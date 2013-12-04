@@ -22,6 +22,7 @@ import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TableLayout;
@@ -36,13 +37,13 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 public class GameActivity extends Activity implements OnTouchListener, OnDragListener {
 
-	SortingDB db;
 	private ImageView[] images;
 	TableRow imagePool;
 	String level;
 	GameControl game;	
 	private ImageView[] categorySymbols;
-	ImageLoader imageLoader;
+	ImageManager mImageManager;
+	private int levelPreloaded;
 
 	public final static String EXTRA_MESSAGE = "com.example.sortinggame.MESSAGE";
 	public final static String LEVEL_NAME_REPLAY = "com.example.sortinggame.MESSAGE";
@@ -63,10 +64,10 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		Intent intent = getIntent();
 		level = intent.getExtras().getString(LevelActivity.LEVEL_NAME);	
 		game = new GameControl(this, level);
-		db = new SortingDB(this);
 
 		images = new ImageView[8];
-		initImageLoader();
+		mImageManager = new ImageManager();
+		levelPreloaded = game.getLevel().isPreLoaded();
 		
 		SoundManager.players[3].seekTo(0);
 		
@@ -98,6 +99,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		
 		for(int i = 0; i < game.getNumOfCategories(); i++) 
 			loadImage(game.getCategorySymbols(i).getPath(), game.getCategorySymbols(i).isPreloaded(), categorySymbols[i]);
+	
+		game.closeDB();
 	}
 	
 	protected void onStart(){
@@ -118,20 +121,6 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
     		SoundManager.isMuted[3] = false;
     	}
     }
-	
-	private void initImageLoader() {
-        DisplayImageOptions defaultOptions =  new DisplayImageOptions.Builder()
-        	.showStubImage(R.drawable.ic_stub)
-            .cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-            .bitmapConfig(Bitmap.Config.RGB_565).build();
-        ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
-        	this).defaultDisplayImageOptions(defaultOptions).memoryCache(
-        	new WeakMemoryCache());
-
-        ImageLoaderConfiguration config = builder.build();
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(config);
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,7 +129,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		return true;
 	}
 	
-	//Handle presses on action bar
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.sound:
@@ -164,6 +153,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 
 	@Override
 	public boolean onDrag(View v, DragEvent dragEvent) {
+		TableLayout tb = (TableLayout)findViewById(R.id.categories);
 		ImageView view = (ImageView) dragEvent.getLocalState();
 
 		if (dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
@@ -226,15 +216,17 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		Field field;
 		int identifier;
 		
-			if(isPreloaded == 0)
-				imageLoader.displayImage("file://" + path, imageView);
+			if(isPreloaded == 0) {
+				imageView.setImageBitmap(mImageManager.decodeSampledBitmapFromFile(path, 100, 100));
+			}
 			else {
 				try {
 					//Find resource id
 					res = R.drawable.class;
 					field = res.getField(path);
 					identifier = field.getInt(null);
-					imageView.setImageResource(identifier);
+					//imageView.setImageResource(identifier);
+					imageView.setImageBitmap(mImageManager.decodeSampledBitmapFromResource(getResources(), identifier, 100, 100));
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					Log.e("MyTag", "Failure to get drawable id. Path = " + path, e);
@@ -362,6 +354,8 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	//Quit Game
 	View.OnClickListener myHandler2 = new View.OnClickListener(){
 		public void onClick(View v) {
+//			Intent intent = new Intent(getBaseContext(), LevelActivity.class);
+//			startActivity(intent);
 			finish();
 		}
 	};
@@ -370,8 +364,10 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 		public void onClick(View v) {
 			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
 			startActivity(intent);
+			finish();
 		}
 	};
+	
 	public void disableSound(){
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setMessage("Sound is currently " + SoundManager.checkSoundState(0) +

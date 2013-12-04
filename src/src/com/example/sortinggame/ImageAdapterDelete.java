@@ -48,7 +48,7 @@ public class ImageAdapterDelete extends BaseAdapter{
         ImageView imageView;
         if (convertView == null) {  // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            imageView.setLayoutParams(new GridView.LayoutParams(115, 115));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {
@@ -70,7 +70,7 @@ public class ImageAdapterDelete extends BaseAdapter{
     
   //Gets path from database for preloaded images and finds reference id in R.java class
     private void loadImages() {
-    	Cursor test = db.query("SELECT name, iconPath FROM  Level", null);
+    	Cursor test = db.query("SELECT name, iconPath FROM  Level WHERE preloaded = 0", null);
     	//Toast.makeText(mContext, test.getColumnNames().toString(), Toast.LENGTH_SHORT).show();
 
 		while(test.moveToNext()) {

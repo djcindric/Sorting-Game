@@ -26,8 +26,12 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 public class GalleryActivity extends Activity {
 	private ImageAdapterGallery imageAdapter;
 	private Cursor cursor;
+	private Cursor selectedImages;
+	private ArrayList<String> images; 
 	private int columnIndex;
 	private ImageLoader imageLoader;
+	SortingDB db;
+	String level;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +41,17 @@ public class GalleryActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_gallery);
 
+		//get level name from intent
+		Intent i = getIntent();
+		if(i.hasExtra(EditCategoryActivity.LEVEL_NAME))
+			level = i.getExtras().getString(CustomizerActivity.LEVEL_NAME);
+		
 		// Enable icon to function as back button
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		db = new SortingDB(this);
+		images = new ArrayList<String>();
 		
 		initImageLoader();
 		
@@ -48,7 +60,7 @@ public class GalleryActivity extends Activity {
 		// Create a grid of icons for choosing a level
 		GridView gridview = (GridView) findViewById(R.id.gallery);
 		gridview.setFastScrollEnabled(true);
-		imageAdapter = new ImageAdapterGallery(this, cursor, columnIndex, imageLoader);
+		imageAdapter = new ImageAdapterGallery(this, images, imageLoader);
 		gridview.setAdapter(imageAdapter);
 	}
 	
@@ -87,23 +99,57 @@ public class GalleryActivity extends Activity {
 	
 	private void getGalleryImages() {
 		// Set up an array of the Thumbnail Image ID column we want
-				String[] projection = { MediaStore.Images.Thumbnails.DATA };
-				// Create the cursor pointing to the SDCard
-				cursor = getContentResolver().query(
-						MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, projection, // Which columns to return
-						null, // Return all rows
-						null, MediaStore.Images.Thumbnails.DATA);
+		String[] projection = { MediaStore.Images.Media.DATA };
+		// Create the cursor pointing to the SDCard
+		cursor = getContentResolver().query(
+				MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection, // Which columns to return
+				null, // Return all rows
+				null, MediaStore.Images.Media.DATA);
+
+		// Get the column index of the Thumbnails Image ID
+		columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+		String ids[] = new String[3];
+		Cursor cursor2 = db.query("SELECT id FROM Category, Level WHERE Level.name = ? and Level.name = Category.levelName ORDER BY categoryName", new String[]{level});
+		
+		//checks to see if level exist (if count = 0 then it does not exist)
+		if(cursor2.getCount() > 0) {
+			System.out.println("Here I am");
+			for(int i = 0; i < ids.length; i++) {
+				cursor2.moveToNext();		
+				ids[i] = cursor2.getString(0);
+			}
+		
+			selectedImages = db.query("SELECT path FROM Images WHERE category_id=? or category_id=? or category_id=?", ids);
 				
-				// Get the column index of the Thumbnails Image ID
-				columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA);
+			while(cursor.moveToNext()) {
+				boolean picUsed = false;
+				while(selectedImages.moveToNext()) {
+					if(cursor.getString(columnIndex).equals(selectedImages.getString(0))) {
+						picUsed = true;
+						break;
+					}
+					else
+						picUsed = false;						
+				}
+				if(picUsed == false)
+					images.add(cursor.getString(columnIndex));
+				selectedImages.moveToFirst();
+			}
+		}
+		else {
+			while(cursor.moveToNext())
+				images.add(cursor.getString(0));
+		}
 	}
 	
-public void btnChoosePhotosClick(View v){	
+	public void btnChoosePhotosClick(View v){	
 		ArrayList<String> selectedItems = imageAdapter.getCheckedItems();
 		Toast.makeText(GalleryActivity.this, "Total photos selected: "+selectedItems.size(), Toast.LENGTH_SHORT).show();
 		Log.d(GalleryActivity.class.getSimpleName(), "Selected Items: " + selectedItems.toString());
 		String[] allPath = new String[selectedItems.size()];
-        for (int i = 0; i < allPath.length; i++) {
+		
+		for (int i = 0; i < allPath.length; i++) {
                 allPath[i] = selectedItems.get(i);
         }
 		Intent data = new Intent().putExtra("image_paths", allPath);

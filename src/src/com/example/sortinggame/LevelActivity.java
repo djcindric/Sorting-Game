@@ -115,10 +115,6 @@ public class LevelActivity extends Activity {
 		String level = imageAdapter.getLevel(position);
 		Intent intent = new Intent(this, GameActivity.class);
 		intent.putExtra(LEVEL_NAME, level);
-		//Stop menu music
-//		if(SoundManager.players[0].isPlaying()){
-//			SoundManager.playMusic(0);
-//		}
     	startActivity(intent);
 	}
 }

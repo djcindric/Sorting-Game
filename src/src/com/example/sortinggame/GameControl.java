@@ -146,6 +146,7 @@ public class GameControl {
 				}
 			}
 		}
+		
 		num1 = 0;
 		num2 = 0;
 		num3 = 0;
@@ -318,5 +319,8 @@ public class GameControl {
 	public int getTotalNumOfImages() {
 		return totalNumOfImages;
 	}
-
+	
+	void closeDB() {
+		db.close();
+	}
 }

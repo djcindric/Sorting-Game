@@ -16,17 +16,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class ImageAdapterGallery extends BaseAdapter {
 	private Context mContext;
+	private ArrayList<String> images;
 	private Cursor cursor;
-	private int columnIndex;
 	private ImageLoader imageLoader;
 	LayoutInflater mInflater;
 	SparseBooleanArray mSparseBooleanArray;
 
 
-	public ImageAdapterGallery(Context c, Cursor images, int column, ImageLoader imageLoader) {
+	public ImageAdapterGallery(Context c, ArrayList<String> img, ImageLoader imageLoader) {
 		mContext = c;
-		cursor = images;
-		columnIndex = column;
+		images = img;
 		this.imageLoader = imageLoader;
 		mInflater = LayoutInflater.from(mContext);
 		mSparseBooleanArray = new SparseBooleanArray();	        
@@ -35,10 +34,9 @@ public class ImageAdapterGallery extends BaseAdapter {
 	public ArrayList<String> getCheckedItems() {
 		ArrayList<String> mTempArry = new ArrayList<String>();
 
-		for(int i=0;i<cursor.getCount();i++) {
+		for(int i=0;i<images.size();i++) {
 			if(mSparseBooleanArray.get(i)) {
-				cursor.moveToPosition(i);
-				mTempArry.add(cursor.getString(columnIndex));
+				mTempArry.add(images.get(i));
 			}
 		}
 
@@ -46,7 +44,7 @@ public class ImageAdapterGallery extends BaseAdapter {
 	}
 
 	public int getCount() {
-		return cursor.getCount();
+		return images.size();
 	}
 
 	public Object getItem(int position) {
@@ -67,10 +65,8 @@ public class ImageAdapterGallery extends BaseAdapter {
 		CheckBox mCheckBox = (CheckBox) convertView.findViewById(R.id.checkBox1);
 		imageView = (ImageView) convertView.findViewById(R.id.imgQueue);
 		
-		
-		cursor.moveToPosition(position);
-		// gets the current value for the requested column
-		String imagePath = cursor.getString(columnIndex);
+		// gets the current value for the requested index
+		String imagePath = images.get(position);
 		
 		// Set the content of the image based on the provided path		
 		imageLoader.displayImage("file://" + imagePath, imageView);
