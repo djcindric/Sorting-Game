@@ -51,6 +51,6 @@
 	<string name="pref_music_enable">Enable Music</string>
 	<string name="pref_music_enable_summary">Toggle whether or not to play music</string>
 	<string name="pref_music_select">Pick Music</string>
-	<string name="pref_music_select_summary">Choose which music to play (Restart to take effect)</string>
+	<string name="pref_music_select_summary">Choose which music to play</string>
 
 </resources>

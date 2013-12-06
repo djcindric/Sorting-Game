@@ -284,11 +284,11 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	public void gameWin(){
 		SoundManager.setContext(this);
 		//Stop Game Music
-		if(SoundManager.players[3].isPlaying()){
-			SoundManager.playMusic(3);
+		if(SoundManager.players[0].isPlaying()){
+			SoundManager.playMusic(0);
 		}
 		//Start Game win sound
-		SoundManager.playMusic(2);
+		SoundManager.playMusic(1);
 		
 		//Grab the entire game view and clear it
 		LinearLayout linear = (LinearLayout) findViewById(R.id.gameScreen);
@@ -354,8 +354,6 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	//Quit Game
 	View.OnClickListener myHandler2 = new View.OnClickListener(){
 		public void onClick(View v) {
-//			Intent intent = new Intent(getBaseContext(), LevelActivity.class);
-//			startActivity(intent);
 			finish();
 		}
 	};

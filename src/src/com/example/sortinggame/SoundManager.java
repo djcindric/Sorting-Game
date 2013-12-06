@@ -24,20 +24,26 @@ public class SoundManager extends Activity {
 		context = cont;
 	}
 	
-	public static void initializePlayers(){
+	public static void initializePlayers(int i){
+		
 		if(isInitialized==false){
-			SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(context);
-			if(s.getString("prefMusicSelection", "NULL").equalsIgnoreCase("kalimba")){
-				players[0] = MediaPlayer.create(context, R.raw.kalimba);
+			if(i != 0){
+				players[0] = MediaPlayer.create(context, i);
 			}
 			else{
-				players[0] = MediaPlayer.create(context, R.raw.gamemusic);
+				players[0] = MediaPlayer.create(context, R.raw.kalimba);
 			}
 			players[1] = MediaPlayer.create(context, R.raw.gamewin);
 			players[0].setLooping(true);
 			isInitialized=true;
 			isMuted[0] = false;
 		}
+	}
+	
+	public static void changeMusic(int i){
+		players[0].release();
+		players[0] = MediaPlayer.create(context, i);
+		players[0].setLooping(true);
 	}
 	
 	public static void playMusic(int playerNumber){

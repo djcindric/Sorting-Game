@@ -77,10 +77,10 @@ public class DeleteActivity extends FragmentActivity {
     public boolean onPrepareOptionsMenu(Menu menu){
     	//Adjust action bar icons based on if music is currently muted
     	if(SoundManager.isMuted[0]){
-    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
     	}
     	else{
-    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
     	}
     	
     	return true;
@@ -91,10 +91,10 @@ public class DeleteActivity extends FragmentActivity {
     	switch (item.getItemId()) {
     	case R.id.mute:
         	if(SoundManager.isMuted[0]){
-        		item.setIcon(R.drawable.mute_button_off);
+        		item.setIcon(R.drawable.mute_button);
         	}
         	else{
-        		item.setIcon(R.drawable.mute_button);
+        		item.setIcon(R.drawable.mute_button_off);
         	}
         	SoundManager.playMusic(0);
         	return true;

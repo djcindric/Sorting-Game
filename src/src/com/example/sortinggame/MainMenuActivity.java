@@ -18,14 +18,25 @@ public class MainMenuActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    	
     	// force landscape
     	setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         
-        SoundManager.setContext(this);
-        SoundManager.initializePlayers();
+        SoundManager.setContext(this); //Set the context for media player
+        
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); //Obtain reference to preferences
+        SharedPreferences.Editor editor = prefs.edit(); 
+        final Intent intent = new Intent(this, SettingsActivity.class); //Intent to open settings
+        
+        //Initialize the background music player. Check if a specific value is set for it in settings
+        int i = 0;
+        if(prefs.getString("prefMusicSelection", "NULL") != "NULL"){
+        	i = getResources().getIdentifier(prefs.getString("prefMusicSelection", "NULL"), "raw", getPackageName());
+        }
+        SoundManager.initializePlayers(i);
         
     }
     
@@ -58,10 +69,10 @@ public class MainMenuActivity extends Activity {
     public boolean onPrepareOptionsMenu(Menu menu){
     	//Adjust action bar icons based on if music is currently muted
     	if(SoundManager.isMuted[0]){
-    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
     	}
     	else{
-    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button_off);
+    		menu.findItem(R.id.mute).setIcon(R.drawable.mute_button);
     	}
     	
     	return true;
@@ -72,10 +83,10 @@ public class MainMenuActivity extends Activity {
             switch (item.getItemId()) {
             case R.id.mute:
             	if(SoundManager.isMuted[0]){
-            		item.setIcon(R.drawable.mute_button_off);
+            		item.setIcon(R.drawable.mute_button);
             	}
             	else{
-            		item.setIcon(R.drawable.mute_button);
+            		item.setIcon(R.drawable.mute_button_off);
             	}
             	SoundManager.playMusic(0);
             	return true;
@@ -94,31 +105,98 @@ public class MainMenuActivity extends Activity {
     public void loadCustomizerInterface(View view) {
     	final Intent intent = new Intent(this, CustomizerActivity.class);
     	final EditText passwordView = new EditText(this);
+    	final EditText passwordView2 = new EditText(this);
     	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    	final SharedPreferences.Editor editor = prefs.edit();
+    	final View view1 = view;
     	
+    	if(prefs.getString("prefPassword", "NULL") == "NULL"){
+    		
+    		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	    	builder.setMessage("Create A Password").setTitle("Set Password");
+	    	builder.setView(passwordView2);
+	    	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	    		public void onClick(DialogInterface dialog, int id) {
+	    			String tempInput = passwordView2.getText().toString();
+	    			editor.putString("prefPassword", tempInput);
+	    			editor.commit();
+	    			askAgain();
+	    		}
+	    	});
+	    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	    		public void onClick(DialogInterface dialog, int id) {
+	    		}
+	    	});
+	    	AlertDialog dialog = builder.create();
+	    	dialog.show(); 
+    	}
     	
-    	//Dialog box prompts user to input password and only proceeds to next menu if password is correct.
-    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
-    	builder.setMessage("Enter Password to Continue").setTitle("Customize");
+    	else{
+	    	//Dialog box prompts user to input password and only proceeds to next menu if password is correct.
+	    	AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
+	    	builder2.setMessage("Enter Password to Continue").setTitle("Load Customize");
+	    	builder2.setView(passwordView);
+	    	builder2.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	    		public void onClick(DialogInterface dialog, int id) {
+	    			String value = passwordView.getText().toString();
+	    			if(value.equals(prefs.getString("prefPassword", "NULL"))){
+	    				startActivity(intent); 
+	    			}	
+	    			else{
+	    				Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_SHORT).show();
+	    				loadCustomizerInterface(view1);
+	    			}
+	    		}
+	    	});
+	    	builder2.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+	    		public void onClick(DialogInterface dialog, int id) {
+	    			
+	    		}
+	    	});
+	    	AlertDialog dialog3 = builder2.create();
+	    	dialog3.show(); 
+    	}
+    }
+    
+    public void askAgain(){
+    	final EditText passwordView = new EditText(this);
+    	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    	final SharedPreferences.Editor editor = prefs.edit();
+    	
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Enter Password Again").setTitle("Confirm Password");
     	builder.setView(passwordView);
-    	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    	builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			String value = passwordView.getText().toString();
-    			if(value.equals(prefs.getString("prefPassword", "NULL"))){
-    				startActivity(intent); 
-    			}	
+    			String tempInput = passwordView.getText().toString();
+    			if(tempInput.equals(prefs.getString("prefPassword", "NULL"))){
+    				
+    			}
+    			else{
+    				Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_LONG).show();
+    				editor.putString("prefPassword", "NULL");
+	    			editor.commit();
+    			}
     		}
     	});
     	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
-    			
+    			editor.putString("prefPassword", "NULL");
+    			editor.commit();
     		}
     	});
     	AlertDialog dialog = builder.create();
-    	dialog.show();       
+    	dialog.show(); 
     }
     
     public void loadSettings() {
     	Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);         
-    }}
+    	startActivity(intent);   
+    }
+    
+    public void loadSettings(View v){
+    	Intent intent = new Intent(this, SettingsActivity.class);
+    	startActivity(intent);
+    }
+    
+    }
