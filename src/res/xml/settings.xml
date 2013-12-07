@@ -4,10 +4,6 @@
     <PreferenceCategory 
         android:title="@string/pref_user_profile" >
         
-        <EditTextPreference
-            android:title="@string/pref_user_name"
-            android:summary="@string/pref_user_name_summary"
-            android:key="prefUsername"/>
         <Preference
             android:title="@string/pref_password"
             android:summary="@string/pref_password_summary"

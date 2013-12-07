@@ -28,8 +28,6 @@ public class MainMenuActivity extends Activity {
         SoundManager.setContext(this); //Set the context for media player
         
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); //Obtain reference to preferences
-        SharedPreferences.Editor editor = prefs.edit(); 
-        final Intent intent = new Intent(this, SettingsActivity.class); //Intent to open settings
         
         //Initialize the background music player. Check if a specific value is set for it in settings
         int i = 0;
@@ -118,7 +116,7 @@ public class MainMenuActivity extends Activity {
 	    			String tempInput = passwordView2.getText().toString();
 	    			editor.putString("prefPassword", tempInput);
 	    			editor.commit();
-	    			askAgain();
+	    			askAgain(view1);
 	    		}
 	    	});
 	    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -156,10 +154,11 @@ public class MainMenuActivity extends Activity {
     	}
     }
     
-    public void askAgain(){
+    public void askAgain(View view){
     	final EditText passwordView = new EditText(this);
     	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     	final SharedPreferences.Editor editor = prefs.edit();
+    	final View view1 = view;
     	
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
     	builder.setMessage("Enter Password Again").setTitle("Confirm Password");
@@ -174,6 +173,8 @@ public class MainMenuActivity extends Activity {
     				Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_LONG).show();
     				editor.putString("prefPassword", "NULL");
 	    			editor.commit();
+	    			loadCustomizerInterface(view1);
+	    			
     			}
     		}
     	});

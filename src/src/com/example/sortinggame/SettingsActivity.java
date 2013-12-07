@@ -250,6 +250,7 @@ public class SettingsActivity extends PreferenceActivity {
 		int i = getResources().getIdentifier(s.getString("prefMusicSelection", "NULL"), "raw", getPackageName());
 		SoundManager.changeMusic(i);
 		Toast.makeText(this, "Saving Settings...", Toast.LENGTH_LONG).show();
+		NavUtils.navigateUpFromSameTask(this);
 	}
 	
 	@Override

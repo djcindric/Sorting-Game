@@ -20,6 +20,9 @@ public class SoundManager extends Activity {
 	
 	static boolean isInitialized=false;
 	
+	SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this); //Obtain reference to preferences
+    SharedPreferences.Editor editor = prefs.edit(); 
+	
 	public static void setContext(Context cont){
 		context = cont;
 	}
