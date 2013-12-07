@@ -288,6 +288,7 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 			SoundManager.playMusic(0);
 		}
 		//Start Game win sound
+		SoundManager.players[1].seekTo(0);
 		SoundManager.playMusic(1);
 		
 		//Grab the entire game view and clear it
@@ -345,6 +346,9 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	//Choose new level
 	View.OnClickListener myHandler1 = new View.OnClickListener(){
 		public void onClick(View v) {
+			SoundManager.playMusic(1);
+			SoundManager.players[0].seekTo(0);
+			SoundManager.playMusic(0);
 			Intent intent = new Intent(getBaseContext(), GameActivity.class);
 			intent.putExtra(LEVEL_NAME_REPLAY, level);
 			startActivity(intent);
@@ -354,12 +358,18 @@ public class GameActivity extends Activity implements OnTouchListener, OnDragLis
 	//Quit Game
 	View.OnClickListener myHandler2 = new View.OnClickListener(){
 		public void onClick(View v) {
+			SoundManager.playMusic(1);
+			SoundManager.players[0].seekTo(0);
+			SoundManager.playMusic(0);
 			finish();
 		}
 	};
 	//Play Again
 	View.OnClickListener myHandler3 = new View.OnClickListener(){
 		public void onClick(View v) {
+			SoundManager.playMusic(1);
+			SoundManager.players[0].seekTo(0);
+			SoundManager.playMusic(0);
 			Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
 			startActivity(intent);
 			finish();

@@ -24,14 +24,15 @@ public class SettingsActivity extends PreferenceActivity {
 		
 		super.onCreate(savedInstanceState);
 		
+		//Use the settings xml file to display the preferences
 		addPreferencesFromResource(R.xml.settings);
 		
 		//Make action bar icon function as back button.
 		ActionBar actionBar = getActionBar();
 	    actionBar.setDisplayHomeAsUpEnabled(true);
 		
+	    //Set what happens when the change password preference is pressed
 		Preference myPref = (Preference) findPreference("prefPassword");
-		
 		myPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
 	        @Override
@@ -57,7 +58,6 @@ public class SettingsActivity extends PreferenceActivity {
 			saveSettings();
 			return true;
 		case android.R.id.home:
-			saveSettings();
     		NavUtils.navigateUpFromSameTask(this);
     		return true;
 		default:
@@ -77,7 +77,7 @@ public class SettingsActivity extends PreferenceActivity {
         			createPassword();
         		}
         	});
-        	builder.setNegativeButton("Maybe Later", new DialogInterface.OnClickListener() {
+        	builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
         		public void onClick(DialogInterface dialog, int id) {
         		}
         	});
@@ -93,7 +93,7 @@ public class SettingsActivity extends PreferenceActivity {
         			changePassword();
         		}
         	});
-        	builder.setNegativeButton("Maybe Later", new DialogInterface.OnClickListener() {
+        	builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
         		public void onClick(DialogInterface dialog, int id) {
         		}
         	});
@@ -102,6 +102,7 @@ public class SettingsActivity extends PreferenceActivity {
     	}
 	}
 	
+	//Prompt to enter a new password (For first time app is used)
 	public void createPassword(){
 		final EditText passwordView = new EditText(this);
     	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -126,6 +127,7 @@ public class SettingsActivity extends PreferenceActivity {
     	dialog.show();
 	}
 	
+	//Ask to confirm password (For creating a password)
 	public void askAgain(){
     	final EditText passwordView = new EditText(this);
     	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -138,12 +140,13 @@ public class SettingsActivity extends PreferenceActivity {
     		public void onClick(DialogInterface dialog, int id) {
     			String tempInput = passwordView.getText().toString();
     			if(tempInput.equals(prefs.getString("prefPassword", "NULL"))){
-    				Toast.makeText(getApplicationContext(), "Password Saved", Toast.LENGTH_LONG).show();
+    				Toast.makeText(getApplicationContext(), "Password Saved", Toast.LENGTH_SHORT).show();
     			}
     			else{
-    				Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_LONG).show();
+    				Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
     				editor.putString("prefPassword", "NULL");
 	    			editor.commit();
+	    			createPassword();
     			}
     		}
     	});
@@ -157,6 +160,7 @@ public class SettingsActivity extends PreferenceActivity {
     	dialog.show(); 
     }
 	
+	//Prompt to enter previous password (For changing password)
 	public void changePassword(){
 		final EditText passwordView = new EditText(this);
     	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -184,6 +188,7 @@ public class SettingsActivity extends PreferenceActivity {
     	dialog.show();
 	}
 	
+	//Prompt to enter a new password (For changing password)
 	public void changePassword2(){
 		final EditText passwordView = new EditText(this);
     	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -195,9 +200,9 @@ public class SettingsActivity extends PreferenceActivity {
     	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int id) {
     			String tempInput = passwordView.getText().toString();
-    			editor.putString("prefPassword", tempInput);
+    			editor.putString("tempPassword", tempInput);
     			editor.commit();
-    			Toast.makeText(getApplicationContext(), "Password Changed", Toast.LENGTH_LONG).show();
+    			changePassword3();
     		}
     	});
     	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -208,6 +213,38 @@ public class SettingsActivity extends PreferenceActivity {
     	dialog.show();
 	}
 	
+	//Prompt to reenter the new password (For changing password)
+	public void changePassword3(){
+		final EditText passwordView = new EditText(this);
+    	final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    	final SharedPreferences.Editor editor = prefs.edit();
+    	
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setMessage("Confirm New Password").setTitle("New Password");
+    	builder.setView(passwordView);
+    	builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    			String tempInput = passwordView.getText().toString();
+    			if(tempInput.equals(prefs.getString("tempPassword", "NULL"))){
+    				Toast.makeText(getApplicationContext(), "Password Changed", Toast.LENGTH_SHORT).show();
+    				editor.putString("prefPassword", tempInput);
+	    			editor.commit();
+    			}
+    			else{
+    				Toast.makeText(getApplicationContext(), "Passwords Do Not Match", Toast.LENGTH_SHORT).show();
+	    			changePassword2();
+    			}
+    		}
+    	});
+    	builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int id) {
+    		}
+    	});
+    	AlertDialog dialog = builder.create();
+    	dialog.show();
+	}
+	
+	//Apply any changes in the settings
 	public void saveSettings() {
 		SharedPreferences s = PreferenceManager.getDefaultSharedPreferences(this);
 		int i = getResources().getIdentifier(s.getString("prefMusicSelection", "NULL"), "raw", getPackageName());
@@ -217,6 +254,6 @@ public class SettingsActivity extends PreferenceActivity {
 	
 	@Override
 	public void onBackPressed(){
-		//Disable back button so user is forced to use action bar, which will cause settings to save
+		NavUtils.navigateUpFromSameTask(this);
 	}
 }

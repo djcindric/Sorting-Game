@@ -90,8 +90,6 @@ public class MainMenuActivity extends Activity {
             	}
             	SoundManager.playMusic(0);
             	return true;
-            case R.id.action_settings:
-            	loadSettings();
             default:
                     return super.onOptionsItemSelected(item);
             }
@@ -187,11 +185,6 @@ public class MainMenuActivity extends Activity {
     	});
     	AlertDialog dialog = builder.create();
     	dialog.show(); 
-    }
-    
-    public void loadSettings() {
-    	Intent intent = new Intent(this, SettingsActivity.class);
-    	startActivity(intent);   
     }
     
     public void loadSettings(View v){
